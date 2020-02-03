@@ -6,12 +6,16 @@ r:
   - devel
 os:
   - linux
+  - osx
 jobs:
   exclude:
   - r: devel
     os: osx
-before_install:
-  - sudo apt-get install libcgal-dev libglu1-mesa-dev
+addons:
+  apt:
+    packages:
+    - libcgal-dev
+    - libglu1-mesa-dev
 after_success:
     - Rscript -e 'covr::codecov()'
 

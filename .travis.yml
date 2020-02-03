@@ -10,7 +10,7 @@ jobs:
   exclude:
   - r: devel
     os: osx
-before_script:
+before_install:
   - sudo apt-get install libcgal-dev libglu1-mesa-dev
 after_success:
     - Rscript -e 'covr::codecov()'

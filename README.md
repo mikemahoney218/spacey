@@ -1,9 +1,7 @@
-Easily retrieve elevations and textures for rayshader mapping
-================
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# spacey
+# spacey: Easily retrieve elevations and textures for rayshader mapping
 
 <!-- badges: start -->
 
@@ -15,7 +13,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 
 ``` r
 library(spacey)
-automap_2d(41.8781, -87.6298, overlay = "World_Imagery", overlay.alpha = 0.35)
+automap_2d(lat = 42.3601, lng = -71.0589)
 ```
 
 <img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />

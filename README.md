@@ -16,7 +16,7 @@ library(spacey)
 automap_2d(lat = 42.3601, lng = -71.0589)
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+<img src="man/figures/README-demo_map-1.png" width="100%" />
 
 The goal of `spacey` is to make it easy to work with packages like
 [rayshader](https://www.rayshader.com/index.html) in order to create

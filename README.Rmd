@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
-```{r}
+```{r demo_map}
 library(spacey)
 automap_2d(lat = 42.3601, lng = -71.0589)
 ```

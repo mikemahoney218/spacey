@@ -113,8 +113,9 @@
     }
   ],
   "codeRepository": "https://github.com/mikemahoney218/spacey",
-  "fileSize": "674.723KB",
+  "fileSize": "674.722KB",
   "developmentStatus": "https://www.tidyverse.org/lifecycle/#experimental",
   "issueTracker": "https://github.com/mikemahoney218/spacey/issues",
-  "releaseNotes": "https://github.com/mikemahoney218/spacey/blob/master/NEWS.md"
+  "releaseNotes": "https://github.com/mikemahoney218/spacey/blob/master/NEWS.md",
+  "readme": "https://github.com/mikemahoney218/spacey/blob/master/README.md"
 }

@@ -1,0 +1,16 @@
+language: r
+cache: packages
+r:
+  - oldrel
+  - release
+  - devel
+os:
+  - linux
+  - osx
+jobs:
+  exclude:
+  - r: devel
+    os: osx
+after_success:
+    - Rscript -e 'covr::codecov()'
+

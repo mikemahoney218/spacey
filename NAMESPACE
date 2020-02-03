@@ -3,6 +3,7 @@
 export(automap_2d)
 export(deg_to_rad)
 export(extract_coords)
+export(get_centroid)
 export(get_centroid_bounding_box)
 export(get_coord_bounding_box)
 export(get_heightmap)

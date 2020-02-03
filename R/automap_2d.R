@@ -58,26 +58,31 @@ automap_2d <- function(lat,
                        save.png = FALSE,
                        tif.filename = NULL,
                        png.filename = NULL,
-                       dist.unit = c("km",
-                                     "miles",
-                                     "m",
-                                     "ft"),
-                       coord.unit = c("degrees",
-                                      "radians"),
+                       dist.unit = c(
+                         "km",
+                         "miles",
+                         "m",
+                         "ft"
+                       ),
+                       coord.unit = c(
+                         "degrees",
+                         "radians"
+                       ),
                        sr_bbox = 4326,
                        sr_image = 4326,
                        print.map = TRUE) {
-
   stopifnot(is.logical(print.map))
 
   if (length(colorscale) == 1) {
     watercolor <- colorscale
     landcolor <- colorscale
   } else {
-    if (all(names(colorscale) %in% c("water",
-                                     "land",
-                                     "watercolor",
-                                     "landcolor"))) {
+    if (all(names(colorscale) %in% c(
+      "water",
+      "land",
+      "watercolor",
+      "landcolor"
+    ))) {
       if (length(names(colorscale) %in% c("water", "watercolor")) != 1) {
         stop("Multiple matches for water colorscale.")
       }
@@ -89,17 +94,21 @@ automap_2d <- function(lat,
     }
   }
 
-  bound_box <- get_centroid_bounding_box(c("lat" = lat,
-                                           "lng" = lng),
-                                         distance = distance,
-                                         dist.unit = dist.unit,
-                                         coord.unit = coord.unit)
+  bound_box <- get_centroid_bounding_box(c(
+    "lat" = lat,
+    "lng" = lng
+  ),
+  distance = distance,
+  dist.unit = dist.unit,
+  coord.unit = coord.unit
+  )
   heightmap <- get_heightmap(bound_box,
-                             major.dim = major.dim,
-                             save.tif = save.tif,
-                             filename = tif.filename,
-                             sr_bbox = sr_bbox,
-                             sr_image = sr_image)
+    major.dim = major.dim,
+    save.tif = save.tif,
+    filename = tif.filename,
+    sr_bbox = sr_bbox,
+    sr_image = sr_image
+  )
 
   out <- heightmap %>%
     rayshader::sphere_shade(texture = landcolor) %>%
@@ -109,18 +118,18 @@ automap_2d <- function(lat,
 
   if (!is.null(overlay)) {
     overlay_img <- get_image_overlay(bound_box,
-                                     overlay = overlay,
-                                     major.dim = major.dim,
-                                     lat = NULL,
-                                     lng = NULL,
-                                     save.png = save.png,
-                                     png.filename = png.filename,
-                                     sr_bbox = sr_bbox,
-                                     sr_image = sr_image)
+      overlay = overlay,
+      major.dim = major.dim,
+      lat = NULL,
+      lng = NULL,
+      save.png = save.png,
+      png.filename = png.filename,
+      sr_bbox = sr_bbox,
+      sr_image = sr_image
+    )
     out <- rayshader::add_overlay(out, overlay_img, alphalayer = overlay.alpha)
   }
 
   if (print.map) rayshader::plot_map(out)
   invisible(out)
-
 }

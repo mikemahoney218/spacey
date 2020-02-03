@@ -28,9 +28,8 @@ get_heightmap <- function(bbox,
                           filename = NULL,
                           sr_bbox = 4326,
                           sr_image = 4326) {
-
   stopifnot(is.logical(save.tif))
-  if(save.tif & is.null(filename)) stop("Must provide filename to save .tif to.")
+  if (save.tif & is.null(filename)) stop("Must provide filename to save .tif to.")
 
   if (all(!is.null(lat), !is.null(lng))) {
     first_corner <- c(bbox[[1]][[lat]], bbox[[1]][[lng]])
@@ -47,10 +46,11 @@ get_heightmap <- function(bbox,
     url,
     query = list(
       bbox = paste(first_corner[["lng"]],
-                   first_corner[["lat"]],
-                   second_corner[["lng"]],
-                   second_corner[["lat"]],
-                   sep = ","),
+        first_corner[["lat"]],
+        second_corner[["lng"]],
+        second_corner[["lat"]],
+        sep = ","
+      ),
       bboxSR = sr_bbox,
       imageSR = sr_image,
       size = paste(img_size[["width"]], img_size[["height"]], sep = ","),
@@ -83,7 +83,6 @@ get_heightmap <- function(bbox,
     raster::extract(raster_read, raster::extent(raster_read), buffer = 1000),
     nrow = ncol(raster_read), ncol = nrow(raster_read)
   )
-
 }
 
 
@@ -101,4 +100,3 @@ load_heightmap <- function(filename) {
     nrow = ncol(raster_read), ncol = nrow(raster_read)
   )
 }
-

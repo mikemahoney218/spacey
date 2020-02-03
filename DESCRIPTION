@@ -1,12 +1,21 @@
 Package: spacey
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Easily Obtain Spatial Data and Make Better Maps
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Authors@R: 
+    person(given = "Michael",
+           family = "Mahoney",
+           role = c("aut", "cre"),
+           email = "mike.mahoney.218@gmail.com",
+           comment = c(ORCID = "0000-0003-2402-304X"))
+Description: One of the remaining pain points in making beautiful maps via 
+    packages like 'rayshader' is both obtaining and processing spatial data
+    to build from. 'spacey' aims to make it easier to obtain and use this data
+    for locations within the United States, providing utilities to download 
+    'USGS' and 'ESRI' data and quickly turn them into maps.
 License: MIT + file LICENSE
+URL: https://github.com/mikemahoney218/spacey
+BugReports: https://github.com/mikemahoney218/spacey/issues
 Encoding: UTF-8
 LazyData: true
 Imports: 

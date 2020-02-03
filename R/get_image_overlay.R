@@ -22,14 +22,16 @@
 #'
 #' @export
 get_image_overlay <- function(bbox,
-                              overlay = c("World_Imagery",
-                                          "NatGeo_World_Map",
-                                          "USA_Topo_Maps",
-                                          "World_Physical_Map",
-                                          "World_Shaded_Relief",
-                                          "World_Street_Map",
-                                          "World_Terrain_Base",
-                                          "World_Topo_Map"),
+                              overlay = c(
+                                "World_Imagery",
+                                "NatGeo_World_Map",
+                                "USA_Topo_Maps",
+                                "World_Physical_Map",
+                                "World_Shaded_Relief",
+                                "World_Street_Map",
+                                "World_Terrain_Base",
+                                "World_Topo_Map"
+                              ),
                               major.dim = 600,
                               lat = NULL,
                               lng = NULL,
@@ -37,7 +39,6 @@ get_image_overlay <- function(bbox,
                               png.filename = NULL,
                               sr_bbox = 4326,
                               sr_image = 4326) {
-
   stopifnot(is.logical(save.png))
 
   if (all(!is.null(lat), !is.null(lng))) {
@@ -56,14 +57,18 @@ get_image_overlay <- function(bbox,
   web_map_param <- list(
     baseMap = list(
       baseMapLayers = list(
-        list(url = jsonlite::unbox(paste0("https://services.arcgisonline.com/ArcGIS/rest/services/",
-                                          overlay,
-                                          "/MapServer")))
+        list(url = jsonlite::unbox(paste0(
+          "https://services.arcgisonline.com/ArcGIS/rest/services/",
+          overlay,
+          "/MapServer"
+        )))
       )
     ),
     exportOptions = list(
-      outputSize = c(img_size[["width"]],
-                     img_size[["height"]])
+      outputSize = c(
+        img_size[["width"]],
+        img_size[["height"]]
+      )
     ),
     mapOptions = list(
       extent = list(
@@ -82,14 +87,14 @@ get_image_overlay <- function(bbox,
       f = "json",
       Format = "PNG32",
       Layout_Template = "MAP_ONLY",
-      Web_Map_as_JSON = jsonlite::toJSON(web_map_param))
+      Web_Map_as_JSON = jsonlite::toJSON(web_map_param)
+    )
   )
 
   if (httr::status_code(res) == 200) {
     body <- httr::content(res, type = "application/json")
     img_res <- httr::GET(body$results[[1]]$value$url)
     img_bin <- httr::content(img_res, "raw")
-
   } else {
     stop(res)
   }
@@ -102,7 +107,6 @@ get_image_overlay <- function(bbox,
   }
 
   png::readPNG(png.filename)
-
 }
 
 #' Import PNG textures for overlays

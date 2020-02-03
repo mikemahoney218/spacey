@@ -8,7 +8,6 @@
 #'
 #' @export
 get_coord_bounding_box <- function(lat, lng) {
-
   stopifnot(length(lat) == length(lng))
 
   if (any(is.na(lat) | is.na(lng))) {
@@ -20,8 +19,10 @@ get_coord_bounding_box <- function(lat, lng) {
   maxlat <- max(lat, na.rm = T)
   maxlng <- max(lng, na.rm = T)
 
-  return(list("bl" = c("lat" = minlat, "lng" = minlng),
-              "tr" = c("lat" = maxlat, "lng" = maxlng)))
+  return(list(
+    "bl" = c("lat" = minlat, "lng" = minlng),
+    "tr" = c("lat" = maxlat, "lng" = maxlng)
+  ))
 }
 
 
@@ -47,12 +48,16 @@ get_centroid_bounding_box <- function(centroid,
                                       distance,
                                       lat = NULL,
                                       lng = NULL,
-                                      dist.unit = c("km",
-                                               "miles",
-                                               "m",
-                                               "ft"),
-                                      coord.unit = c("degrees",
-                                                        "radians")) {
+                                      dist.unit = c(
+                                        "km",
+                                        "miles",
+                                        "m",
+                                        "ft"
+                                      ),
+                                      coord.unit = c(
+                                        "degrees",
+                                        "radians"
+                                      )) {
   stopifnot(length(centroid) == 2)
   names(centroid) <- tolower(names(centroid))
   pi <- base::pi
@@ -90,11 +95,13 @@ get_centroid_bounding_box <- function(centroid,
 
   R <- 6378.1
   calc_lat <- function(lat, bearing) {
-    asin(sin(lat) * cos(distance / R) + cos(lat) * sin(distance / R) *  cos(bearing))
+    asin(sin(lat) * cos(distance / R) + cos(lat) * sin(distance / R) * cos(bearing))
   }
   calc_lng <- function(lat, newlat, lng, bearing) {
-    lng + atan2(sin(bearing) * sin(distance / R) * cos(lat),
-                cos(distance / R) - sin(lat) * sin(newlat))
+    lng + atan2(
+      sin(bearing) * sin(distance / R) * cos(lat),
+      cos(distance / R) - sin(lat) * sin(newlat)
+    )
   }
 
   bl.lat <- calc_lat(lat, bl.bearing)
@@ -110,15 +117,20 @@ get_centroid_bounding_box <- function(centroid,
     tr.lng <- rad_to_deg(tr.lng)
   }
 
-  bl <- c(bl.lat,
-          bl.lng)
+  bl <- c(
+    bl.lat,
+    bl.lng
+  )
   names(bl) <- c("lat", "lng")
 
-  tr <- c(tr.lat,
-          tr.lng)
+  tr <- c(
+    tr.lat,
+    tr.lng
+  )
   names(tr) <- c("lat", "lng")
 
-  return(list(bl,
-              tr))
-
+  return(list(
+    bl,
+    tr
+  ))
 }

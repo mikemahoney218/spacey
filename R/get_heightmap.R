@@ -32,8 +32,8 @@ get_heightmap <- function(bbox,
   if (save.tif & is.null(filename)) stop("Must provide filename to save .tif to.")
 
   if (all(!is.null(lat), !is.null(lng))) {
-    first_corner <- c(bbox[[1]][[lat]], bbox[[1]][[lng]])
-    second_corner <- c(bbox[[2]][[lat]], bbox[[2]][[lng]])
+    first_corner <- c("lat" = bbox[[1]][[lat]], "lng" = bbox[[1]][[lng]])
+    second_corner <- c("lat" = bbox[[2]][[lat]], "lng" = bbox[[2]][[lng]])
   } else {
     first_corner <- extract_coords(bbox[[1]])
     second_corner <- extract_coords(bbox[[2]])
@@ -45,10 +45,10 @@ get_heightmap <- function(bbox,
   res <- httr::GET(
     url,
     query = list(
-      bbox = paste(first_corner[["lng"]],
-        first_corner[["lat"]],
-        second_corner[["lng"]],
-        second_corner[["lat"]],
+      bbox = paste(min(first_corner[["lng"]], second_corner[["lng"]]),
+        min(first_corner[["lat"]], second_corner[["lat"]]),
+        max(second_corner[["lng"]], first_corner[["lng"]]),
+        max(second_corner[["lat"]], first_corner[["lat"]]),
         sep = ","
       ),
       bboxSR = sr_bbox,

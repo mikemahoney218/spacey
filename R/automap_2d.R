@@ -86,6 +86,7 @@ automap_2d <- function(lat,
                        print.map = TRUE) {
   stopifnot(is.logical(print.map))
   stopifnot(length(colorscale) > 0 && length(colorscale) < 3)
+  stopifnot(length(lat) == length(lng))
   from.file <- from.file[[1]]
   if (from.file == TRUE && (save.tif || save.png)) {
     warning("from.file being TRUE overrides save.tif and save.png; files will
@@ -144,14 +145,27 @@ automap_2d <- function(lat,
     }
   }
 
-  bound_box <- get_centroid_bounding_box(c(
-    "lat" = lat,
-    "lng" = lng
-  ),
-  distance = distance,
-  dist.unit = dist.unit,
-  coord.unit = coord.unit
-  )
+  if (length(lat) == 1) {
+    bound_box <- get_centroid_bounding_box(c(
+      "lat" = lat,
+      "lng" = lng
+    ),
+    distance = distance,
+    dist.unit = dist.unit,
+    coord.unit = coord.unit
+    )
+  } else {
+    if (is.na(distance) || distance == 0) {
+      get_centroid_bounding_box(get_centroid(lat, lng, coord.unit),
+        distance = distance,
+        dist.unit = dist.unit,
+        coord.unit = coord.unit
+      )
+    } else {
+      bound_box <- get_coord_bounding_box(lat, lng)
+    }
+  }
+
   if (from.file == TRUE || from.file == "tif") {
     heightmap <- load_heightmap(tif.filename)
   } else {
@@ -166,9 +180,20 @@ automap_2d <- function(lat,
 
   out <- heightmap %>%
     rayshader::sphere_shade(texture = landcolor) %>%
-    rayshader::add_water(rayshader::detect_water(heightmap), color = watercolor) %>%
-    rayshader::add_shadow(rayshader::ray_shade(heightmap, zscale = z, lambert = TRUE), max_darken = max.darken) %>%
-    rayshader::add_shadow(rayshader::ambient_shade(heightmap, zscale = z), max_darken = max.darken)
+    rayshader::add_water(rayshader::detect_water(heightmap),
+      color = watercolor
+    ) %>%
+    rayshader::add_shadow(rayshader::ray_shade(heightmap,
+      zscale = z,
+      lambert = TRUE
+    ),
+    max_darken = max.darken
+    ) %>%
+    rayshader::add_shadow(rayshader::ambient_shade(heightmap,
+      zscale = z
+    ),
+    max_darken = max.darken
+    )
 
   if (!is.null(overlay)) {
     if (from.file == TRUE || from.file == "png") {

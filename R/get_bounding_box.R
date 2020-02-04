@@ -14,10 +14,10 @@ get_coord_bounding_box <- function(lat, lng) {
     warning("NAs present in coordinate data and will be ignored.")
   }
 
-  minlat <- min(lat, na.rm = T)
-  minlng <- min(lng, na.rm = T)
-  maxlat <- max(lat, na.rm = T)
-  maxlng <- max(lng, na.rm = T)
+  minlat <- min(lat, na.rm = TRUE)
+  minlng <- min(lng, na.rm = TRUE)
+  maxlat <- max(lat, na.rm = TRUE)
+  maxlng <- max(lng, na.rm = TRUE)
 
   return(list(
     "bl" = c("lat" = minlat, "lng" = minlng),

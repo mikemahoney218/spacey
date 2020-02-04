@@ -54,6 +54,7 @@ get_image_overlay <- function(bbox,
   img_size <- get_img_size(bbox, lat, lng, major.dim)
 
   url <- httr::parse_url("https://utility.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task/execute")
+
   web_map_param <- list(
     baseMap = list(
       baseMapLayers = list(
@@ -73,10 +74,10 @@ get_image_overlay <- function(bbox,
     mapOptions = list(
       extent = list(
         spatialReference = list(wkid = jsonlite::unbox(sr_bbox)),
-        xmax = jsonlite::unbox(second_corner[[2]]),
-        xmin = jsonlite::unbox(first_corner[[2]]),
-        ymax = jsonlite::unbox(second_corner[[1]]),
-        ymin = jsonlite::unbox(first_corner[[1]])
+        xmax = jsonlite::unbox(max(second_corner[[2]], first_corner[[2]])),
+        xmin = jsonlite::unbox(min(first_corner[[2]], second_corner[[2]])),
+        ymax = jsonlite::unbox(max(second_corner[[1]], first_corner[[1]])),
+        ymin = jsonlite::unbox(min(first_corner[[1]], second_corner[[1]]))
       )
     )
   )

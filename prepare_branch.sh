@@ -1,11 +1,9 @@
-R -e "devtools::document()"
-R -e "devtools::build_vignettes()"
-R -e "rmarkdown::render('README.Rmd')"
-R -e "devtools::build_site()"
-
-R -e "styler::style_dir()"
-R -e 'styler::style_dir(filetype = "Rmd")'
-R -e "devtools::document()"
-R -e "devtools::check()"
-
-R -e "codemetar::write_codemeta()"
+R -e "devtools::document(); 
+      devtools::build_vignettes(); 
+      rmarkdown::render('README.Rmd'); 
+      devtools::build_site();
+      styler::style_dir();
+      styler::style_dir(filetype = 'Rmd');
+      devtools::document();
+      devtools::check();
+      codemetar::write_codemeta()"

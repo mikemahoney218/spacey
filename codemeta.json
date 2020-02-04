@@ -50,6 +50,18 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=testthat"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "covr",
+      "name": "covr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=covr"
     }
   ],
   "softwareRequirements": [
@@ -124,12 +136,25 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=jsonlite"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rgdal",
+      "name": "rgdal",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rgdal"
     }
   ],
   "codeRepository": "https://github.com/mikemahoney218/spacey",
-  "fileSize": "3099.197KB",
+  "fileSize": "3099.402KB",
   "developmentStatus": "https://www.tidyverse.org/lifecycle/#experimental",
   "issueTracker": "https://github.com/mikemahoney218/spacey/issues",
   "releaseNotes": "https://github.com/mikemahoney218/spacey/blob/master/NEWS.md",
-  "readme": "https://github.com/mikemahoney218/spacey/blob/master/README.md"
+  "readme": "https://github.com/mikemahoney218/spacey/blob/master/README.md",
+  "contIntegration": ["https://travis-ci.com/mikemahoney218/spacey", "https://ci.appveyor.com/project/mikemahoney218/spacey", "https://codecov.io/gh/mikemahoney218/spacey?branch=master"]
 }

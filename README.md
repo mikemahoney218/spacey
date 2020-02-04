@@ -9,10 +9,10 @@ status](https://www.r-pkg.org/badges/version/spacey)](https://CRAN.R-project.org
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![Travis CI
 status](https://travis-ci.com/mikemahoney218/spacey.svg?branch=master)](https://travis-ci.com/mikemahoney218/spacey)
-[![Codecov
-Coverage](https://codecov.io/gh/mikemahoney218/spacey?branch=master)](https://codecov.io/gh/mikemahoney218/spacey)
 [![ApppVeyor Build
 Status](https://ci.appveyor.com/api/projects/status/github/mikemahoney218/spacey?branch=master&svg=true)](https://ci.appveyor.com/project/mikemahoney218/spacey)
+[![Codecov test
+coverage](https://codecov.io/gh/mikemahoney218/spacey/branch/master/graph/badge.svg)](https://codecov.io/gh/mikemahoney218/spacey?branch=master)
 <!-- badges: end -->
 
     library(spacey)

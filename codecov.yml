@@ -1,17 +1,12 @@
-# codecov:
-#   strict_yaml_branch: master
-
 comment: false
 
 coverage:
   status:
     project:
       default:
-        target: 80%
-        threshold: 5%
+        target: auto
+        threshold: 1%
     patch:
       default:
-        target: 80%
+        target: auto
         threshold: 1%
-
-

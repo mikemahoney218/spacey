@@ -85,4 +85,3 @@ test_that("automap_2d errors fire appropriately", {
     )
   ))
 })
-

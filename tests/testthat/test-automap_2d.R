@@ -8,7 +8,8 @@ test_that("automap_2d creates the same map twice", {
   rayshader::save_png(x, boston_map)
   expect_equal(
     load_overlay(boston_map),
-    load_overlay("../data/boston.png")
+    load_overlay("../data/boston.png"),
+    tolerance = 0.004
   )
 
   expect_equal(

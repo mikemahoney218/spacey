@@ -1,3 +1,5 @@
+env:
+  - NOT_CRAN=true
 language: r
 cache: packages
 r:

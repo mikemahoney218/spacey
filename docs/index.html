@@ -78,20 +78,14 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-
-<div id="easily-retrieve-elevations-and-textures-for-rayshader-mapping" class="section level1">
+<div id="spacey-easily-retrieve-elevations-and-textures-for-rayshader-mapping" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#easily-retrieve-elevations-and-textures-for-rayshader-mapping" class="anchor"></a>Easily retrieve elevations and textures for rayshader mapping</h1></div>
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-</div>
-<div id="spacey" class="section level1">
-<h1 class="hasAnchor">
-<a href="#spacey" class="anchor"></a>spacey</h1>
+<a href="#spacey-easily-retrieve-elevations-and-textures-for-rayshader-mapping" class="anchor"></a>spacey: Easily retrieve elevations and textures for rayshader mapping</h1></div>
 <!-- badges: start -->
 
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(spacey)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="reference/automap_2d.html">automap_2d</a></span>(<span class="fl">41.8781</span>, <span class="fl">-87.6298</span>, <span class="dt">overlay =</span> <span class="st">"World_Imagery"</span>, <span class="dt">overlay.alpha =</span> <span class="fl">0.35</span>)</a></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-2-1.png" width="100%"></p>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="reference/automap_2d.html">automap_2d</a></span>(<span class="dt">lat =</span> <span class="fl">42.3601</span>, <span class="dt">lng =</span> <span class="fl">-71.0589</span>)</a></code></pre></div>
+<p><img src="reference/figures/README-demo_map-1.png" width="100%"></p>
 <p>The goal of <code>spacey</code> is to make it easy to work with packages like <a href="https://www.rayshader.com/index.html">rayshader</a> in order to create beautiful landscape visualizations, pulling source data from the USGS for elevation profiles and ESRI for textures to quickly create maps for the area relevant to your analysis.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -135,7 +129,6 @@
 <p>Similarly, most geospatial calculations implemented in this package don’t deal well with areas near the poles or Prime Meridian. Given the spatial constraints of the USGS dataset, this isn’t a problem for current use cases, but be careful extending these functions outside of this package.</p>
 </div>
 </div>
-
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

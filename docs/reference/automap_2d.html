@@ -142,12 +142,13 @@ functioning internet connection in order to retrieve data.</p>
   <span class='kw'>distance</span> <span class='kw'>=</span> <span class='fl'>10</span>,
   <span class='kw'>major.dim</span> <span class='kw'>=</span> <span class='fl'>600</span>,
   <span class='kw'>overlay</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>30</span>,
+  <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>0.3</span>,
   <span class='kw'>overlay.alpha</span> <span class='kw'>=</span> <span class='fl'>0.75</span>,
   <span class='kw'>colorscale</span> <span class='kw'>=</span> <span class='st'>"imhof4"</span>,
   <span class='kw'>max.darken</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
   <span class='kw'>save.tif</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>save.png</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>from.file</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>FALSE</span>, <span class='st'>"tif"</span>, <span class='st'>"png"</span>, <span class='fl'>TRUE</span>),
   <span class='kw'>tif.filename</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>png.filename</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>dist.unit</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"km"</span>, <span class='st'>"miles"</span>, <span class='st'>"m"</span>, <span class='st'>"ft"</span>),
@@ -183,7 +184,9 @@ produces square maps, this is equivalent to pixels along any edge.</p></td>
     <tr>
       <th>overlay</th>
       <td><p>ESRI overlay map to include, if any -- see
-<code><a href='get_image_overlay.html'>get_image_overlay</a></code> for list of options.</p></td>
+<code><a href='get_image_overlay.html'>get_image_overlay</a></code> for list of options. If specifying
+a local file with <code>from.file</code>, any non <code>NULL</code> value will add your
+local file as an overlay.</p></td>
     </tr>
     <tr>
       <th>z</th>
@@ -215,12 +218,25 @@ for water coloring, while "land" or "landcolor" will be used for land.</p></td>
       <td><p>Logical -- should the overlay image be saved?</p></td>
     </tr>
     <tr>
+      <th>from.file</th>
+      <td><p>Should the map be built from local <code>.tif</code>
+and <code>.png</code> files, rather than downloaded data? Accepts logical
+<code>FALSE</code> (no local files used) and <code>TRUE</code> (local files used for both
+height maps and textures, if requested), as well as strings <code>tif</code>
+(only use height map, redownload PNG) and <code>png</code> (only use texture,
+redownload tif). Overrides save arguments if local files are used.</p></td>
+    </tr>
+    <tr>
       <th>tif.filename</th>
-      <td><p>Filename for the heightmap if <code>save.tif</code> is TRUE.</p></td>
+      <td><p>If <code>save.tif</code> is <code>TRUE</code>, filename to save the
+<code>.tif</code> height map to. If <code>from.file</code> is <code>TRUE</code>, filename to
+load the height map from.</p></td>
     </tr>
     <tr>
       <th>png.filename</th>
-      <td><p>Filename for the overlay if <code>save.png</code> is TRUE.</p></td>
+      <td><p>If <code>save.png</code> is <code>TRUE</code>, filename to save the
+<code>.png</code> texture to. If <code>from.file</code> is <code>TRUE</code>, filename to
+load the texture from.</p></td>
     </tr>
     <tr>
       <th>dist.unit</th>

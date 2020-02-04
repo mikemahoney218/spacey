@@ -1,20 +1,22 @@
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-# spacey: Easily retrieve elevations and textures for rayshader mapping
+spacey: Easily retrieve elevations and textures for rayshader mapping
+=====================================================================
 
 <!-- badges: start -->
-
 [![CRAN
 status](https://www.r-pkg.org/badges/version/spacey)](https://CRAN.R-project.org/package=spacey)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Travis CI
+status](https://travis-ci.com/mikemahoney218/spacey.svg?branch=master)](https://travis-ci.com/mikemahoney218/spacey)
+[![Codecov
+Coverage](https://codecov.io/gh/mikemahoney218/spacey?branch=master)](https://codecov.io/gh/mikemahoney218/spacey)
+[![ApppVeyor Build
+Status](https://ci.appveyor.com/api/projects/status/github/mikemahoney218/spacey?branch=master&svg=true)](https://ci.appveyor.com/project/mikemahoney218/spacey)
 <!-- badges: end -->
 
-``` r
-library(spacey)
-automap_2d(lat = 42.3601, lng = -71.0589)
-```
+    library(spacey)
+    automap_2d(lat = 42.3601, lng = -71.0589)
 
 <img src="man/figures/README-demo_map-1.png" width="100%" />
 
@@ -24,53 +26,52 @@ beautiful landscape visualizations, pulling source data from the USGS
 for elevation profiles and ESRI for textures to quickly create maps for
 the area relevant to your analysis.
 
-## Installation
+Installation
+------------
 
 If the CRAN version badge above is green, you can install the released
 version of `spacey` from [CRAN](https://CRAN.R-project.org) with:
 
-``` r
-install.packages("spacey")
-```
+    install.packages("spacey")
 
 You can always get the most up-to-date development version with:
 
-``` r
-# install.packages("devtools")
-devtools::install_github("mikemahoney218/spacey")
-```
+    # install.packages("devtools")
+    devtools::install_github("mikemahoney218/spacey")
 
-## Functions
+Functions
+---------
 
 At the moment, `spacey` consists mainly of the following functions:
 
-  - `automap_2d` uses a combination of sensible defaults to produce
+-   `automap_2d` uses a combination of sensible defaults to produce
     attractive square map outputs from a single central point location.
-  - `get_coord_bounding_box` finds the smallest rectangle required to
+-   `get_coord_bounding_box` finds the smallest rectangle required to
     contain a list of lat/long coordinates.
-  - `get_centroid_bounding_box` finds the corners of a square with
+-   `get_centroid_bounding_box` finds the corners of a square with
     diagonals a set distance from a central point, enabling map creation
     for a single central lat/long combination.
-  - `get_centroid` finds the central point for matched vectors of
+-   `get_centroid` finds the central point for matched vectors of
     latitude and longitude.
-  - `get_heightmap` retrives an elevation map from the USGS for a
+-   `get_heightmap` retrives an elevation map from the USGS for a
     specified boundary box and translates it into an R matrix.
-  - `get_image_overlay` retrieves a texture from ESRI for a specified
+-   `get_image_overlay` retrieves a texture from ESRI for a specified
     boundary box and translates it into a matrix.
 
 It also includes several helper functions, including:
 
-  - `load_heightmap` can import stored .tif files in order to used saved
+-   `load_heightmap` can import stored .tif files in order to used saved
     USGS national map data (or potentially other sources).
-  - `load_overlay` is an *extremely* thin wrapper around
+-   `load_overlay` is an *extremely* thin wrapper around
     [png::readPNG](http://www.rforge.net/png/), used to read stored ESRI
     image overlay files.
 
-## Limitations
+Limitations
+-----------
 
 At the moment, `spacey` is only able to retrieve data from the USGS
 National Map API, limiting its use to the United States. If you have a
-good API for other regions, open an issue or submit a PR\!
+good API for other regions, open an issue or submit a PR!
 
 Similarly, most geospatial calculations implemented in this package
 don’t deal well with areas near the poles or Prime Meridian. Given the

@@ -1,5 +1,5 @@
 ---
-output: github_document
+output: md_document
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -18,13 +18,15 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/spacey)](https://CRAN.R-project.org/package=spacey)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Travis CI status](https://travis-ci.com/mikemahoney218/spacey.svg?branch=master)](https://travis-ci.com/mikemahoney218/spacey)
+[![Codecov Coverage](https://codecov.io/gh/mikemahoney218/spacey?branch=master)](https://codecov.io/gh/mikemahoney218/spacey)
+[![ApppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/mikemahoney218/spacey?branch=master&svg=true)](https://ci.appveyor.com/project/mikemahoney218/spacey)
 <!-- badges: end -->
 
 ```{r demo_map}
 library(spacey)
 automap_2d(lat = 42.3601, lng = -71.0589)
 ```
-
 
 The goal of `spacey` is to make it easy to work with packages like 
 [rayshader](https://www.rayshader.com/index.html) in order to create beautiful 

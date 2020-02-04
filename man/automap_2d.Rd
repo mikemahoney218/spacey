@@ -10,12 +10,13 @@ automap_2d(
   distance = 10,
   major.dim = 600,
   overlay = NULL,
-  z = 30,
+  z = 0.3,
   overlay.alpha = 0.75,
   colorscale = "imhof4",
   max.darken = 0.5,
   save.tif = FALSE,
   save.png = FALSE,
+  from.file = c(FALSE, "tif", "png", TRUE),
   tif.filename = NULL,
   png.filename = NULL,
   dist.unit = c("km", "miles", "m", "ft"),
@@ -39,7 +40,9 @@ radians.}
 produces square maps, this is equivalent to pixels along any edge.}
 
 \item{overlay}{ESRI overlay map to include, if any -- see
-\code{\link[spacey]{get_image_overlay}} for list of options.}
+\code{\link[spacey]{get_image_overlay}} for list of options. If specifying
+a local file with \code{from.file}, any non \code{NULL} value will add your
+local file as an overlay.}
 
 \item{z}{zscale, passed to various rayshader functions. Defined as
 the ratio between the x and y spacing (which are assumed to be equal)
@@ -58,9 +61,20 @@ for water coloring, while "land" or "landcolor" will be used for land.}
 
 \item{save.png}{Logical -- should the overlay image be saved?}
 
-\item{tif.filename}{Filename for the heightmap if \code{save.tif} is TRUE.}
+\item{from.file}{Should the map be built from local \code{.tif}
+and \code{.png} files, rather than downloaded data? Accepts logical
+\code{FALSE} (no local files used) and \code{TRUE} (local files used for both
+height maps and textures, if requested), as well as strings \code{tif}
+(only use height map, redownload PNG) and \code{png} (only use texture,
+redownload tif). Overrides save arguments if local files are used.}
 
-\item{png.filename}{Filename for the overlay if \code{save.png} is TRUE.}
+\item{tif.filename}{If \code{save.tif} is \code{TRUE}, filename to save the
+\code{.tif} height map to. If \code{from.file} is \code{TRUE}, filename to
+load the height map from.}
+
+\item{png.filename}{If \code{save.png} is \code{TRUE}, filename to save the
+\code{.png} texture to. If \code{from.file} is \code{TRUE}, filename to
+load the texture from.}
 
 \item{dist.unit}{Units for the distance argument. All units are converted to
 kilometers, with some errors in the transition due to floating point

@@ -1,27 +1,31 @@
-#' Convert degrees to radians
+#' Convert decimal degrees to radians
 #'
-#' @param deg Value in degrees to be converted
+#' @param deg A vector of values, in decimal degrees, to convert to radians
 #'
-#' @keywords internal
+#' @return A vector of the same length in radians
 #'
-#' @return Value in radians
-#'
+#' @examples
+#' deg_to_rad(360)
+#' rad_to_deg(deg_to_rad(360))
 #' @export
 deg_to_rad <- function(deg) {
-  deg * pi / 180
+  stopifnot(is.numeric(deg))
+  deg * base::pi / 180
 }
 
 #' Convert radians to degrees
 #'
-#' @param rad Value in radians to be converted
+#' @param rad A vector of values, in radians, to convert to decimal degrees
 #'
-#' @keywords internal
+#' @return A vector of the same length in decimal degrees
 #'
-#' @return Value in degrees
-#'
+#' @examples
+#' rad_to_deg(2 * base::pi)
+#' rad_to_deg(deg_to_rad(360))
 #' @export
 rad_to_deg <- function(rad) {
-  rad * 180 / pi
+  stopifnot(is.numeric(rad))
+  rad * 180 / base::pi
 }
 
 #' Extract latitude and longitude from a provided object

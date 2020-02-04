@@ -37,7 +37,21 @@
       "@id": "https://orcid.org/0000-0003-2402-304X"
     }
   ],
-  "softwareSuggestions": [],
+  "softwareSuggestions": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "testthat",
+      "name": "testthat",
+      "version": ">= 2.1.0",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=testthat"
+    }
+  ],
   "softwareRequirements": [
     {
       "@type": "SoftwareApplication",
@@ -113,7 +127,7 @@
     }
   ],
   "codeRepository": "https://github.com/mikemahoney218/spacey",
-  "fileSize": "674.722KB",
+  "fileSize": "3099.197KB",
   "developmentStatus": "https://www.tidyverse.org/lifecycle/#experimental",
   "issueTracker": "https://github.com/mikemahoney218/spacey/issues",
   "releaseNotes": "https://github.com/mikemahoney218/spacey/blob/master/NEWS.md",

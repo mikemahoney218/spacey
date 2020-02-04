@@ -9,14 +9,13 @@
 #' @export
 get_centroid <- function(lat, lng, coord.unit = c("degrees", "radians")) {
   coord.unit <- coord.unit[[1]]
-  pi <- base::pi
   stopifnot(length(lat) == length(lng))
   if (length(lat) == 1) {
-    return(c(lat, lng))
+    return(c("lat" = lat, "lng" = lng))
   }
   if (coord.unit == "degrees") {
-    lat <- lat * pi / 180
-    lng <- lng * pi / 180
+    lat <- deg_to_rad(lat)
+    lng <- deg_to_rad(lng)
   }
 
   x <- sum(cos(lat) * cos(lng)) / length(lat)
@@ -24,11 +23,11 @@ get_centroid <- function(lat, lng, coord.unit = c("degrees", "radians")) {
   z <- sum(sin(lat)) / length(lat)
 
   lng <- atan2(y, x)
-  lat <- atan2(z, (x * x + y * y))
+  lat <- atan2(z, sqrt(x * x + y * y))
 
   if (coord.unit == "degrees") {
-    lat <- lat * 180 / pi
-    lng <- lng * 180 / pi
+    lat <- rad_to_deg(lat)
+    lng <- rad_to_deg(lng)
   }
 
   return(c("lat" = lat, "lng" = lng))

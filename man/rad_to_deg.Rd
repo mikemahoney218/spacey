@@ -7,12 +7,15 @@
 rad_to_deg(rad)
 }
 \arguments{
-\item{rad}{Value in radians to be converted}
+\item{rad}{A vector of values, in radians, to convert to decimal degrees}
 }
 \value{
-Value in degrees
+A vector of the same length in decimal degrees
 }
 \description{
 Convert radians to degrees
 }
-\keyword{internal}
+\examples{
+rad_to_deg(2 * base::pi)
+rad_to_deg(deg_to_rad(360))
+}

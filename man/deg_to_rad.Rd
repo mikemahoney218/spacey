@@ -2,17 +2,20 @@
 % Please edit documentation in R/utils.R
 \name{deg_to_rad}
 \alias{deg_to_rad}
-\title{Convert degrees to radians}
+\title{Convert decimal degrees to radians}
 \usage{
 deg_to_rad(deg)
 }
 \arguments{
-\item{deg}{Value in degrees to be converted}
+\item{deg}{A vector of values, in decimal degrees, to convert to radians}
 }
 \value{
-Value in radians
+A vector of the same length in radians
 }
 \description{
-Convert degrees to radians
+Convert decimal degrees to radians
 }
-\keyword{internal}
+\examples{
+deg_to_rad(360)
+rad_to_deg(deg_to_rad(360))
+}

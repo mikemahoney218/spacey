@@ -18,6 +18,7 @@ addons:
     packages:
     - libcgal-dev
     - libglu1-mesa-dev
+    - libgdal1-dev
 after_success:
     - Rscript -e 'covr::codecov()'
 

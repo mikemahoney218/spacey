@@ -103,6 +103,7 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(spacey)</a></code></pre></div>
 <p>The most comprehensive command in <code>spacey</code> is <code>automap_2d</code>, which only requires two vectors, one for latitude and one for longitude<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>, in order to quickly generate a 2D raytracer image. In fact, you can use as little as a single coordinate pair:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="../reference/automap_2d.html">automap_2d</a></span>(<span class="dt">lat =</span> <span class="fl">42.3601</span>, <span class="dt">lng =</span> <span class="fl">-71.0589</span>)</a></code></pre></div>
+<p><img src="boston_simple.png" width="100%"></p>
 <p>Behind the scenes, automap is doing a few different things that we’ll discuss separately:</p>
 <ul>
 <li>First, <code>automap_2d</code> looks at your coordinates (alongside other optional arguments) to determine how large a map should be drawn, calling a few <code>spacey</code> functions built for geospatial data processing along the way</li>
@@ -126,15 +127,17 @@
 <li>
 <code>get_coord_bounding_box</code> will find the bounding box for a set of coordinates (any length of latitude/longitude pairs), in order to pull the right area for your output map. For instance, we can use our same coordinates as above to find the edges of our data:</li>
 </ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="../reference/get_coord_bounding_box.html">get_coord_bounding_box</a></span>(<span class="dt">lat =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">42.35375</span>, <span class="fl">42.36645</span>), </a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">                       <span class="dt">lng =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="fl">71.06750</span>, <span class="fl">-71.05030</span>))</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt; $bl</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt;       lat       lng </span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt;  42.35375 -71.06750 </span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; $tr</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt;       lat       lng </span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt;  42.36645 -71.05030</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="../reference/get_coord_bounding_box.html">get_coord_bounding_box</a></span>(</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">  <span class="dt">lat =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">42.35375</span>, <span class="fl">42.36645</span>),</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">  <span class="dt">lng =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="fl">71.06750</span>, <span class="fl">-71.05030</span>)</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">)</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; $bl</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt;       lat       lng </span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt;  42.35375 -71.06750 </span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; $tr</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt;       lat       lng </span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt;  42.36645 -71.05030</span></a></code></pre></div>
 <p>All <code>spacey</code> functions deal with boundary boxes via their bottom left (minimum latitude, minimum longitude) and top right (maximum latitude, maximum longitude) corners, named “bl” and “tr” in package outputs.</p>
 <ul>
 <li>Finally, <code>get_centroid_bounding_box</code> will find the square bounding box for a set of central coordinates, with each corner a set distance away from the central point. For example, we can plug in the centroid we calculated earlier and ask for the corners 1 kilometer away like so:</li>
@@ -173,6 +176,7 @@
 <a class="sourceLine" id="cb6-4" data-line-number="4">heightmap &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_heightmap.html">get_heightmap</a></span>(bounding_box)</a></code></pre></div>
 <p>The syntax for <code>get_image_overlay</code> is almost as simple – the only difference is an additional parameter, <code>overlay</code>, which specifies which ESRI basemap to pull the data for:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">overlay &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_image_overlay.html">get_image_overlay</a></span>(bounding_box, <span class="dt">overlay =</span> <span class="st">"World_Imagery"</span>)</a></code></pre></div>
+<p>(Note that I’m cheating a little bit for this vignette – in order to get properly sized graphics, the <code>get_heightmap</code> and <code>get_image_overlay</code> calls used to build these maps both used the argument <code>major.dim = 1200</code>, doubling the default image size.)</p>
 <p>You can also optionally save each object into a file (using <code>save.tif</code> and <code>tif.filename</code> in <code>get_heightmap</code> and <code>save.png</code> plus <code>png.filename</code> in <code>get_image_overlay</code>), letting you retrieve the data later without having to ping the API (or worry about the data changing between runs!). You can them reimport those files using either <code>load_heightmap</code> for <code>.tif</code> files, or <code>load_overlay</code> for <code>.png</code> basemaps.</p>
 </div>
 <div id="mapping" class="section level2">
@@ -187,6 +191,7 @@
 <a class="sourceLine" id="cb8-6" data-line-number="6">             <span class="dt">max_darken =</span> <span class="fl">0.5</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb8-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/rayshader/man/add_shadow.html">add_shadow</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/rayshader/man/ambient_shade.html">ambient_shade</a></span>(heightmap, <span class="dt">zscale =</span> <span class="fl">0.3</span>), <span class="dt">max_darken =</span> <span class="fl">0.5</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb8-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/rayshader/man/plot_map.html">plot_map</a></span>()</a></code></pre></div>
+<p><img src="boston_simple.png" width="100%"></p>
 <p>We can even add our overlay with just a single additional step:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">heightmap <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/rayshader/man/sphere_shade.html">sphere_shade</a></span>(<span class="dt">texture =</span> <span class="st">"imhof4"</span>) <span class="op">%&gt;%</span></a>
@@ -195,6 +200,7 @@
 <a class="sourceLine" id="cb9-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/rayshader/man/add_shadow.html">add_shadow</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/rayshader/man/ambient_shade.html">ambient_shade</a></span>(heightmap, <span class="dt">zscale =</span> <span class="fl">0.3</span>), <span class="dt">max_darken =</span> <span class="fl">0.5</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb9-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/rayshader/man/add_overlay.html">add_overlay</a></span>(overlay, <span class="dt">alphalayer =</span> <span class="fl">0.75</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb9-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/rayshader/man/plot_map.html">plot_map</a></span>()</a></code></pre></div>
+<p><img src="boston_overlay.png" width="100%"></p>
 <p>My guess is that most people who use <code>spacey</code> will eventually move on to carefully designing their output maps, since you’re able to control things with much more granularity using the core <code>rayshader</code> functions than you are with anything in <code>spacey</code>.</p>
 <p>However, the automapping facilities in <code>spacey</code> can let you iterate on your design more quickly, testing out different shadings, overlays, and colorations before moving on to more thorough map detailing using <code>rayshader</code> directly. Right now, the only function in <code>spacey</code> in this category is <code>automap_2d</code>, which will let you customize most <code>rayshader</code> variables in a single function call:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="../reference/automap_2d.html">automap_2d</a></span>(<span class="dt">lat =</span> <span class="fl">42.3601</span>, </a>
@@ -203,7 +209,8 @@
 <a class="sourceLine" id="cb10-4" data-line-number="4">           <span class="dt">overlay =</span> <span class="st">"World_Terrain_Base"</span>, </a>
 <a class="sourceLine" id="cb10-5" data-line-number="5">           <span class="dt">colorscale =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"water"</span> =<span class="st"> "unicorn"</span>, <span class="st">"land"</span> =<span class="st"> "bw"</span>),</a>
 <a class="sourceLine" id="cb10-6" data-line-number="6">           <span class="dt">overlay.alpha =</span> <span class="fl">0.3</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/rayshader/man/save_png.html">save_png</a></span>(<span class="st">"boston_rainbow.png"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/rayshader/man/plot_map.html">plot_map</a></span>()</a></code></pre></div>
+<p><img src="boston_rainbow.png" width="100%"></p>
 <p>The hope is that by providing sensible defaults to iterate on and easy access to data, <code>spacey</code> will help you make more and better maps, letting you prototype your ideas before committing to a design and helping you better understand your study system and the world we live in.</p>
 </div>
 <div id="acknowledgements" class="section level2">

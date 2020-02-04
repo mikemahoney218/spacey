@@ -37,7 +37,7 @@ raytracer image. In fact, you can use as little as a single coordinate pair:
 automap_2d(lat = 42.3601, lng = -71.0589)
 ```
 
-```{r, include=FALSE}
+```{r, echo=FALSE, out.width='100%'}
 knitr::include_graphics("boston_simple.png")
 ```
 
@@ -163,6 +163,11 @@ the data for:
 overlay <- get_image_overlay(bounding_box, overlay = "World_Imagery")
 ```
 
+(Note that I'm cheating a little bit for this vignette -- in order to get 
+properly sized graphics, the `get_heightmap` and `get_image_overlay` calls 
+used to build these maps both used the argument `major.dim = 1200`, doubling 
+the default image size.)
+
 You can also optionally save each 
 object into a file (using `save.tif` and `tif.filename` in `get_heightmap` and 
 `save.png` plus `png.filename` in `get_image_overlay`), letting you retrieve 
@@ -188,7 +193,7 @@ heightmap %>%
   plot_map()
 ```
 
-```{r, include=FALSE}
+```{r, echo=FALSE, out.width='100%'}
 knitr::include_graphics("boston_simple.png")
 ```
 
@@ -205,7 +210,7 @@ heightmap %>%
   plot_map()
 ```
 
-```{r, include=FALSE}
+```{r, echo=FALSE, out.width='100%'}
 knitr::include_graphics("boston_overlay.png")
 ```
 
@@ -229,10 +234,10 @@ automap_2d(lat = 42.3601,
            overlay = "World_Terrain_Base", 
            colorscale = c("water" = "unicorn", "land" = "bw"),
            overlay.alpha = 0.3) %>%
-  save_png("boston_rainbow.png")
+  plot_map()
 ```
 
-```{r, include=FALSE}
+```{r, echo=FALSE, out.width='100%'}
 knitr::include_graphics("boston_rainbow.png")
 ```
 

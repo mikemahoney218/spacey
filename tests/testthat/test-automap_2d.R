@@ -37,7 +37,8 @@ test_that("automap_2d creates the same map twice", {
   ))
 })
 
-test_that("automap_2d warnings and errors fire appropriately", {
+test_that("automap_2d warnings fire appropriately", {
+  skip_on_cran()
   expect_warning(automap_2d(
     lat = 42.3601, lng = -71.0589, from.file = TRUE,
     tif.filename = "../data/boston_heights.tif",
@@ -54,7 +55,9 @@ test_that("automap_2d warnings and errors fire appropriately", {
     png.filename = "../data/boston_overlay.png",
     save.png = TRUE
   ))
+})
 
+test_that("automap_2d errors fire appropriately", {
   expect_error(automap_2d(
     lat = 42.3601, lng = -71.0589, save.tif = TRUE,
     tif.filename = "junk.png"
@@ -81,3 +84,4 @@ test_that("automap_2d warnings and errors fire appropriately", {
     )
   ))
 })
+

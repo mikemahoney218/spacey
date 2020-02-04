@@ -89,7 +89,7 @@ automap_2d <- function(lat,
   from.file <- from.file[[1]]
   if (from.file == TRUE && (save.tif || save.png)) {
     warning("from.file being TRUE overrides save.tif and save.png; files will
-not be overwritten.")
+  not be overwritten.")
     save.tif <- FALSE
     save.png <- FALSE
   } else if (from.file == "tif" && save.tif) {

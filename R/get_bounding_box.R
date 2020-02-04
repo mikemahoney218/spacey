@@ -130,7 +130,7 @@ get_centroid_bounding_box <- function(centroid,
   names(tr) <- c("lat", "lng")
 
   return(list(
-    bl,
-    tr
+    "bl" = bl,
+    "tr" = tr
   ))
 }

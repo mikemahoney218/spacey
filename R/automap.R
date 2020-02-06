@@ -1,4 +1,4 @@
-#' Automatically create 2D maps using USGS and ESRI map data
+#' Automatically create 2D and 3D maps using USGS and ESRI map data
 #'
 #' This function takes a latitude/longitude coordinate pair alongside a desired
 #' distance to map and retrieves USGS (and optionally ESRI) map data, converts
@@ -12,6 +12,7 @@
 #' radians.
 #' @param distance The distance between the centroid and any corner of the
 #' (square) output map to include.
+#' @param method Should a 2d or 3d plot be produced?
 #' @param major.dim Image size in the major direction -- as this function
 #' produces square maps, this is equivalent to pixels along any edge.
 #' @param overlay ESRI overlay map to include, if any -- see
@@ -46,6 +47,15 @@
 #' minimum possible area to consider a body of water.
 #' @param water.max.height Passed to \code{\link[rayshader]{detect_water}}. If
 #' provided, the maximum height a point can be classified water.
+#' @param solid Logical -- should the output be rendered as a solid
+#' (\code{TRUE}) or just a surface (\code{FALSE})?
+#' @param shadow Logical -- should shadows be rendered?
+#' @param water Logical -- should water be rendered?
+#' @param waterdepth Water level.
+#' @param theta Rotation around z axis.
+#' @param phi Azimuth amgle.
+#' @param fov Field of view angle.
+#' @param zoom Zoom factor.
 #' @param save.tif Logical -- should the height map be saved?
 #' @param save.png Logical -- should the overlay image be saved?
 #' @param from.file Should the map be built from local \code{.tif}
@@ -82,44 +92,57 @@
 #'
 #' @export
 
-automap_2d <- function(lat,
-                       lng,
-                       distance = 10,
-                       major.dim = 600,
-                       overlay = NULL,
-                       z = 9,
-                       overlay.alpha = 0.75,
-                       colorscale = "imhof4",
-                       color.intensity = 1,
-                       max.darken = 0.5,
-                       sun.angle = 315,
-                       sun.altitude = 45,
-                       water.cutoff = 0.999,
-                       water.min.area = length(heightmap) / 400,
-                       water.max.height = NULL,
-                       save.tif = FALSE,
-                       save.png = FALSE,
-                       from.file = c(FALSE, "tif", "png", TRUE),
-                       tif.filename = NULL,
-                       png.filename = NULL,
-                       dist.unit = c(
-                         "km",
-                         "miles",
-                         "m",
-                         "ft"
-                       ),
-                       coord.unit = c(
-                         "degrees",
-                         "radians"
-                       ),
-                       sr_bbox = 4326,
-                       sr_image = 4326,
-                       print.map = TRUE) {
+automap <- function(lat,
+                    lng,
+                    distance = 10,
+                    method = c("2d", "3d"),
+                    major.dim = 600,
+                    overlay = NULL,
+                    z = 9,
+                    overlay.alpha = 0.75,
+                    colorscale = "imhof4",
+                    color.intensity = 1,
+                    max.darken = 0.5,
+                    sun.angle = 315,
+                    sun.altitude = 45,
+                    water.cutoff = 0.999,
+                    water.min.area = length(heightmap) / 400,
+                    water.max.height = NULL,
+                    solid = TRUE,
+                    shadow = TRUE,
+                    water = FALSE,
+                    waterdepth = 0,
+                    theta = 45,
+                    phi = 45,
+                    fov = 0,
+                    zoom = 1,
+                    save.tif = FALSE,
+                    save.png = FALSE,
+                    from.file = c(FALSE, "tif", "png", TRUE),
+                    tif.filename = NULL,
+                    png.filename = NULL,
+                    dist.unit = c(
+                      "km",
+                      "miles",
+                      "m",
+                      "ft"
+                    ),
+                    coord.unit = c(
+                      "degrees",
+                      "radians"
+                    ),
+                    sr_bbox = 4326,
+                    sr_image = 4326,
+                    print.map = TRUE) {
   stopifnot(is.logical(print.map))
   stopifnot(length(colorscale) > 0 && length(colorscale) < 3)
   stopifnot(length(lat) == length(lng))
   stopifnot(length(z) < 3)
+  method <- method[[1]]
+  stopifnot(method %in% c("2d", "3d"))
+
   from.file <- from.file[[1]]
+
   if (from.file == TRUE && (save.tif || save.png)) {
     warning("from.file being TRUE overrides save.tif and save.png; files will
   not be overwritten.")
@@ -267,6 +290,32 @@ automap_2d <- function(lat,
     out <- rayshader::add_overlay(out, overlay_img, alphalayer = overlay.alpha)
   }
 
-  if (print.map) rayshader::plot_map(out)
+  if (print.map) {
+    if (method == "2d") {
+      rayshader::plot_map(out)
+    } else {
+      rayshader::plot_3d(out,
+        heightmap,
+        zscale = land.z,
+        solid = TRUE,
+        shadow = TRUE,
+        water = FALSE,
+        waterdepth = 0,
+        watercolor = "lightblue",
+        waterlinecolor = NULL,
+        theta = 45,
+        phi = 45,
+        fov = 0,
+        zoom = 1,
+        background = "white",
+        litbase = FALSE,
+        windowsize = get_img_size(bound_box,
+          major.dim = major.dim
+        )
+      )
+      Sys.sleep(0.2)
+      rayshader::render_snapshot()
+    }
+  }
   invisible(out)
 }

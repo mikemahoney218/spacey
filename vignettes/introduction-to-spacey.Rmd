@@ -26,7 +26,7 @@ First, let's load our package:
 library(spacey)
 ```
 
-The most comprehensive command in `spacey` is `automap_2d`, which only requires 
+The most comprehensive command in `spacey` is `automap`, which only requires 
 two vectors, one for latitude and one for longitude^[This package follows 
 [ISO 6709](https://en.wikipedia.org/wiki/ISO_6709) convention of representing 
 spatial data in the format (latitude, longitude), as opposed to the somewhat 
@@ -34,7 +34,7 @@ popular (longitude, latitude) format.], in order to quickly generate a 2D
 raytracer image. In fact, you can use as little as a single coordinate pair:
 
 ```r
-automap_2d(lat = 42.3601, lng = -71.0589)
+automap(lat = 42.3601, lng = -71.0589, z = 0.3)
 ```
 
 ```{r, echo=FALSE, out.width='100%'}
@@ -44,14 +44,14 @@ knitr::include_graphics("boston_simple.png")
 Behind the scenes, automap is doing a few different things that we'll discuss 
 separately:
 
-* First, `automap_2d` looks at your coordinates (alongside other optional 
+* First, `automap` looks at your coordinates (alongside other optional 
 arguments) to determine how large a map should be drawn, calling a few 
 `spacey` functions built for geospatial data processing along the way
-* Next, `automap_2d` uses that information to query the 
+* Next, `automap` uses that information to query the 
   [USGS National Map](https://www.usgs.gov/core-science-systems/national-geospatial-program/national-map)
   and [ESRI REST API](https://developers.arcgis.com/rest/) (no keys required) in
   order to download elevation and optionally image data for the relevant area
-* Finally, `automap_2d` takes that data and creates a rayshader map using 
+* Finally, `automap` takes that data and creates a rayshader map using 
   sensible defaults, resulting in maps similar to the one above.
 
 We'll run through each of those steps as separate sections. 
@@ -224,11 +224,11 @@ However, the automapping facilities in `spacey` can let you
 iterate on your design more quickly, testing out different shadings, 
 overlays, and colorations before moving on to more thorough map detailing using
 `rayshader` directly. Right now, the only function in `spacey` in this category 
-is `automap_2d`, which will let you customize most `rayshader` variables in a 
+is `automap`, which will let you customize most `rayshader` variables in a 
 single function call:
 
 ```r
-automap_2d(lat = 42.3601, 
+automap(lat = 42.3601, 
            lng = -71.05, 
            distance = 20,
            overlay = "World_Terrain_Base", 
@@ -248,7 +248,7 @@ study system and the world we live in.
 
 ## Acknowledgements
 
-`rayshader`, which powers the maps coming out of `automap_2d`, was built by 
+`rayshader`, which powers the maps coming out of `automap`, was built by 
 [Tyler Morgan-Wall](https://www.tylermw.com/), and can be extended _far_ 
 beyond what I've done here -- check out 
 [its main website.](https://www.rayshader.com/)

@@ -87,6 +87,10 @@ get_img_size <- function(bbox, lat = NULL, lng = NULL, major.dim = 600) {
     second_corner <- extract_coords(bbox[[2]])
   }
 
+  if (any(first_corner == second_corner)) {
+    stop("At least one dimension of bounding box is null")
+  }
+
   aspect_ratio <- abs((first_corner[[2]] - second_corner[[2]]) / (first_corner[[1]] - second_corner[[1]]))
   img_width <- round(ifelse(aspect_ratio > 1, major.dim, major.dim * aspect_ratio))
   img_height <- round(ifelse(aspect_ratio < 1, major.dim, major.dim / aspect_ratio))

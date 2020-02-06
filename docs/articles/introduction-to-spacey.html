@@ -101,14 +101,14 @@
 <p><code>spacey</code> is a package designed to make it trivial to produce beautiful <a href="https://www.rayshader.com/">rayshader</a> maps for locations in the United States, letting you easily obtain and combine USGS and ESRI map data into 2D (and eventually 3D) images. This vignette will walk through the basic utilities in <code>spacey</code> and their expected uses.</p>
 <p>First, let’s load our package:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(spacey)</a></code></pre></div>
-<p>The most comprehensive command in <code>spacey</code> is <code>automap_2d</code>, which only requires two vectors, one for latitude and one for longitude<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>, in order to quickly generate a 2D raytracer image. In fact, you can use as little as a single coordinate pair:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="../reference/automap_2d.html">automap_2d</a></span>(<span class="dt">lat =</span> <span class="fl">42.3601</span>, <span class="dt">lng =</span> <span class="fl">-71.0589</span>)</a></code></pre></div>
+<p>The most comprehensive command in <code>spacey</code> is <code>automap</code>, which only requires two vectors, one for latitude and one for longitude<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>, in order to quickly generate a 2D raytracer image. In fact, you can use as little as a single coordinate pair:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="../reference/automap.html">automap</a></span>(<span class="dt">lat =</span> <span class="fl">42.3601</span>, <span class="dt">lng =</span> <span class="fl">-71.0589</span>, <span class="dt">z =</span> <span class="fl">0.3</span>)</a></code></pre></div>
 <p><img src="boston_simple.png" width="100%"></p>
 <p>Behind the scenes, automap is doing a few different things that we’ll discuss separately:</p>
 <ul>
-<li>First, <code>automap_2d</code> looks at your coordinates (alongside other optional arguments) to determine how large a map should be drawn, calling a few <code>spacey</code> functions built for geospatial data processing along the way</li>
-<li>Next, <code>automap_2d</code> uses that information to query the <a href="https://www.usgs.gov/core-science-systems/national-geospatial-program/national-map">USGS National Map</a> and <a href="https://developers.arcgis.com/rest/">ESRI REST API</a> (no keys required) in order to download elevation and optionally image data for the relevant area</li>
-<li>Finally, <code>automap_2d</code> takes that data and creates a rayshader map using sensible defaults, resulting in maps similar to the one above.</li>
+<li>First, <code>automap</code> looks at your coordinates (alongside other optional arguments) to determine how large a map should be drawn, calling a few <code>spacey</code> functions built for geospatial data processing along the way</li>
+<li>Next, <code>automap</code> uses that information to query the <a href="https://www.usgs.gov/core-science-systems/national-geospatial-program/national-map">USGS National Map</a> and <a href="https://developers.arcgis.com/rest/">ESRI REST API</a> (no keys required) in order to download elevation and optionally image data for the relevant area</li>
+<li>Finally, <code>automap</code> takes that data and creates a rayshader map using sensible defaults, resulting in maps similar to the one above.</li>
 </ul>
 <p>We’ll run through each of those steps as separate sections.</p>
 <div id="geospatial-data-processing" class="section level2">
@@ -202,8 +202,8 @@
 <a class="sourceLine" id="cb9-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/rayshader/man/plot_map.html">plot_map</a></span>()</a></code></pre></div>
 <p><img src="boston_overlay.png" width="100%"></p>
 <p>My guess is that most people who use <code>spacey</code> will eventually move on to carefully designing their output maps, since you’re able to control things with much more granularity using the core <code>rayshader</code> functions than you are with anything in <code>spacey</code>.</p>
-<p>However, the automapping facilities in <code>spacey</code> can let you iterate on your design more quickly, testing out different shadings, overlays, and colorations before moving on to more thorough map detailing using <code>rayshader</code> directly. Right now, the only function in <code>spacey</code> in this category is <code>automap_2d</code>, which will let you customize most <code>rayshader</code> variables in a single function call:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="../reference/automap_2d.html">automap_2d</a></span>(<span class="dt">lat =</span> <span class="fl">42.3601</span>, </a>
+<p>However, the automapping facilities in <code>spacey</code> can let you iterate on your design more quickly, testing out different shadings, overlays, and colorations before moving on to more thorough map detailing using <code>rayshader</code> directly. Right now, the only function in <code>spacey</code> in this category is <code>automap</code>, which will let you customize most <code>rayshader</code> variables in a single function call:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="../reference/automap.html">automap</a></span>(<span class="dt">lat =</span> <span class="fl">42.3601</span>, </a>
 <a class="sourceLine" id="cb10-2" data-line-number="2">           <span class="dt">lng =</span> <span class="fl">-71.05</span>, </a>
 <a class="sourceLine" id="cb10-3" data-line-number="3">           <span class="dt">distance =</span> <span class="dv">20</span>,</a>
 <a class="sourceLine" id="cb10-4" data-line-number="4">           <span class="dt">overlay =</span> <span class="st">"World_Terrain_Base"</span>, </a>
@@ -216,7 +216,7 @@
 <div id="acknowledgements" class="section level2">
 <h2 class="hasAnchor">
 <a href="#acknowledgements" class="anchor"></a>Acknowledgements</h2>
-<p><code>rayshader</code>, which powers the maps coming out of <code>automap_2d</code>, was built by <a href="https://www.tylermw.com/">Tyler Morgan-Wall</a>, and can be extended <em>far</em> beyond what I’ve done here – check out <a href="https://www.rayshader.com/">its main website.</a></p>
+<p><code>rayshader</code>, which powers the maps coming out of <code>automap</code>, was built by <a href="https://www.tylermw.com/">Tyler Morgan-Wall</a>, and can be extended <em>far</em> beyond what I’ve done here – check out <a href="https://www.rayshader.com/">its main website.</a></p>
 <p>The USGS and ESRI query code has its roots in <a href="https://wcmbishop.github.io/rayshader-demo/">Will Bishop’s fantastic essay</a> on using <code>rayshader</code>.</p>
 </div>
 <div class="footnotes">

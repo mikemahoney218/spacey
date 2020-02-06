@@ -1,6 +1,6 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-spacey: Easily retrieve elevations and textures for rayshader mapping
-=====================================================================
+spacey: Easy data retrieval and helpful defaults for rayshader mapping
+======================================================================
 
 <!-- badges: start -->
 [![CRAN
@@ -16,15 +16,27 @@ coverage](https://codecov.io/gh/mikemahoney218/spacey/branch/master/graph/badge.
 <!-- badges: end -->
 
     library(spacey)
-    automap_2d(lat = 42.3601, lng = -71.0589, z = 0.3)
 
-<img src="man/figures/README-demo_map-1.png" width="100%" />
+The goal of `spacey` is to make it easy to work with the
+[rayshader](https://www.rayshader.com/index.html) package in order to
+create beautiful landscape visualizations, pulling source data from the
+USGS and ESRI for beautifully shaded maps in 2D:
 
-The goal of `spacey` is to make it easy to work with packages like
-[rayshader](https://www.rayshader.com/index.html) in order to create
-beautiful landscape visualizations, pulling source data from the USGS
-for elevation profiles and ESRI for textures to quickly create maps for
-the area relevant to your analysis.
+    automap(44.121268, -73.903734)
+
+<img src="man/figures/README-2d-demo-1.png" width="100%" />
+
+and 3D:
+
+    automap(44.121268, -73.903734, method = "3d")
+
+<img src="man/figures/README-3d-demo-1.png" width="100%" />
+
+And optionally with textures from satellite images as well:
+
+    automap(44.121268, -73.903734, overlay = "World_Imagery", method = "3d")
+
+<img src="man/figures/README-3d-demo-tex-1.png" width="100%" />
 
 Installation
 ------------
@@ -44,7 +56,7 @@ Functions
 
 At the moment, `spacey` consists mainly of the following functions:
 
--   `automap_2d` uses a combination of sensible defaults to produce
+-   `automap` uses a combination of sensible defaults to produce
     attractive square map outputs from a single central point location.
 -   `get_coord_bounding_box` finds the smallest rectangle required to
     contain a list of lat/long coordinates.

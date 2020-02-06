@@ -10,10 +10,16 @@ automap_2d(
   distance = 10,
   major.dim = 600,
   overlay = NULL,
-  z = 0.3,
+  z = 9,
   overlay.alpha = 0.75,
   colorscale = "imhof4",
+  color.intensity = 1,
   max.darken = 0.5,
+  sun.angle = 315,
+  sun.altitude = 45,
+  water.cutoff = 0.999,
+  water.min.area = length(heightmap)/400,
+  water.max.height = NULL,
   save.tif = FALSE,
   save.png = FALSE,
   from.file = c(FALSE, "tif", "png", TRUE),
@@ -46,7 +52,10 @@ local file as an overlay.}
 
 \item{z}{zscale, passed to various rayshader functions. Defined as
 the ratio between the x and y spacing (which are assumed to be equal)
-and the z axis.}
+and the z axis. For contiguous United States, USGS data is generally
+available at a ~9 meter spacing, with elevation provided in meter increments,
+resulting in a z value of 9 returning roughly representative maps; decrease
+this value to exaggerate elevation features.}
 
 \item{overlay.alpha}{Alpha value for the optional overlay layer.}
 
@@ -55,7 +64,29 @@ length 1, the same color scale will be applied for both land and water. If
 greater than  length 1, values named "water" or "watercolor" will be used
 for water coloring, while "land" or "landcolor" will be used for land.}
 
-\item{max.darken}{Passed to \code{\link[rayshader]{add_shadow}}.}
+\item{color.intensity}{Intensity of color mapping -- higher values result in
+more intense colors.}
+
+\item{max.darken}{Passed to \code{\link[rayshader]{add_shadow}}. The lower
+limit for how much the image will be darkened. 0 is completely black, 1 means
+the shadow map will have no effect.}
+
+\item{sun.angle}{Angle around the matrix from which lights originate. Values
+line up with compass directions -- so 0 is directly North, while the default
+315 places the sun in the Northwest.}
+
+\item{sun.altitude}{Angle in degrees from horizon from which light
+originates. Bounded [0, 90].}
+
+\item{water.cutoff}{Passed to \code{\link[rayshader]{detect_water}}. Defined
+therein as the lower limit of the z-component of the unit normal vector to
+be classified as water.}
+
+\item{water.min.area}{Passed to \code{\link[rayshader]{detect_water}}. The
+minimum possible area to consider a body of water.}
+
+\item{water.max.height}{Passed to \code{\link[rayshader]{detect_water}}. If
+provided, the maximum height a point can be classified water.}
 
 \item{save.tif}{Logical -- should the height map be saved?}
 
@@ -99,4 +130,10 @@ distance to map and retrieves USGS (and optionally ESRI) map data, converts
 said data into matrices, and runs the data through \code{rayshader} using
 sensible defaults in order to return a 2D shaded map relief. It requires a
 functioning internet connection in order to retrieve data.
+}
+\references{
+Archuleta, C.M., Constance, E.W., Arundel, S.T., Lowe, A.J., Mantey, K.S.,
+and Phillips, L.A., 2017, The National Map seamless digital elevation model
+specifications: U.S. Geological Survey Techniques and Methods, book 11,
+chap. B9, 39 p., https://doi.org/10.3133/tm11B9
 }

@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 
 ```{r demo_map}
 library(spacey)
-automap_2d(lat = 42.3601, lng = -71.0589)
+automap_2d(lat = 42.3601, lng = -71.0589, z = 0.3)
 ```
 
 The goal of `spacey` is to make it easy to work with packages like 

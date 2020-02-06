@@ -3,7 +3,8 @@ test_that("automap_2d creates the same map twice", {
   boston_map <- tempfile("boston", fileext = ".png")
   x <- automap_2d(
     lat = 42.3601, lng = -71.0589,
-    from.file = "tif", tif.filename = "../data/boston_heights.tif"
+    from.file = "tif", tif.filename = "../data/boston_heights.tif",
+    z = 0.3
   )
   rayshader::save_png(x, boston_map)
   expect_equal(

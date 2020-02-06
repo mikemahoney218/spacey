@@ -16,7 +16,7 @@ coverage](https://codecov.io/gh/mikemahoney218/spacey/branch/master/graph/badge.
 <!-- badges: end -->
 
     library(spacey)
-    automap_2d(lat = 42.3601, lng = -71.0589)
+    automap_2d(lat = 42.3601, lng = -71.0589, z = 0.3)
 
 <img src="man/figures/README-demo_map-1.png" width="100%" />
 

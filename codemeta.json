@@ -183,5 +183,17 @@
     "https://travis-ci.com/mikemahoney218/spacey",
     "https://ci.appveyor.com/project/mikemahoney218/spacey",
     "https://codecov.io/gh/mikemahoney218/spacey?branch=master"
+  ],
+  "keywords": [
+    "spacey",
+    "cran",
+    "r",
+    "r-package",
+    "rstats",
+    "rayshader",
+    "esri",
+    "usgs",
+    "map",
+    "mapping"
   ]
 }

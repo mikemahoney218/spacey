@@ -20,13 +20,32 @@
 #' local file as an overlay.
 #' @param z zscale, passed to various rayshader functions. Defined as
 #' the ratio between the x and y spacing (which are assumed to be equal)
-#' and the z axis.
+#' and the z axis. For contiguous United States, USGS data is generally
+#' available at a ~9 meter spacing, with elevation provided in meter increments,
+#' resulting in a z value of 9 returning roughly representative maps; decrease
+#' this value to exaggerate elevation features.
 #' @param overlay.alpha Alpha value for the optional overlay layer.
 #' @param colorscale Color scale for land and water elements. If a vector of
 #' length 1, the same color scale will be applied for both land and water. If
 #' greater than  length 1, values named "water" or "watercolor" will be used
 #' for water coloring, while "land" or "landcolor" will be used for land.
-#' @param max.darken Passed to \code{\link[rayshader]{add_shadow}}.
+#' @param color.intensity Intensity of color mapping -- higher values result in
+#' more intense colors.
+#' @param max.darken Passed to \code{\link[rayshader]{add_shadow}}. The lower
+#' limit for how much the image will be darkened. 0 is completely black, 1 means
+#' the shadow map will have no effect.
+#' @param sun.angle Angle around the matrix from which lights originate. Values
+#' line up with compass directions -- so 0 is directly North, while the default
+#' 315 places the sun in the Northwest.
+#' @param sun.altitude Angle in degrees from horizon from which light
+#' originates. Bounded [0, 90].
+#' @param water.cutoff Passed to \code{\link[rayshader]{detect_water}}. Defined
+#' therein as the lower limit of the z-component of the unit normal vector to
+#' be classified as water.
+#' @param water.min.area Passed to \code{\link[rayshader]{detect_water}}. The
+#' minimum possible area to consider a body of water.
+#' @param water.max.height Passed to \code{\link[rayshader]{detect_water}}. If
+#' provided, the maximum height a point can be classified water.
 #' @param save.tif Logical -- should the height map be saved?
 #' @param save.png Logical -- should the overlay image be saved?
 #' @param from.file Should the map be built from local \code{.tif}
@@ -55,6 +74,12 @@
 #'
 #' @importFrom magrittr `%>%`
 #'
+#' @references
+#' Archuleta, C.M., Constance, E.W., Arundel, S.T., Lowe, A.J., Mantey, K.S.,
+#' and Phillips, L.A., 2017, The National Map seamless digital elevation model
+#' specifications: U.S. Geological Survey Techniques and Methods, book 11,
+#' chap. B9, 39 p., https://doi.org/10.3133/tm11B9
+#'
 #' @export
 
 automap_2d <- function(lat,
@@ -62,10 +87,16 @@ automap_2d <- function(lat,
                        distance = 10,
                        major.dim = 600,
                        overlay = NULL,
-                       z = 0.3,
+                       z = 9,
                        overlay.alpha = 0.75,
                        colorscale = "imhof4",
+                       color.intensity = 1,
                        max.darken = 0.5,
+                       sun.angle = 315,
+                       sun.altitude = 45,
+                       water.cutoff = 0.999,
+                       water.min.area = length(heightmap) / 400,
+                       water.max.height = NULL,
                        save.tif = FALSE,
                        save.png = FALSE,
                        from.file = c(FALSE, "tif", "png", TRUE),
@@ -87,6 +118,7 @@ automap_2d <- function(lat,
   stopifnot(is.logical(print.map))
   stopifnot(length(colorscale) > 0 && length(colorscale) < 3)
   stopifnot(length(lat) == length(lng))
+  stopifnot(length(z) < 3)
   from.file <- from.file[[1]]
   if (from.file == TRUE && (save.tif || save.png)) {
     warning("from.file being TRUE overrides save.tif and save.png; files will
@@ -122,6 +154,17 @@ automap_2d <- function(lat,
     )) {
       stop("Couldn't parse overlay request -- see ?get_image_overlay for list of options.")
     }
+  }
+
+  if (length(z) > 1) {
+    if (all(tolower(names(z))) %in% c("water", "land")) {
+      stopifnot(sum(grepl("water", names(z))) == 1)
+      water.z <- z[["water"]]
+      land.z <- z[["land"]]
+    }
+  } else {
+    water.z <- z
+    land.z <- z
   }
 
   if (length(colorscale) == 1) {
@@ -179,18 +222,29 @@ automap_2d <- function(lat,
   }
 
   out <- heightmap %>%
-    rayshader::sphere_shade(texture = landcolor) %>%
-    rayshader::add_water(rayshader::detect_water(heightmap),
-      color = watercolor
+    rayshader::sphere_shade(
+      sunangle = sun.angle,
+      colorintensity = color.intensity,
+      zscale = z,
+      texture = landcolor
+    ) %>%
+    rayshader::add_water(rayshader::detect_water(heightmap,
+      zscale = water.z,
+      cutoff = water.cutoff,
+      min_area = water.min.area,
+      max_height = water.max.height
+    ),
+    color = watercolor
     ) %>%
     rayshader::add_shadow(rayshader::ray_shade(heightmap,
-      zscale = z,
-      lambert = TRUE
+      sunaltitude = sun.altitude,
+      sunangle = sun.angle,
+      zscale = land.z
     ),
     max_darken = max.darken
     ) %>%
     rayshader::add_shadow(rayshader::ambient_shade(heightmap,
-      zscale = z
+      zscale = land.z
     ),
     max_darken = max.darken
     )

@@ -36,7 +36,7 @@ And optionally with textures from satellite images as well:
 
     automap(44.121268, -73.903734, overlay = "World_Imagery", method = "3d")
 
-<img src="man/figures/README-3d-demo-tex-1.png" width="100%" />
+<img src="man/figures/README-3d-demo-textured-1.png" width="100%" />
 
 Installation
 ------------

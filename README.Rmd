@@ -45,7 +45,7 @@ automap(44.121268, -73.903734, method = "3d")
 
 And optionally with textures from satellite images as well:
 
-```{r 3d-demo-tex}
+```{r 3d-demo-textured}
 automap(44.121268, -73.903734, overlay = "World_Imagery", method = "3d")
 ```
 

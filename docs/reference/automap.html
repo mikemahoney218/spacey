@@ -153,7 +153,8 @@ functioning internet connection in order to retrieve data.</p>
   <span class='no'>lng</span>,
   <span class='kw'>distance</span> <span class='kw'>=</span> <span class='fl'>10</span>,
   <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2d"</span>, <span class='st'>"3d"</span>),
-  <span class='kw'>major.dim</span> <span class='kw'>=</span> <span class='fl'>600</span>,
+  <span class='kw'>img.width</span> <span class='kw'>=</span> <span class='fl'>600</span>,
+  <span class='kw'>img.height</span> <span class='kw'>=</span> <span class='fl'>600</span>,
   <span class='kw'>overlay</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>9</span>,
   <span class='kw'>overlay.alpha</span> <span class='kw'>=</span> <span class='fl'>0.75</span>,
@@ -173,8 +174,7 @@ functioning internet connection in order to retrieve data.</p>
   <span class='kw'>phi</span> <span class='kw'>=</span> <span class='fl'>45</span>,
   <span class='kw'>fov</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>save.tif</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>save.png</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>save.file</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>FALSE</span>, <span class='st'>"tif"</span>, <span class='st'>"png"</span>, <span class='fl'>TRUE</span>),
   <span class='kw'>from.file</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>FALSE</span>, <span class='st'>"tif"</span>, <span class='st'>"png"</span>, <span class='fl'>TRUE</span>),
   <span class='kw'>tif.filename</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>png.filename</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -208,9 +208,12 @@ radians.</p></td>
       <td><p>Should a 2d or 3d plot be produced?</p></td>
     </tr>
     <tr>
-      <th>major.dim</th>
-      <td><p>Image size in the major direction -- as this function
-produces square maps, this is equivalent to pixels along any edge.</p></td>
+      <th>img.width</th>
+      <td><p>Image width, in pixels</p></td>
+    </tr>
+    <tr>
+      <th>img.height</th>
+      <td><p>Image height, in pixels</p></td>
     </tr>
     <tr>
       <th>overlay</th>
@@ -311,12 +314,10 @@ provided, the maximum height a point can be classified water.</p></td>
       <td><p>Zoom factor.</p></td>
     </tr>
     <tr>
-      <th>save.tif</th>
-      <td><p>Logical -- should the height map be saved?</p></td>
-    </tr>
-    <tr>
-      <th>save.png</th>
-      <td><p>Logical -- should the overlay image be saved?</p></td>
+      <th>save.file</th>
+      <td><p>Should the heightmap (<code>= "tif"</code>), overlay
+(<code>= "png"</code>), or both (<code>= TRUE</code>) be saved? Default <code>FALSE</code>
+saves neither.</p></td>
     </tr>
     <tr>
       <th>from.file</th>

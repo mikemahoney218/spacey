@@ -9,7 +9,8 @@ automap(
   lng,
   distance = 10,
   method = c("2d", "3d"),
-  major.dim = 600,
+  img.width = 600,
+  img.height = 600,
   overlay = NULL,
   z = 9,
   overlay.alpha = 0.75,
@@ -29,8 +30,7 @@ automap(
   phi = 45,
   fov = 0,
   zoom = 1,
-  save.tif = FALSE,
-  save.png = FALSE,
+  save.file = c(FALSE, "tif", "png", TRUE),
   from.file = c(FALSE, "tif", "png", TRUE),
   tif.filename = NULL,
   png.filename = NULL,
@@ -53,8 +53,9 @@ radians.}
 
 \item{method}{Should a 2d or 3d plot be produced?}
 
-\item{major.dim}{Image size in the major direction -- as this function
-produces square maps, this is equivalent to pixels along any edge.}
+\item{img.width}{Image width, in pixels}
+
+\item{img.height}{Image height, in pixels}
 
 \item{overlay}{ESRI overlay map to include, if any -- see
 \code{\link[spacey]{get_image_overlay}} for list of options. If specifying
@@ -116,9 +117,9 @@ provided, the maximum height a point can be classified water.}
 
 \item{zoom}{Zoom factor.}
 
-\item{save.tif}{Logical -- should the height map be saved?}
-
-\item{save.png}{Logical -- should the overlay image be saved?}
+\item{save.file}{Should the heightmap (\code{= "tif"}), overlay
+(\code{= "png"}), or both (\code{= TRUE}) be saved? Default \code{FALSE}
+saves neither.}
 
 \item{from.file}{Should the map be built from local \code{.tif}
 and \code{.png} files, rather than downloaded data? Accepts logical

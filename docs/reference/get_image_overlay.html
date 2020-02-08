@@ -149,7 +149,8 @@ obtain the data.</p>
   <span class='kw'>overlay</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"World_Imagery"</span>, <span class='st'>"NatGeo_World_Map"</span>, <span class='st'>"USA_Topo_Maps"</span>,
     <span class='st'>"World_Physical_Map"</span>, <span class='st'>"World_Shaded_Relief"</span>, <span class='st'>"World_Street_Map"</span>, <span class='st'>"World_Terrain_Base"</span>,
     <span class='st'>"World_Topo_Map"</span>),
-  <span class='kw'>major.dim</span> <span class='kw'>=</span> <span class='fl'>600</span>,
+  <span class='kw'>img.width</span> <span class='kw'>=</span> <span class='fl'>600</span>,
+  <span class='kw'>img.height</span> <span class='kw'>=</span> <span class='fl'>600</span>,
   <span class='kw'>lat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>lng</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>save.png</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
@@ -171,8 +172,12 @@ obtain the data.</p>
 <a href='https://services.arcgisonline.com/ArcGIS/rest/services'>https://services.arcgisonline.com/ArcGIS/rest/services</a>.</p></td>
     </tr>
     <tr>
-      <th>major.dim</th>
-      <td><p>Image size in the major (largest) direction.</p></td>
+      <th>img.width</th>
+      <td><p>Image width, in pixels</p></td>
+    </tr>
+    <tr>
+      <th>img.height</th>
+      <td><p>Image height, in pixels</p></td>
     </tr>
     <tr>
       <th>lat</th>

@@ -45,27 +45,27 @@ test_that("automap warnings fire appropriately", {
     lat = 42.3601, lng = -71.0589, from.file = TRUE,
     tif.filename = "../data/boston_heights.tif",
     png.filename = "../data/boston_overlay.png",
-    save.png = TRUE
+    save.file = TRUE
   ))
   expect_warning(automap(
     lat = 42.3601, lng = -71.0589, from.file = "tif",
     tif.filename = "../data/boston_heights.tif",
-    save.tif = TRUE
+    save.file = TRUE
   ))
   expect_warning(automap(
     lat = 42.3601, lng = -71.0589, from.file = "png",
     png.filename = "../data/boston_overlay.png",
-    save.png = TRUE
+    save.file = TRUE
   ))
 })
 
 test_that("automap errors fire appropriately", {
   expect_error(automap(
-    lat = 42.3601, lng = -71.0589, save.tif = TRUE,
+    lat = 42.3601, lng = -71.0589, save.file = TRUE,
     tif.filename = "junk.png"
   ))
   expect_error(automap(
-    lat = 42.3601, lng = -71.0589, save.png = TRUE,
+    lat = 42.3601, lng = -71.0589, save.file = TRUE,
     png.filename = "junk.tif"
   ))
 

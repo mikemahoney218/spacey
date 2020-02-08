@@ -13,8 +13,8 @@
 #' @param distance The distance between the centroid and any corner of the
 #' (square) output map to include.
 #' @param method Should a 2d or 3d plot be produced?
-#' @param major.dim Image size in the major direction -- as this function
-#' produces square maps, this is equivalent to pixels along any edge.
+#' @param img.width Image width, in pixels
+#' @param img.height Image height, in pixels
 #' @param overlay ESRI overlay map to include, if any -- see
 #' \code{\link[spacey]{get_image_overlay}} for list of options. If specifying
 #' a local file with \code{from.file}, any non \code{NULL} value will add your
@@ -56,8 +56,9 @@
 #' @param phi Azimuth amgle.
 #' @param fov Field of view angle.
 #' @param zoom Zoom factor.
-#' @param save.tif Logical -- should the height map be saved?
-#' @param save.png Logical -- should the overlay image be saved?
+#' @param save.file Should the heightmap (\code{= "tif"}), overlay
+#' (\code{= "png"}), or both (\code{= TRUE}) be saved? Default \code{FALSE}
+#' saves neither.
 #' @param from.file Should the map be built from local \code{.tif}
 #' and \code{.png} files, rather than downloaded data? Accepts logical
 #' \code{FALSE} (no local files used) and \code{TRUE} (local files used for both
@@ -96,7 +97,8 @@ automap <- function(lat,
                     lng,
                     distance = 10,
                     method = c("2d", "3d"),
-                    major.dim = 600,
+                    img.width = 600,
+                    img.height = 600,
                     overlay = NULL,
                     z = 9,
                     overlay.alpha = 0.75,
@@ -116,8 +118,7 @@ automap <- function(lat,
                     phi = 45,
                     fov = 0,
                     zoom = 1,
-                    save.tif = FALSE,
-                    save.png = FALSE,
+                    save.file = c(FALSE, "tif", "png", TRUE),
                     from.file = c(FALSE, "tif", "png", TRUE),
                     tif.filename = NULL,
                     png.filename = NULL,
@@ -141,6 +142,18 @@ automap <- function(lat,
   method <- method[[1]]
   stopifnot(method %in% c("2d", "3d"))
 
+  save.tif <- FALSE
+  save.png <- FALSE
+  save.file <- save.file[[1]]
+  if (save.file == TRUE) {
+    save.tif <- TRUE
+    save.png <- TRUE
+  } else if (save.file == "tif") {
+    save.tif <- TRUE
+  } else if (save.file == "png") {
+    save.png <- TRUE
+  }
+
   from.file <- from.file[[1]]
 
   if (from.file == TRUE && (save.tif || save.png)) {
@@ -148,10 +161,15 @@ automap <- function(lat,
   not be overwritten.")
     save.tif <- FALSE
     save.png <- FALSE
-  } else if (from.file == "tif" && save.tif) {
+  } else if (from.file != FALSE && save.file == TRUE) {
+    warning("Can't parse which files you want saved; try again with a different
+  save.file argument")
+    save.tif <- FALSE
+    save.png <- FALSE
+  } else if ((from.file == "tif" || from.file == TRUE) && save.tif) {
     warning("Local heightmap used and will not be resaved.")
     save.tif <- FALSE
-  } else if (from.file == "png" && save.png) {
+  } else if ((from.file == "png" || from.file == TRUE) && save.png) {
     warning("Local texture used and will not be resaved.")
     save.png <- FALSE
   }
@@ -235,15 +253,26 @@ automap <- function(lat,
   if (from.file == TRUE || from.file == "tif") {
     heightmap <- load_heightmap(tif.filename)
   } else {
-    heightmap <- get_heightmap(bound_box,
-      major.dim = major.dim,
+    heightmap <- tryCatch(get_heightmap(bound_box,
+      img.width = img.width,
+      img.height = img.height,
+      save.tif = save.tif,
+      filename = tif.filename,
+      sr_bbox = sr_bbox,
+      sr_image = sr_image
+    ),
+    error = get_heightmap(bound_box,
+      img.width = img.width,
+      img.height = img.height,
       save.tif = save.tif,
       filename = tif.filename,
       sr_bbox = sr_bbox,
       sr_image = sr_image
     )
+    )
   }
 
+  # look into future-proofing
   out <- heightmap %>%
     rayshader::sphere_shade(
       sunangle = sun.angle,
@@ -278,7 +307,8 @@ automap <- function(lat,
     } else {
       overlay_img <- get_image_overlay(bound_box,
         overlay = overlay,
-        major.dim = major.dim,
+        img.width = img.width,
+        img.height = img.height,
         lat = NULL,
         lng = NULL,
         save.png = save.png,
@@ -287,6 +317,9 @@ automap <- function(lat,
         sr_image = sr_image
       )
     }
+  }
+
+  if (!is.null(overlay)) {
     out <- rayshader::add_overlay(out, overlay_img, alphalayer = overlay.alpha)
   }
 
@@ -309,9 +342,7 @@ automap <- function(lat,
         zoom = 1,
         background = "white",
         litbase = FALSE,
-        windowsize = get_img_size(bound_box,
-          major.dim = major.dim
-        )
+        windowsize = c(img.width, img.height)
       )
       Sys.sleep(0.2)
       rayshader::render_snapshot()

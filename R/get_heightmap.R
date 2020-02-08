@@ -5,7 +5,8 @@
 #' rayshader. It requires a functioning internet connection to retrieve data.
 #'
 #' @param bbox Bounding box to download imagery for
-#' @param major.dim The image size in the major dimension
+#' @param img.width Image width, in pixels
+#' @param img.height Image size, in pixels
 #' @param lat A quoted string indicating what named value in the bounding box
 #' represents latitude. If NULL, will be inferred from bounding box names.
 #' @param lng A quoted string indicating what named value in the bounding box
@@ -21,7 +22,8 @@
 #'
 #' @export
 get_heightmap <- function(bbox,
-                          major.dim = 600,
+                          img.width = 600,
+                          img.height = 600,
                           lat = NULL,
                           lng = NULL,
                           save.tif = FALSE,
@@ -39,8 +41,6 @@ get_heightmap <- function(bbox,
     second_corner <- extract_coords(bbox[[2]])
   }
 
-  img_size <- get_img_size(bbox, major.dim)
-
   url <- httr::parse_url("https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage")
   res <- httr::GET(
     url,
@@ -53,7 +53,7 @@ get_heightmap <- function(bbox,
       ),
       bboxSR = sr_bbox,
       imageSR = sr_image,
-      size = paste(img_size[["width"]], img_size[["height"]], sep = ","),
+      size = paste(img.width, img.height, sep = ","),
       format = "tiff",
       pixelType = "F32",
       noDataInterpretation = "esriNoDataMatchAny",

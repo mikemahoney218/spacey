@@ -9,7 +9,8 @@ get_image_overlay(
   overlay = c("World_Imagery", "NatGeo_World_Map", "USA_Topo_Maps",
     "World_Physical_Map", "World_Shaded_Relief", "World_Street_Map", "World_Terrain_Base",
     "World_Topo_Map"),
-  major.dim = 600,
+  img.width = 600,
+  img.height = 600,
   lat = NULL,
   lng = NULL,
   save.png = FALSE,
@@ -24,7 +25,9 @@ get_image_overlay(
 \item{overlay}{One of the available overlays from
 \url{https://services.arcgisonline.com/ArcGIS/rest/services}.}
 
-\item{major.dim}{Image size in the major (largest) direction.}
+\item{img.width}{Image width, in pixels}
+
+\item{img.height}{Image height, in pixels}
 
 \item{lat}{A quoted string indicating what named value in the bounding box
 represents latitude. If NULL, will be inferred from bounding box names.}

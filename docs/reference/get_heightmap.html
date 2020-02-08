@@ -146,7 +146,8 @@ rayshader. It requires a functioning internet connection to retrieve data.</p>
 
     <pre class="usage"><span class='fu'>get_heightmap</span>(
   <span class='no'>bbox</span>,
-  <span class='kw'>major.dim</span> <span class='kw'>=</span> <span class='fl'>600</span>,
+  <span class='kw'>img.width</span> <span class='kw'>=</span> <span class='fl'>600</span>,
+  <span class='kw'>img.height</span> <span class='kw'>=</span> <span class='fl'>600</span>,
   <span class='kw'>lat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>lng</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>save.tif</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
@@ -163,8 +164,12 @@ rayshader. It requires a functioning internet connection to retrieve data.</p>
       <td><p>Bounding box to download imagery for</p></td>
     </tr>
     <tr>
-      <th>major.dim</th>
-      <td><p>The image size in the major dimension</p></td>
+      <th>img.width</th>
+      <td><p>Image width, in pixels</p></td>
+    </tr>
+    <tr>
+      <th>img.height</th>
+      <td><p>Image size, in pixels</p></td>
     </tr>
     <tr>
       <th>lat</th>

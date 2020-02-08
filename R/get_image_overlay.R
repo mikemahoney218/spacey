@@ -7,7 +7,8 @@
 #' @param bbox The bounding box for your image.
 #' @param overlay One of the available overlays from
 #' \url{https://services.arcgisonline.com/ArcGIS/rest/services}.
-#' @param major.dim Image size in the major (largest) direction.
+#' @param img.width Image width, in pixels
+#' @param img.height Image height, in pixels
 #' @param lat A quoted string indicating what named value in the bounding box
 #' represents latitude. If NULL, will be inferred from bounding box names.
 #' @param lng A quoted string indicating what named value in the bounding box
@@ -32,7 +33,8 @@ get_image_overlay <- function(bbox,
                                 "World_Terrain_Base",
                                 "World_Topo_Map"
                               ),
-                              major.dim = 600,
+                              img.width = 600,
+                              img.height = 600,
                               lat = NULL,
                               lng = NULL,
                               save.png = FALSE,
@@ -51,8 +53,6 @@ get_image_overlay <- function(bbox,
 
   overlay <- overlay[[1]]
 
-  img_size <- get_img_size(bbox, lat, lng, major.dim)
-
   url <- httr::parse_url("https://utility.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task/execute")
 
   web_map_param <- list(
@@ -67,8 +67,8 @@ get_image_overlay <- function(bbox,
     ),
     exportOptions = list(
       outputSize = c(
-        img_size[["width"]],
-        img_size[["height"]]
+        img.width,
+        img.height
       )
     ),
     mapOptions = list(

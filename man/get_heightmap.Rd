@@ -6,7 +6,8 @@
 \usage{
 get_heightmap(
   bbox,
-  major.dim = 600,
+  img.width = 600,
+  img.height = 600,
   lat = NULL,
   lng = NULL,
   save.tif = FALSE,
@@ -18,7 +19,9 @@ get_heightmap(
 \arguments{
 \item{bbox}{Bounding box to download imagery for}
 
-\item{major.dim}{The image size in the major dimension}
+\item{img.width}{Image width, in pixels}
+
+\item{img.height}{Image size, in pixels}
 
 \item{lat}{A quoted string indicating what named value in the bounding box
 represents latitude. If NULL, will be inferred from bounding box names.}

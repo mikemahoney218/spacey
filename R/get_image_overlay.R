@@ -42,7 +42,27 @@ get_image_overlay <- function(bbox,
                               sr_bbox = 4326,
                               sr_image = 4326) {
   stopifnot(is.logical(save.png))
-
+  if (!overlay %in% c(
+    "World_Imagery",
+    "NatGeo_World_Map",
+    "USA_Topo_Maps",
+    "World_Physical_Map",
+    "World_Shaded_Relief",
+    "World_Street_Map",
+    "World_Terrain_Base",
+    "World_Topo_Map"
+  )) {
+    stop(paste(
+      "Couldn't parse overlay request --",
+      "see ?get_image_overlay for list of options."
+    ))
+  }
+  if (img.width > 8000 || img.height > 8000) {
+    stop(paste(
+      "USGS data sets a maximum side length of 8000 pixels -- try",
+      "again with smaller img.width or img.height arguments."
+    ))
+  }
   if (all(!is.null(lat), !is.null(lng))) {
     first_corner <- c(bbox[[1]][[lat]], bbox[[1]][[lng]])
     second_corner <- c(bbox[[2]][[lat]], bbox[[2]][[lng]])

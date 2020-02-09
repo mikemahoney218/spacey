@@ -31,7 +31,15 @@ get_heightmap <- function(bbox,
                           sr_bbox = 4326,
                           sr_image = 4326) {
   stopifnot(is.logical(save.tif))
-  if (save.tif & is.null(filename)) stop("Must provide filename to save .tif to.")
+  if (img.width > 8000 || img.height > 8000) {
+    stop(paste(
+      "USGS data sets a maximum side length of 8000 pixels -- try",
+      "again with smaller img.width or img.height arguments."
+    ))
+  }
+  if (save.tif & is.null(filename)) {
+    stop("Must provide filename to save .tif to.")
+  }
 
   if (all(!is.null(lat), !is.null(lng))) {
     first_corner <- c("lat" = bbox[[1]][[lat]], "lng" = bbox[[1]][[lng]])

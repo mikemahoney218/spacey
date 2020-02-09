@@ -182,21 +182,6 @@ automap <- function(lat,
     stop("Must provide valid filename with .png extension to save overlays.")
   }
 
-  if (!is.null(overlay) && (from.file != TRUE || from.file != "png")) {
-    if (!overlay %in% c(
-      "World_Imagery",
-      "NatGeo_World_Map",
-      "USA_Topo_Maps",
-      "World_Physical_Map",
-      "World_Shaded_Relief",
-      "World_Street_Map",
-      "World_Terrain_Base",
-      "World_Topo_Map"
-    )) {
-      stop("Couldn't parse overlay request -- see ?get_image_overlay for list of options.")
-    }
-  }
-
   if (length(z) > 1) {
     if (all(tolower(names(z))) %in% c("water", "land")) {
       stopifnot(sum(grepl("water", names(z))) == 1)
@@ -272,40 +257,22 @@ automap <- function(lat,
     )
   }
 
-  # look into future-proofing
-  out <- heightmap %>%
-    rayshader::sphere_shade(
-      sunangle = sun.angle,
-      colorintensity = color.intensity,
-      zscale = z,
-      texture = landcolor
-    ) %>%
-    rayshader::add_water(rayshader::detect_water(heightmap,
-      zscale = water.z,
-      cutoff = water.cutoff,
-      min_area = water.min.area,
-      max_height = water.max.height
-    ),
-    color = watercolor
-    ) %>%
-    rayshader::add_shadow(rayshader::ray_shade(heightmap,
-      sunaltitude = sun.altitude,
-      sunangle = sun.angle,
-      zscale = land.z
-    ),
-    max_darken = max.darken
-    ) %>%
-    rayshader::add_shadow(rayshader::ambient_shade(heightmap,
-      zscale = land.z
-    ),
-    max_darken = max.darken
-    )
-
   if (!is.null(overlay)) {
     if (from.file == TRUE || from.file == "png") {
       overlay_img <- load_overlay(png.filename)
     } else {
-      overlay_img <- get_image_overlay(bound_box,
+      overlay_img <- tryCatch(get_image_overlay(bound_box,
+        overlay = overlay,
+        img.width = img.width,
+        img.height = img.height,
+        lat = NULL,
+        lng = NULL,
+        save.png = save.png,
+        png.filename = png.filename,
+        sr_bbox = sr_bbox,
+        sr_image = sr_image
+      ),
+      error = get_image_overlay(bound_box,
         overlay = overlay,
         img.width = img.width,
         img.height = img.height,
@@ -316,11 +283,77 @@ automap <- function(lat,
         sr_bbox = sr_bbox,
         sr_image = sr_image
       )
+      )
     }
   }
 
+  if (requireNamespace("future", quietly = TRUE)) {
+    base_future <- future::future(heightmap %>%
+      rayshader::sphere_shade(
+        sunangle = sun.angle,
+        colorintensity = color.intensity,
+        zscale = z,
+        texture = landcolor
+      ))
+    water_future <- future::future(rayshader::detect_water(heightmap,
+      zscale = water.z,
+      cutoff = water.cutoff,
+      min_area = water.min.area,
+      max_height = water.max.height
+    ))
+    rayshade_future <- future::future(rayshader::ray_shade(heightmap,
+      sunaltitude = sun.altitude,
+      sunangle = sun.angle,
+      zscale = land.z
+    ))
+    ambient_future <- future::future(rayshader::ambient_shade(heightmap,
+      zscale = land.z
+    ))
+    out <- future::value(base_future) %>%
+      rayshader::add_water(future::value(water_future),
+        color = watercolor
+      ) %>%
+      rayshader::add_shadow(future::value(rayshade_future),
+        max_darken = max.darken
+      ) %>%
+      rayshader::add_shadow(future::value(ambient_future),
+        max_darken = max.darken
+      )
+  } else {
+    out <- heightmap %>%
+      rayshader::sphere_shade(
+        sunangle = sun.angle,
+        colorintensity = color.intensity,
+        zscale = z,
+        texture = landcolor
+      ) %>%
+      rayshader::add_water(rayshader::detect_water(heightmap,
+        zscale = water.z,
+        cutoff = water.cutoff,
+        min_area = water.min.area,
+        max_height = water.max.height
+      ),
+      color = watercolor
+      ) %>%
+      rayshader::add_shadow(rayshader::ray_shade(heightmap,
+        sunaltitude = sun.altitude,
+        sunangle = sun.angle,
+        zscale = land.z
+      ),
+      max_darken = max.darken
+      ) %>%
+      rayshader::add_shadow(rayshader::ambient_shade(heightmap,
+        zscale = land.z
+      ),
+      max_darken = max.darken
+      )
+  }
+
   if (!is.null(overlay)) {
-    out <- rayshader::add_overlay(out, overlay_img, alphalayer = overlay.alpha)
+    out <- rayshader::add_overlay(out,
+      overlay_img,
+      alphalayer = overlay.alpha
+    )
   }
 
   if (print.map) {

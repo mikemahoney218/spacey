@@ -147,11 +147,17 @@ automap <- function(lat,
   save.file <- save.file[[1]]
   if (save.file == TRUE) {
     save.tif <- TRUE
-    save.png <- TRUE
+    if (!is.null(overlay)) {
+      save.png <- TRUE
+    }
   } else if (save.file == "tif") {
     save.tif <- TRUE
   } else if (save.file == "png") {
-    save.png <- TRUE
+    if (!is.null(overlay)) {
+      save.png <- TRUE
+    } else {
+      stop("Cannot save png if overlay isn't specified.")
+    }
   }
 
   from.file <- from.file[[1]]

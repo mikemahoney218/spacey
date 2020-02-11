@@ -4,7 +4,8 @@ test_that("automap creates the same map twice", {
   x <- automap(
     lat = 42.3601, lng = -71.0589,
     from.file = "tif", tif.filename = "../data/boston_heights.tif",
-    z = 0.3
+    z = 0.3,
+    distance = 1
   )
   rayshader::save_png(x, boston_map)
   expect_equal(
@@ -20,7 +21,8 @@ test_that("automap creates the same map twice", {
       colorscale = c(
         "water" = "imhof4",
         "land" = "imhof3"
-      )
+      ),
+      distance = 1
     ),
     automap(
       lat = 42.3601, lng = -71.0589,
@@ -28,7 +30,8 @@ test_that("automap creates the same map twice", {
       colorscale = c(
         "watercolor" = "imhof4",
         "landcolor" = "imhof3"
-      )
+      ),
+      distance = 1
     )
   )
   expect_invisible(automap(

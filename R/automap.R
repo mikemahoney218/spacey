@@ -136,8 +136,8 @@ automap <- function(lat,
                     sr_image = 4326,
                     print.map = TRUE) {
   stopifnot(is.logical(print.map))
-  stopifnot(length(colorscale) > 0 && length(colorscale) < 3)
   stopifnot(length(lat) == length(lng))
+  stopifnot(length(names(colorscale)) < 3)
   stopifnot(length(z) < 3)
   method <- method[[1]]
   stopifnot(method %in% c("2d", "3d"))
@@ -199,7 +199,7 @@ automap <- function(lat,
     land.z <- z
   }
 
-  if (length(colorscale) == 1) {
+  if (length(names(colorscale)) < 2) {
     watercolor <- colorscale
     landcolor <- colorscale
   } else {
@@ -373,7 +373,7 @@ automap <- function(lat,
         shadow = TRUE,
         water = FALSE,
         waterdepth = 0,
-        watercolor = "lightblue",
+        watercolor = watercolor,
         waterlinecolor = NULL,
         theta = 45,
         phi = 45,

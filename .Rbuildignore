@@ -23,4 +23,3 @@ cran-comments.md
 ^appveyor\.yml$
 .gitattributes
 README.html
-tests/data

@@ -137,7 +137,6 @@ automap <- function(lat,
                     print.map = TRUE) {
   stopifnot(is.logical(print.map))
   stopifnot(length(lat) == length(lng))
-  stopifnot(length(names(colorscale)) < 3)
   stopifnot(length(z) < 3)
   method <- method[[1]]
   stopifnot(method %in% c("2d", "3d"))
@@ -200,8 +199,8 @@ automap <- function(lat,
   }
 
   if (length(names(colorscale)) < 2) {
-    watercolor <- colorscale
-    landcolor <- colorscale
+    watercolor <- colorscale[[1]]
+    landcolor <- colorscale[[1]]
   } else {
     if (all(names(colorscale) %in% c(
       "water",
@@ -215,9 +214,22 @@ automap <- function(lat,
       if (sum(names(colorscale) %in% c("land", "landcolor")) != 1) {
         stop("Couldn't determine land colorscale.")
       }
-      watercolor <- colorscale[names(colorscale) %in% c("water", "watercolor")]
-      landcolor <- colorscale[names(colorscale) %in% c("land", "landcolor")]
+      watercolor <- colorscale[names(colorscale) %in% c("water", "watercolor")][[1]]
+      landcolor <- colorscale[names(colorscale) %in% c("land", "landcolor")][[1]]
     }
+  }
+  if (is.array(watercolor)) {
+    warning(paste(
+      "Water colors don't work well with gradients; set water to a",
+      "single value instead. Defaulting to light blue."
+    ))
+    watercolor <- "lightblue"
+  } else if (grepl("spacey", watercolor)) {
+    watercolor <- "lightblue"
+  }
+
+  if (!is.array(landcolor) & grepl("spacey", landcolor)) {
+    landcolor <- get_texture(landcolor)
   }
 
   if (length(lat) == 1) {

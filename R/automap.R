@@ -137,6 +137,7 @@ automap <- function(lat,
                     print.map = TRUE) {
   stopifnot(is.logical(print.map))
   stopifnot(length(lat) == length(lng))
+  stopifnot(length(names(colorscale)) < 3)
   stopifnot(length(z) < 3)
   method <- method[[1]]
   stopifnot(method %in% c("2d", "3d"))

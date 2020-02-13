@@ -19,6 +19,13 @@ navbar:
     home:
       icon: fas fa-home fa-lg
       href: index.html
+    articles:
+      text: Articles
+      menu:
+      - text: Introduction to spacey
+        href: articles/introduction-to-spacey.html
+      - text: automap reference
+        href: articles/automap-walkthrough.html
     reference:
       text: Reference
       href: reference/index.html

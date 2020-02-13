@@ -27,16 +27,11 @@ test_that("automap builds from local files", {
   skip_on_travis()
   skip_on_appveyor()
   boston_map <- tempfile("boston", fileext = ".png")
-  x <- automap(
-    lat = 42.3601, lng = -71.0589,
-    from.file = "tif", tif.filename = "../data/boston_heights.tif",
-    z = 0.3,
-    distance = 1
-  )
+  x <- automap(lat = 42.3601, lng = -71.0589, z = 0.3)
   rayshader::save_png(x, boston_map)
   expect_equal(
     load_overlay(boston_map),
-    load_overlay("../data/boston.png"),
+    load_overlay("../../vignettes/boston_simple.png"),
     tolerance = 0.004
   )
   expect_invisible(automap(

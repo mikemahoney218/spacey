@@ -228,8 +228,8 @@ automap <- function(lat,
     watercolor <- "lightblue"
   }
 
-  if (!is.array(landcolor) & grepl("spacey", landcolor)) {
-    landcolor <- get_texture(landcolor)
+  if (!is.array(landcolor)) {
+    if (grepl("spacey", landcolor)) landcolor <- get_texture(landcolor)
   }
 
   if (length(lat) == 1) {

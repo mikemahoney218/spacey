@@ -1,5 +1,5 @@
 ---
-title: "A semoi-comprehensive `automap` walkthrough"
+title: "A semi-comprehensive `automap` walkthrough"
 output: html_document
 ---
 

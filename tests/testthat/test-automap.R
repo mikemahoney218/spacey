@@ -135,6 +135,8 @@ test_that("custom color scales work", {
 })
 
 test_that("3d maps work", {
+  skip_on_appveyor()
+  skip_on_travis()
   skip_on_cran()
   expect_error(
     automap(

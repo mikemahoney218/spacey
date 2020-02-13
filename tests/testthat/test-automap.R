@@ -120,18 +120,18 @@ test_that("automap errors fire appropriately", {
 
 test_that("custom color scales work", {
   skip_on_cran()
-  expect_output(automap(
+  expect_error(automap(
     lat = 42.3601, lng = -71.0589,
     colorscale = "spacey1"
-  ))
-  expect_output(automap(
+  ), NA)
+  expect_error(automap(
     lat = 42.3601, lng = -71.0589,
     colorscale = "spacey2"
-  ))
-  expect_output(automap(
+  ), NA)
+  expect_error(automap(
     lat = 42.3601, lng = -71.0589,
     colorscale = "spacey3"
-  ))
+  ), NA)
 })
 
 test_that("3d maps work", {

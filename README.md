@@ -1,6 +1,6 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-spacey: Easy data retrieval and helpful defaults for rayshader mapping
-======================================================================
+spacey <a href='https:/mikemahoney218.github.io/spacey'><img src='man/figures/logo.png' align="right" height="139" /></a>
+=========================================================================================================================
 
 <!-- badges: start -->
 [![CRAN

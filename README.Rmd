@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# spacey: Easy data retrieval and helpful defaults for rayshader mapping
+# spacey <a href='https:/mikemahoney218.github.io/spacey'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/spacey)](https://CRAN.R-project.org/package=spacey)

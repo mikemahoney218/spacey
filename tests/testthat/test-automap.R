@@ -60,6 +60,16 @@ test_that("automap warnings fire appropriately", {
     png.filename = "../data/boston_overlay.png",
     save.file = TRUE
   ))
+  expect_warning(automap(
+    lat = 42.3601, lng = -71.0589,
+    colorscale = list(rayshader::create_texture(
+      "#53777A",
+      "#C02942",
+      "#D95B43",
+      "#542437",
+      "#F7E29E"
+    ))
+  ))
 })
 
 test_that("automap errors fire appropriately", {
@@ -87,5 +97,48 @@ test_that("automap errors fire appropriately", {
       "water" = "imhof4",
       "other" = "imhof4"
     )
+  ))
+  expect_error(automap(
+    lat = 42.3601, lng = -71.0589,
+    colorscale = "spacey10"
+  ))
+  junk_file <- tempfile("junk", fileext = ".png")
+  expect_error(automap(
+    lat = 42.3601, lng = -71.0589,
+    save.file = "png",
+    png.filename = junk_file
+  ))
+  junk_file <- tempfile("junk", fileext = ".txt")
+  expect_error(automap(
+    lat = 42.3601, lng = -71.0589,
+    save.file = "png",
+    overlay = "World_Imagery",
+    png.filename = junk_file
+  ))
+})
+
+
+test_that("custom color scales work", {
+  skip_on_cran()
+  expect_output(automap(
+    lat = 42.3601, lng = -71.0589,
+    colorscale = "spacey1"
+  ))
+  expect_output(automap(
+    lat = 42.3601, lng = -71.0589,
+    colorscale = "spacey2"
+  ))
+  expect_output(automap(
+    lat = 42.3601, lng = -71.0589,
+    colorscale = "spacey3"
+  ))
+})
+
+test_that("3d maps work", {
+  skip_on_cran()
+  expect_output(automap(
+    lat = 42.3601, lng = -71.0589,
+    colorscale = "spacey1",
+    method = "3d"
   ))
 })

@@ -37,8 +37,8 @@ image. In fact, you can use as little as a single coordinate pair:
 automap(44.121268, -73.903734)
 ```
 
-```{r, include=FALSE}
-knitr::include_graphics("../man/figures/README-johns_brook_basic-1.png")
+```{r, echo=FALSE}
+knitr::include_graphics(pkgload::package_file("man/figures/README-johns_brook_basic-1.png"))
 ```
 
 And it isn't much harder to add overlays of satellite imagery:
@@ -47,8 +47,8 @@ And it isn't much harder to add overlays of satellite imagery:
 automap(44.121268, -73.903734, overlay = "World_Imagery")
 ```
 
-```{r include=FALSE}
-knitr::include_graphics("../man/figures/README-johns_brook_overlay-1.png")
+```{r echo=FALSE}
+knitr::include_graphics(pkgload::package_file("man/figures/README-johns_brook_overlay-1.png"))
 ```
 
 Or turn those into 3D visuals:
@@ -62,8 +62,8 @@ automap(44.121268,
 )
 ```
 
-```{r include=FALSE}
-knitr::include_graphics("../man/figures/README-johns_brook_3d-1.png")
+```{r echo=FALSE}
+knitr::include_graphics(pkgload::package_file("man/figures/README-johns_brook_3d-1.png"))
 ```
 
 In addition, `automap` supports parallelization with `future` straight out of 
@@ -209,8 +209,8 @@ heightmap %>%
   plot_map()
 ```
 
-```{r, include=FALSE}
-knitr::include_graphics("../man/figures/README-johns_brook_basic-1.png")
+```{r, echo=FALSE}
+knitr::include_graphics(pkgload::package_file("man/figures/README-johns_brook_basic-1.png"))
 ```
 
 My guess is that most people who use `spacey` will eventually move on to 

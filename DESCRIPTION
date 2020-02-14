@@ -32,5 +32,6 @@ Suggests:
     covr,
     knitr,
     rmarkdown,
-    future
+    future,
+    pkgload
 VignetteBuilder: knitr

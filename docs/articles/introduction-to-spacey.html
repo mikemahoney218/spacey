@@ -113,8 +113,10 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(spacey)</a></code></pre></div>
 <p>The most comprehensive command in <code>spacey</code> is <code>automap</code>, which only requires two vectors, one for latitude and one for longitude<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>, in order to quickly generate a rayshader image. In fact, you can use as little as a single coordinate pair:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="../reference/automap.html">automap</a></span>(<span class="fl">44.121268</span>, <span class="fl">-73.903734</span>)</a></code></pre></div>
+<p><img src="../man/figures/README-johns_brook_basic-1.png" width="336"></p>
 <p>And it isn’t much harder to add overlays of satellite imagery:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../reference/automap.html">automap</a></span>(<span class="fl">44.121268</span>, <span class="fl">-73.903734</span>, <span class="dt">overlay =</span> <span class="st">"World_Imagery"</span>)</a></code></pre></div>
+<p><img src="../man/figures/README-johns_brook_overlay-1.png" width="336"></p>
 <p>Or turn those into 3D visuals:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="../reference/automap.html">automap</a></span>(<span class="fl">44.121268</span>,</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">  <span class="fl">-73.903734</span>,</a>
@@ -122,6 +124,7 @@
 <a class="sourceLine" id="cb4-4" data-line-number="4">  <span class="dt">method =</span> <span class="st">"3d"</span>,</a>
 <a class="sourceLine" id="cb4-5" data-line-number="5">  <span class="dt">zoom =</span> <span class="dv">10</span></a>
 <a class="sourceLine" id="cb4-6" data-line-number="6">)</a></code></pre></div>
+<p><img src="../man/figures/README-johns_brook_3d-1.png" width="336"></p>
 <p>In addition, <code>automap</code> supports parallelization with <code>future</code> straight out of the box to speed up map generation – just call <code><a href="https://rdrr.io/pkg/future/man/plan.html">future::plan("multisession")</a></code> (or whatever plan you prefer) before <code>automap</code> to run the different rayshading processes in parallel, notably speeding up the whole map generation process.</p>
 <p>All of the elevation and imagery data pulled by this package comes via the <a href="https://www.usgs.gov/core-science-systems/national-geospatial-program/national-map">USGS National Map API</a>, with the satellite imagery in particular coming via <a href="https://services.arcgisonline.com/ArcGIS/rest/services">ESRI’s MapServer API</a>. If you want to save these off as files (so that you can work on your maps without an Internet connection, or archive the data used), you can set <code>save.file = TRUE</code> in your automap call and provide names for your output files:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="../reference/automap.html">automap</a></span>(<span class="fl">44.121268</span>, </a>
@@ -203,6 +206,7 @@
 <a class="sourceLine" id="cb11-10" data-line-number="10">                 <span class="dt">max_darken =</span> <span class="fl">0.5</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb11-11" data-line-number="11"><span class="st">      </span><span class="kw"><a href="https://rdrr.io/pkg/rayshader/man/add_shadow.html">add_shadow</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/rayshader/man/ambient_shade.html">ambient_shade</a></span>(heightmap, <span class="dt">zscale =</span> <span class="dv">9</span>), <span class="dt">max_darken =</span> <span class="fl">0.5</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb11-12" data-line-number="12"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/rayshader/man/plot_map.html">plot_map</a></span>()</a></code></pre></div>
+<p><img src="../man/figures/README-johns_brook_basic-1.png" width="336"></p>
 <p>My guess is that most people who use <code>spacey</code> will eventually move on to carefully designing their output maps, since you’re able to control things with much more granularity using the core <code>rayshader</code> functions than you are with <code>spacey</code>. However, the data import functions and quick iteration provided by <code>spacey</code> will hopefully help you get started with making these beautiful maps, letting you spend less time fighting with data and more time communicating your landscape to your audience.</p>
 <div id="miscellania" class="section level2">
 <h2 class="hasAnchor">

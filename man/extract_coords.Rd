@@ -13,6 +13,15 @@ extract_coords(coords)
 A vector of length 2 containing object latitude and longitude
 }
 \description{
-Extract latitude and longitude from a provided object
+This is an internal utility function to convert bounding boxes into
+coordinate pairs.
+}
+\examples{
+extract_coords(get_centroid_bounding_box(c(
+  "lat" = 44.121268,
+  "lng" = -73.903734
+),
+distance = 10
+)[[1]])
 }
 \keyword{internal}

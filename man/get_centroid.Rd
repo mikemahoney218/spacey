@@ -18,3 +18,10 @@ representes longitude. If NULL, will be inferred from bounding box names.}
 \description{
 Find central point for list of lat/long coordinates
 }
+\examples{
+df <- data.frame(
+  lat = c(44.05771, 44.18475),
+  lng = c(-73.99212, -73.81515)
+)
+get_centroid(df$lat, df$lng)
+}

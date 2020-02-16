@@ -18,3 +18,10 @@ top-right (named "tr") coordinates of the bounding box.
 \description{
 Get bounding box for set of coordinate points
 }
+\examples{
+df <- data.frame(
+  lat = c(44.05771, 44.18475),
+  lng = c(-73.99212, -73.81515)
+)
+get_coord_bounding_box(df$lat, df$lng)
+}

@@ -166,12 +166,23 @@
 
     <p>A matrix of elevations for use with further mapping utilities.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='no'>bbox</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_centroid_bounding_box.html'>get_centroid_bounding_box</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"lat"</span> <span class='kw'>=</span> <span class='fl'>44.121268</span>,
+                                    <span class='st'>"lng"</span> <span class='kw'>=</span> -<span class='fl'>73.903734</span>),
+                                  <span class='kw'>distance</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+
+<span class='no'>heightmap_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span>(<span class='st'>"heightmap_file"</span>, <span class='kw'>fileext</span> <span class='kw'>=</span> <span class='st'>".tif"</span>)
+<span class='fu'><a href='get_heightmap.html'>get_heightmap</a></span>(<span class='no'>bbox</span>, <span class='kw'>save.tif</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>filename</span> <span class='kw'>=</span> <span class='no'>heightmap_file</span>)
+<span class='no'>heightmap</span> <span class='kw'>&lt;-</span> <span class='fu'>load_heightmap</span>(<span class='no'>heightmap_file</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

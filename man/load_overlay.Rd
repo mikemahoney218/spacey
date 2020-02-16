@@ -17,3 +17,22 @@ This is an extremely thin wrapper for \code{\link[png]{readPNG}}, in order
 for users to not realize they even needed \code{png} for this package's
 functionality at all.
 }
+\examples{
+\dontrun{
+bbox <- get_centroid_bounding_box(c(
+  "lat" = 44.121268,
+  "lng" = -73.903734
+),
+distance = 10
+)
+
+overlay_file <- tempfile("overlay_file", fileext = ".png")
+get_image_overlay(bbox,
+  save.png = TRUE,
+  png.filename = overlay_file,
+  overlay = "World_Imagery"
+)
+overlay <- load_overlay(overlay_file)
+}
+
+}

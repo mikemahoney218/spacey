@@ -19,7 +19,19 @@
 #' @param sr_image Spatial reference code (ISO 19111) for image.
 #'
 #' @return A matrix object provided by \code{\link[png]{readPNG}}, suitable for
-#' use with \code{rayshader} and similar mapping utilities.
+#' use with \code{rayshader} and similar mapping utilities. Returned invisibly.
+#'
+#' @examples
+#' \dontrun{
+#' bbox <- get_centroid_bounding_box(c(
+#'   "lat" = 44.121268,
+#'   "lng" = -73.903734
+#' ),
+#' distance = 10
+#' )
+#'
+#' get_image_overlay(bbox, overlay = "World_Imagery")
+#' }
 #'
 #' @export
 get_image_overlay <- function(bbox,
@@ -127,7 +139,7 @@ get_image_overlay <- function(bbox,
     writeBin(img_bin, png.filename)
   }
 
-  png::readPNG(png.filename)
+  invisible(png::readPNG(png.filename))
 }
 
 #' Import PNG textures for overlays
@@ -139,6 +151,24 @@ get_image_overlay <- function(bbox,
 #' @param filename The path to the PNG file to be imported
 #'
 #' @return A matrix of values provided by \code{\link[png]{readPNG}}
+#'
+#' @examples
+#' \dontrun{
+#' bbox <- get_centroid_bounding_box(c(
+#'   "lat" = 44.121268,
+#'   "lng" = -73.903734
+#' ),
+#' distance = 10
+#' )
+#'
+#' overlay_file <- tempfile("overlay_file", fileext = ".png")
+#' get_image_overlay(bbox,
+#'   save.png = TRUE,
+#'   png.filename = overlay_file,
+#'   overlay = "World_Imagery"
+#' )
+#' overlay <- load_overlay(overlay_file)
+#' }
 #'
 #' @export
 load_overlay <- function(filename) {

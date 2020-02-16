@@ -160,6 +160,14 @@ said data into matrices, and runs the data through \code{rayshader} using
 sensible defaults in order to return a 2D shaded map relief. It requires a
 functioning internet connection in order to retrieve data.
 }
+\examples{
+\dontrun{
+automap(44.121268, -73.903734)
+automap(44.121268, -73.903734, overlay = "World_Imagery")
+automap(44.121268, -73.903734, overlay = "World_Imagery", method = "3d")
+}
+
+}
 \references{
 Archuleta, C.M., Constance, E.W., Arundel, S.T., Lowe, A.J., Mantey, K.S.,
 and Phillips, L.A., 2017, The National Map seamless digital elevation model

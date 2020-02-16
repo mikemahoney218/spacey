@@ -85,6 +85,13 @@
 #'
 #' @importFrom magrittr `%>%`
 #'
+#' @examples
+#' \dontrun{
+#' automap(44.121268, -73.903734)
+#' automap(44.121268, -73.903734, overlay = "World_Imagery")
+#' automap(44.121268, -73.903734, overlay = "World_Imagery", method = "3d")
+#' }
+#'
 #' @references
 #' Archuleta, C.M., Constance, E.W., Arundel, S.T., Lowe, A.J., Mantey, K.S.,
 #' and Phillips, L.A., 2017, The National Map seamless digital elevation model
@@ -260,7 +267,7 @@ automap <- function(lat,
       img.width = img.width,
       img.height = img.height,
       save.tif = save.tif,
-      filename = tif.filename,
+      tif.filename = tif.filename,
       sr_bbox = sr_bbox,
       sr_image = sr_image
     ),
@@ -268,7 +275,7 @@ automap <- function(lat,
       img.width = img.width,
       img.height = img.height,
       save.tif = save.tif,
-      filename = tif.filename,
+      tif.filename = tif.filename,
       sr_bbox = sr_bbox,
       sr_image = sr_image
     )

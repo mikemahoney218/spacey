@@ -6,6 +6,12 @@
 #' @return A list of length 2, containing the bottom-left (named "bl") and
 #' top-right (named "tr") coordinates of the bounding box.
 #'
+#' @examples
+#' df <- data.frame(
+#'   lat = c(44.05771, 44.18475),
+#'   lng = c(-73.99212, -73.81515)
+#' )
+#' get_coord_bounding_box(df$lat, df$lng)
 #' @export
 get_coord_bounding_box <- function(lat, lng) {
   stopifnot(length(lat) == length(lng))
@@ -43,6 +49,13 @@ get_coord_bounding_box <- function(lat, lng) {
 #' @return A list of length 2, containing the bottom-left (named "bl") and
 #' top-right (named "tr") coordinates of the bounding box.
 #'
+#' @examples
+#' get_centroid_bounding_box(c(
+#'   "lat" = 44.121268,
+#'   "lng" = -73.903734
+#' ),
+#' distance = 10
+#' )
 #' @export
 get_centroid_bounding_box <- function(centroid,
                                       distance,

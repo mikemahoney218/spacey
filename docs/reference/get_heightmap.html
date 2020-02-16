@@ -162,7 +162,7 @@ rayshader. It requires a functioning internet connection to retrieve data.</p>
   <span class='kw'>lat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>lng</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>save.tif</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>filename</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>tif.filename</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>sr_bbox</span> <span class='kw'>=</span> <span class='fl'>4326</span>,
   <span class='kw'>sr_image</span> <span class='kw'>=</span> <span class='fl'>4326</span>
 )</pre>
@@ -197,7 +197,7 @@ representes longitude. If NULL, will be inferred from bounding box names.</p></t
       <td><p>Logical: should the downloaded imagery be saved as a file?</p></td>
     </tr>
     <tr>
-      <th>filename</th>
+      <th>tif.filename</th>
       <td><p>If <code>save.tif</code> is <code>TRUE</code>, the filepath to save the
 resulting .tif to.</p></td>
     </tr>
@@ -214,14 +214,23 @@ resulting .tif to.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A matrix object containing elevation data suitable for use with
-mapping functions.</p>
+mapping functions. Returned invisibly.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='no'>bbox</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_centroid_bounding_box.html'>get_centroid_bounding_box</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"lat"</span> <span class='kw'>=</span> <span class='fl'>44.121268</span>,
+                                    <span class='st'>"lng"</span> <span class='kw'>=</span> -<span class='fl'>73.903734</span>),
+                                  <span class='kw'>distance</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+
+<span class='no'>heightmap</span> <span class='kw'>&lt;-</span> <span class='fu'>get_heightmap</span>(<span class='no'>bbox</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

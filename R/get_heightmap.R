@@ -12,13 +12,25 @@
 #' @param lng A quoted string indicating what named value in the bounding box
 #' representes longitude. If NULL, will be inferred from bounding box names.
 #' @param save.tif Logical: should the downloaded imagery be saved as a file?
-#' @param filename If \code{save.tif} is \code{TRUE}, the filepath to save the
+#' @param tif.filename If \code{save.tif} is \code{TRUE}, the filepath to save the
 #' resulting .tif to.
 #' @param sr_bbox Spatial reference code (ISO 19111) for bounding box
 #' @param sr_image Spatial reference code (ISO 19111) for image
 #'
 #' @return A matrix object containing elevation data suitable for use with
-#' mapping functions.
+#' mapping functions. Returned invisibly.
+#'
+#' @examples
+#' \dontrun{
+#' bbox <- get_centroid_bounding_box(c(
+#'   "lat" = 44.121268,
+#'   "lng" = -73.903734
+#' ),
+#' distance = 10
+#' )
+#'
+#' heightmap <- get_heightmap(bbox)
+#' }
 #'
 #' @export
 get_heightmap <- function(bbox,
@@ -27,7 +39,7 @@ get_heightmap <- function(bbox,
                           lat = NULL,
                           lng = NULL,
                           save.tif = FALSE,
-                          filename = NULL,
+                          tif.filename = NULL,
                           sr_bbox = 4326,
                           sr_image = 4326) {
   stopifnot(is.logical(save.tif))
@@ -37,8 +49,8 @@ get_heightmap <- function(bbox,
       "again with smaller img.width or img.height arguments."
     ))
   }
-  if (save.tif & is.null(filename)) {
-    stop("Must provide filename to save .tif to.")
+  if (save.tif & is.null(tif.filename)) {
+    stop("Must provide tif.filename to save .tif to.")
   }
 
   if (all(!is.null(lat), !is.null(lng))) {
@@ -77,19 +89,21 @@ get_heightmap <- function(bbox,
     img_bin <- httr::content(img_res, "raw")
 
     if (save.tif) {
-      writeBin(img_bin, filename)
+      writeBin(img_bin, tif.filename)
     } else {
-      filename <- tempfile("download", tempdir(), ".tif")
-      writeBin(img_bin, filename)
+      tif.filename <- tempfile("download", tempdir(), ".tif")
+      writeBin(img_bin, tif.filename)
     }
   } else {
     stop(res)
   }
 
-  raster_read <- raster::raster(filename)
-  matrix(
-    raster::extract(raster_read, raster::extent(raster_read), buffer = 1000),
-    nrow = ncol(raster_read), ncol = nrow(raster_read)
+  raster_read <- raster::raster(tif.filename)
+  invisible(
+    matrix(
+      raster::extract(raster_read, raster::extent(raster_read), buffer = 1000),
+      nrow = ncol(raster_read), ncol = nrow(raster_read)
+    )
   )
 }
 
@@ -99,6 +113,20 @@ get_heightmap <- function(bbox,
 #' @param filename The path to the .tif file to import as an elevation map.
 #'
 #' @return A matrix of elevations for use with further mapping utilities.
+#'
+#' @examples
+#' \dontrun{
+#' bbox <- get_centroid_bounding_box(c(
+#'   "lat" = 44.121268,
+#'   "lng" = -73.903734
+#' ),
+#' distance = 10
+#' )
+#'
+#' heightmap_file <- tempfile("heightmap_file", fileext = ".tif")
+#' get_heightmap(bbox, save.tif = TRUE, filename = heightmap_file)
+#' heightmap <- load_heightmap(heightmap_file)
+#' }
 #'
 #' @export
 load_heightmap <- function(filename) {

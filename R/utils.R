@@ -30,12 +30,22 @@ rad_to_deg <- function(rad) {
 
 #' Extract latitude and longitude from a provided object
 #'
+#' This is an internal utility function to convert bounding boxes into
+#' coordinate pairs.
+#'
 #' @param coords An object to try and extract coordinates from
 #'
 #' @keywords internal
 #'
 #' @return A vector of length 2 containing object latitude and longitude
 #'
+#' @examples
+#' extract_coords(get_centroid_bounding_box(c(
+#'   "lat" = 44.121268,
+#'   "lng" = -73.903734
+#' ),
+#' distance = 10
+#' )[[1]])
 #' @export
 extract_coords <- function(coords) {
   if (all(names(coords %in% c(

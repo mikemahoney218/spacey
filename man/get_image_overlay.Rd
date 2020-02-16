@@ -45,10 +45,23 @@ representes longitude. If NULL, will be inferred from bounding box names.}
 }
 \value{
 A matrix object provided by \code{\link[png]{readPNG}}, suitable for
-use with \code{rayshader} and similar mapping utilities.
+use with \code{rayshader} and similar mapping utilities. Returned invisibly.
 }
 \description{
 This function calls the ESRI ArcGIS API to retrieve map imagery to overlay
 a rayshader map object. It requires a functioning internet connection to
 obtain the data.
+}
+\examples{
+\dontrun{
+bbox <- get_centroid_bounding_box(c(
+  "lat" = 44.121268,
+  "lng" = -73.903734
+),
+distance = 10
+)
+
+get_image_overlay(bbox, overlay = "World_Imagery")
+}
+
 }

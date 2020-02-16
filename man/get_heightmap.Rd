@@ -11,7 +11,7 @@ get_heightmap(
   lat = NULL,
   lng = NULL,
   save.tif = FALSE,
-  filename = NULL,
+  tif.filename = NULL,
   sr_bbox = 4326,
   sr_image = 4326
 )
@@ -31,7 +31,7 @@ representes longitude. If NULL, will be inferred from bounding box names.}
 
 \item{save.tif}{Logical: should the downloaded imagery be saved as a file?}
 
-\item{filename}{If \code{save.tif} is \code{TRUE}, the filepath to save the
+\item{tif.filename}{If \code{save.tif} is \code{TRUE}, the filepath to save the
 resulting .tif to.}
 
 \item{sr_bbox}{Spatial reference code (ISO 19111) for bounding box}
@@ -40,10 +40,23 @@ resulting .tif to.}
 }
 \value{
 A matrix object containing elevation data suitable for use with
-mapping functions.
+mapping functions. Returned invisibly.
 }
 \description{
 This function retrieves elevation data from the USGS national map API and
 converts it into a matrix appropriate for further usage with tools such as
 rayshader. It requires a functioning internet connection to retrieve data.
+}
+\examples{
+\dontrun{
+bbox <- get_centroid_bounding_box(c(
+  "lat" = 44.121268,
+  "lng" = -73.903734
+),
+distance = 10
+)
+
+heightmap <- get_heightmap(bbox)
+}
+
 }

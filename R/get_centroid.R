@@ -6,6 +6,12 @@
 #' representes longitude. If NULL, will be inferred from bounding box names.
 #' @param coord.unit The unit latitude and longitude are stored in.
 #'
+#' @examples
+#' df <- data.frame(
+#'   lat = c(44.05771, 44.18475),
+#'   lng = c(-73.99212, -73.81515)
+#' )
+#' get_centroid(df$lat, df$lng)
 #' @export
 get_centroid <- function(lat, lng, coord.unit = c("degrees", "radians")) {
   coord.unit <- coord.unit[[1]]

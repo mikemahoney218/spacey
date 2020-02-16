@@ -15,3 +15,18 @@ A matrix of elevations for use with further mapping utilities.
 \description{
 Load an elevation map from file
 }
+\examples{
+\dontrun{
+bbox <- get_centroid_bounding_box(c(
+  "lat" = 44.121268,
+  "lng" = -73.903734
+),
+distance = 10
+)
+
+heightmap_file <- tempfile("heightmap_file", fileext = ".tif")
+get_heightmap(bbox, save.tif = TRUE, filename = heightmap_file)
+heightmap <- load_heightmap(heightmap_file)
+}
+
+}

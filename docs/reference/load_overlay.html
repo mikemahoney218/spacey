@@ -170,12 +170,26 @@ functionality at all.</p>
 
     <p>A matrix of values provided by <code><a href='https://rdrr.io/pkg/png/man/readPNG.html'>readPNG</a></code></p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='no'>bbox</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_centroid_bounding_box.html'>get_centroid_bounding_box</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"lat"</span> <span class='kw'>=</span> <span class='fl'>44.121268</span>,
+                                    <span class='st'>"lng"</span> <span class='kw'>=</span> -<span class='fl'>73.903734</span>),
+                                  <span class='kw'>distance</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+
+<span class='no'>overlay_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span>(<span class='st'>"overlay_file"</span>, <span class='kw'>fileext</span> <span class='kw'>=</span> <span class='st'>".png"</span>)
+<span class='fu'><a href='get_image_overlay.html'>get_image_overlay</a></span>(<span class='no'>bbox</span>,
+                  <span class='kw'>save.png</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+                  <span class='kw'>png.filename</span> <span class='kw'>=</span> <span class='no'>overlay_file</span>,
+                  <span class='kw'>overlay</span> <span class='kw'>=</span> <span class='st'>"World_Imagery"</span>)
+<span class='no'>overlay</span> <span class='kw'>&lt;-</span> <span class='fu'>load_overlay</span>(<span class='no'>overlay_file</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

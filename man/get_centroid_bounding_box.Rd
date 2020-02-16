@@ -38,3 +38,11 @@ top-right (named "tr") coordinates of the bounding box.
 \description{
 Get bounding box for set of coordinate points
 }
+\examples{
+get_centroid_bounding_box(c(
+  "lat" = 44.121268,
+  "lng" = -73.903734
+),
+distance = 10
+)
+}

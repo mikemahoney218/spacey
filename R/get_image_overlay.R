@@ -12,7 +12,7 @@
 #' @param lat A quoted string indicating what named value in the bounding box
 #' represents latitude. If NULL, will be inferred from bounding box names.
 #' @param lng A quoted string indicating what named value in the bounding box
-#' representes longitude. If NULL, will be inferred from bounding box names.
+#' represents longitude. If NULL, will be inferred from bounding box names.
 #' @param save.png Logical -- should the overlay image be saved?
 #' @param png.filename Filename for the overlay if \code{save.png} is TRUE.
 #' @param sr_bbox Spatial reference code (ISO 19111) for bounding box.

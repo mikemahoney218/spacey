@@ -11,7 +11,7 @@ get_centroid(lat, lng, coord.unit = c("degrees", "radians"))
 represents latitude. If NULL, will be inferred from bounding box names.}
 
 \item{lng}{A quoted string indicating what named value in the bounding box
-representes longitude. If NULL, will be inferred from bounding box names.}
+represents longitude. If NULL, will be inferred from bounding box names.}
 
 \item{coord.unit}{The unit latitude and longitude are stored in.}
 }

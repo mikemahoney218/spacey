@@ -24,8 +24,6 @@ test_that("automap creates the same map twice", {
 
 test_that("automap builds from local files", {
   skip_on_cran()
-  skip_on_travis()
-  skip_on_appveyor()
   boston_map <- tempfile("boston", fileext = ".png")
   x <- automap(lat = 42.3601, lng = -71.0589, z = 0.3)
   rayshader::save_png(x, boston_map)
@@ -35,7 +33,7 @@ test_that("automap builds from local files", {
     tolerance = 0.004
   )
   expect_invisible(automap(
-    lat = 42.3601, lng = -71.0589, from.file = TRUE,
+    from.file = TRUE,
     tif.filename = "../data/boston_heights.tif",
     png.filename = "../data/boston_overlay.png",
     print.map = FALSE
@@ -45,13 +43,13 @@ test_that("automap builds from local files", {
 test_that("automap warnings fire appropriately", {
   skip_on_cran()
   expect_warning(automap(
-    lat = 42.3601, lng = -71.0589, from.file = TRUE,
+    from.file = TRUE,
     tif.filename = "../data/boston_heights.tif",
     png.filename = "../data/boston_overlay.png",
     save.file = TRUE
   ))
   expect_warning(automap(
-    lat = 42.3601, lng = -71.0589, from.file = "tif",
+    from.file = "tif",
     tif.filename = "../data/boston_heights.tif",
     save.file = TRUE
   ))

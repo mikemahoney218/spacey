@@ -40,7 +40,7 @@ get_coord_bounding_box <- function(lat, lng) {
 #' @param lat A quoted string indicating what named value in the centroid
 #' represents latitude. If NULL, will be inferred from centroid names.
 #' @param lng A quoted string indicating what named value in the centroid
-#' representes longitude. If NULL, will be inferred from centroid names.
+#' represents longitude. If NULL, will be inferred from centroid names.
 #' @param dist.unit A single value representing the units the distance value
 #' is in.
 #' @param coord.unit A single value representing the units the coordinates are

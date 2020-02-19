@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">spacey</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9002</span>
       </span>
     </div>
 
@@ -211,7 +211,7 @@
 <div id="miscellania" class="section level2">
 <h2 class="hasAnchor">
 <a href="#miscellania" class="anchor"></a>Miscellania</h2>
-<p>In addition to these main functions, <code>spacey</code> implements basic functions for converting radians to degrees (via the function <code>rad_to_deg</code>) and back again (via <code>deg_to_rad</code>), which may be of some use. Note that these conversions are done simply and will incurr some error from floating point arithmetic.</p>
+<p>In addition to these main functions, <code>spacey</code> implements basic functions for converting radians to degrees (via the function <code>rad_to_deg</code>) and back again (via <code>deg_to_rad</code>), which may be of some use. Note that these conversions are done simply and will incur some error from floating point arithmetic.</p>
 <p>It should be noted that <code>spacey</code> really isn’t a geospatial processing library, and these commands are built to be exactly as accurate as needed by core package functions. For that reason, you probably shouldn’t rely upon <code>get_centroid</code> or <code>get_*_bounding_box</code> for points near extreme latitudes or longitudes, as there are no adjustments built in to deal with these locations, since the USGS data <code>spacey</code> is designed to work with doesn’t really wrap those.</p>
 </div>
 <div id="acknowledgements" class="section level2">

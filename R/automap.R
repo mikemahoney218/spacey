@@ -53,7 +53,7 @@
 #' @param water Logical -- should water be rendered?
 #' @param waterdepth Water level.
 #' @param theta Rotation around z axis.
-#' @param phi Azimuth amgle.
+#' @param phi Azimuth angle.
 #' @param fov Field of view angle.
 #' @param zoom Zoom factor.
 #' @param save.file Should the heightmap (\code{= "tif"}), overlay
@@ -100,8 +100,8 @@
 #'
 #' @export
 
-automap <- function(lat,
-                    lng,
+automap <- function(lat = NULL,
+                    lng = NULL,
                     distance = 10,
                     method = c("2d", "3d"),
                     img.width = 600,
@@ -142,6 +142,17 @@ automap <- function(lat,
                     sr_bbox = 4326,
                     sr_image = 4326,
                     print.map = TRUE) {
+  if (any(is.null(c(lat, lng)))) {
+    if (from.file == FALSE) {
+      stop("Must provide data on the area to map to lat/lng or from.file!")
+    }
+    if (!is.null(overlay)) {
+      if (from.file == FALSE || from.file == "tif") {
+        stop("Can't obtain image overlay without a lat/lng argument.")
+      }
+    }
+  }
+
   stopifnot(is.logical(print.map))
   stopifnot(length(lat) == length(lng))
   stopifnot(length(z) < 3)
@@ -239,26 +250,29 @@ automap <- function(lat,
     if (grepl("spacey", landcolor)) landcolor <- get_texture(landcolor)
   }
 
-  if (length(lat) == 1) {
-    bound_box <- get_centroid_bounding_box(c(
-      "lat" = lat,
-      "lng" = lng
-    ),
-    distance = distance,
-    dist.unit = dist.unit,
-    coord.unit = coord.unit
-    )
-  } else {
-    if (is.na(distance) || distance == 0) {
-      get_centroid_bounding_box(get_centroid(lat, lng, coord.unit),
-        distance = distance,
-        dist.unit = dist.unit,
-        coord.unit = coord.unit
+  if (!any(is.null(c(lat, lng)))) {
+    if (length(lat) == 1) {
+      bound_box <- get_centroid_bounding_box(c(
+        "lat" = lat,
+        "lng" = lng
+      ),
+      distance = distance,
+      dist.unit = dist.unit,
+      coord.unit = coord.unit
       )
     } else {
-      bound_box <- get_coord_bounding_box(lat, lng)
+      if (is.na(distance) || distance == 0) {
+        get_centroid_bounding_box(get_centroid(lat, lng, coord.unit),
+          distance = distance,
+          dist.unit = dist.unit,
+          coord.unit = coord.unit
+        )
+      } else {
+        bound_box <- get_coord_bounding_box(lat, lng)
+      }
     }
   }
+
 
   if (from.file == TRUE || from.file == "tif") {
     heightmap <- load_heightmap(tif.filename)

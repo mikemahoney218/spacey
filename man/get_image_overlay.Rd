@@ -33,7 +33,7 @@ get_image_overlay(
 represents latitude. If NULL, will be inferred from bounding box names.}
 
 \item{lng}{A quoted string indicating what named value in the bounding box
-representes longitude. If NULL, will be inferred from bounding box names.}
+represents longitude. If NULL, will be inferred from bounding box names.}
 
 \item{save.png}{Logical -- should the overlay image be saved?}
 

@@ -10,7 +10,7 @@
 #' @param lat A quoted string indicating what named value in the bounding box
 #' represents latitude. If NULL, will be inferred from bounding box names.
 #' @param lng A quoted string indicating what named value in the bounding box
-#' representes longitude. If NULL, will be inferred from bounding box names.
+#' represents longitude. If NULL, will be inferred from bounding box names.
 #' @param save.tif Logical: should the downloaded imagery be saved as a file?
 #' @param tif.filename If \code{save.tif} is \code{TRUE}, the filepath to save the
 #' resulting .tif to.

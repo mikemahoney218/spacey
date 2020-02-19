@@ -5,8 +5,8 @@
 \title{Automatically create 2D and 3D maps using USGS and ESRI map data}
 \usage{
 automap(
-  lat,
-  lng,
+  lat = NULL,
+  lng = NULL,
   distance = 10,
   method = c("2d", "3d"),
   img.width = 600,
@@ -111,7 +111,7 @@ provided, the maximum height a point can be classified water.}
 
 \item{theta}{Rotation around z axis.}
 
-\item{phi}{Azimuth amgle.}
+\item{phi}{Azimuth angle.}
 
 \item{fov}{Field of view angle.}
 

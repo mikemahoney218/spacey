@@ -23,7 +23,7 @@ values.}
 represents latitude. If NULL, will be inferred from centroid names.}
 
 \item{lng}{A quoted string indicating what named value in the centroid
-representes longitude. If NULL, will be inferred from centroid names.}
+represents longitude. If NULL, will be inferred from centroid names.}
 
 \item{dist.unit}{A single value representing the units the distance value
 is in.}

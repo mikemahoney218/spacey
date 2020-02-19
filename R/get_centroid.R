@@ -3,7 +3,7 @@
 #' @param lat A quoted string indicating what named value in the bounding box
 #' represents latitude. If NULL, will be inferred from bounding box names.
 #' @param lng A quoted string indicating what named value in the bounding box
-#' representes longitude. If NULL, will be inferred from bounding box names.
+#' represents longitude. If NULL, will be inferred from bounding box names.
 #' @param coord.unit The unit latitude and longitude are stored in.
 #'
 #' @examples

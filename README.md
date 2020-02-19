@@ -9,7 +9,7 @@ status](https://www.r-pkg.org/badges/version/spacey)](https://CRAN.R-project.org
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![Travis CI
 status](https://travis-ci.com/mikemahoney218/spacey.svg?branch=master)](https://travis-ci.com/mikemahoney218/spacey)
-[![ApppVeyor Build
+[![AppVeyor Build
 Status](https://ci.appveyor.com/api/projects/status/github/mikemahoney218/spacey?branch=master&svg=true)](https://ci.appveyor.com/project/mikemahoney218/spacey)
 [![Codecov test
 coverage](https://codecov.io/gh/mikemahoney218/spacey/branch/master/graph/badge.svg)](https://codecov.io/gh/mikemahoney218/spacey?branch=master)
@@ -38,8 +38,7 @@ And optionally even turn these into 3D visualizations:
     automap(44.121268,
       -73.903734,
       overlay = "World_Imagery",
-      method = "3d",
-      zoom = 10
+      method = "3d"
     )
 
 <img src="man/figures/README-johns_brook_3d-1.png" width="100%" />
@@ -73,7 +72,7 @@ At the moment, `spacey` consists mainly of the following functions:
 
 -   `automap` uses a combination of sensible defaults to produce
     attractive square map outputs from a single central point location.
--   `get_heightmap` retrives an elevation map from the USGS for a
+-   `get_heightmap` retrieves an elevation map from the USGS for a
     specified boundary box and translates it into an R matrix.
 -   `get_image_overlay` retrieves a texture from ESRI for a specified
     boundary box and translates it into a matrix.

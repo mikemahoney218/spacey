@@ -226,7 +226,7 @@ time communicating your landscape to your audience.
 In addition to these main functions, `spacey` implements basic functions for 
 converting radians to degrees (via the function `rad_to_deg`) and back again
 (via `deg_to_rad`), which may be of some use. Note that these conversions are 
-done simply and will incurr some error from floating point arithmetic.
+done simply and will incur some error from floating point arithmetic.
 
 It should be noted that `spacey` really isn't a geospatial processing library, 
 and these commands are built to be exactly as accurate as needed by core package

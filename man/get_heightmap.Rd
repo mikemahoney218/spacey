@@ -27,7 +27,7 @@ get_heightmap(
 represents latitude. If NULL, will be inferred from bounding box names.}
 
 \item{lng}{A quoted string indicating what named value in the bounding box
-representes longitude. If NULL, will be inferred from bounding box names.}
+represents longitude. If NULL, will be inferred from bounding box names.}
 
 \item{save.tif}{Logical: should the downloaded imagery be saved as a file?}
 

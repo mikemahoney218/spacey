@@ -29,7 +29,7 @@ test_that("automap builds from local files", {
   rayshader::save_png(x, boston_map)
   expect_equal(
     load_overlay(boston_map),
-    load_overlay("pkgload::package_file("vignettes/boston_overlay.png")"),
+    load_overlay(pkgload::package_file("vignettes/boston_simple.png")),
     tolerance = 0.004
   )
   expect_invisible(automap(

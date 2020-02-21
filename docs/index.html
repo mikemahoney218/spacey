@@ -21,7 +21,7 @@
     packages like rayshader is both obtaining and processing spatial data
     to build from. spacey aims to make it easier to obtain and use this data
     for locations within the United States, providing utilities to download 
-    USGS and ESRI data and quickly turn them into maps.">
+    USGS and ESRI geospatial data and quickly turn it into maps.">
 <meta property="og:image" content="https://mikemahoney218.github.io/spacey/logo.png">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -48,7 +48,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">spacey</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
@@ -117,9 +117,8 @@
 <div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="reference/automap.html">automap</a></span>(<span class="fl">44.121268</span>,</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="fl">-73.903734</span>,</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">  <span class="dt">overlay =</span> <span class="st">"World_Imagery"</span>,</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">  <span class="dt">method =</span> <span class="st">"3d"</span>,</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">  <span class="dt">zoom =</span> <span class="dv">10</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">)</a></code></pre></div>
+<a class="sourceLine" id="cb3-4" data-line-number="4">  <span class="dt">method =</span> <span class="st">"3d"</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">)</a></code></pre></div>
 <p><img src="reference/figures/README-johns_brook_3d-1.png" width="100%"></p>
 <p>And while <code>automap</code> tries to make it easy to configure these maps, <code>spacey</code> also lets you save off your heightmaps and overlays directly, either through arguments to <code>automap</code> or the functions <code>get_heightmap</code> and <code>get_overlay</code>, so that you can work directly with <code>rayshader</code> to make these maps by yourself.</p>
 <p>There’s a lot more to these three functions, alongside a few basic geospatial utilities <code>spacey</code> implements to make it easier to make maps from your data. For more information, check out the <a href="https://mikemahoney218.github.io/spacey/articles/introduction-to-spacey.html">introductory vignette</a>! ## Installation</p>
@@ -136,7 +135,7 @@
 <li>
 <code>automap</code> uses a combination of sensible defaults to produce attractive square map outputs from a single central point location.</li>
 <li>
-<code>get_heightmap</code> retrives an elevation map from the USGS for a specified boundary box and translates it into an R matrix.</li>
+<code>get_heightmap</code> retrieves an elevation map from the USGS for a specified boundary box and translates it into an R matrix.</li>
 <li>
 <code>get_image_overlay</code> retrieves a texture from ESRI for a specified boundary box and translates it into a matrix.</li>
 </ul>
@@ -200,7 +199,7 @@
 <li><a href="https://CRAN.R-project.org/package=spacey"><img src="https://www.r-pkg.org/badges/version/spacey" alt="CRAN status"></a></li>
 <li><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
 <li><a href="https://travis-ci.com/mikemahoney218/spacey"><img src="https://travis-ci.com/mikemahoney218/spacey.svg?branch=master" alt="Travis CI status"></a></li>
-<li><a href="https://ci.appveyor.com/project/mikemahoney218/spacey"><img src="https://ci.appveyor.com/api/projects/status/github/mikemahoney218/spacey?branch=master&amp;svg=true" alt="ApppVeyor Build Status"></a></li>
+<li><a href="https://ci.appveyor.com/project/mikemahoney218/spacey"><img src="https://ci.appveyor.com/api/projects/status/github/mikemahoney218/spacey?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
 <li><a href="https://codecov.io/gh/mikemahoney218/spacey?branch=master"><img src="https://codecov.io/gh/mikemahoney218/spacey/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>

@@ -1,7 +1,7 @@
 Package: spacey
 Type: Package
 Title: Easily Obtain Spatial Data and Make Better Maps
-Version: 0.1.0.9002
+Version: 0.1.0
 Authors@R: 
     person(given = "Michael",
            family = "Mahoney",
@@ -12,9 +12,9 @@ Description: One of the remaining pain points in making beautiful maps via
     packages like 'rayshader' is both obtaining and processing spatial data
     to build from. 'spacey' aims to make it easier to obtain and use this data
     for locations within the United States, providing utilities to download 
-    'USGS' and 'ESRI' data and quickly turn them into maps.
+    'USGS' and 'ESRI' geospatial data and quickly turn it into maps.
 License: MIT + file LICENSE
-URL: https://github.com/mikemahoney218/spacey
+URL: https://github.com/mikemahoney218/spacey, https://mikemahoney218.github.io/spacey/
 BugReports: https://github.com/mikemahoney218/spacey/issues
 Encoding: UTF-8
 LazyData: true

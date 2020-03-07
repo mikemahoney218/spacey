@@ -138,7 +138,6 @@ get_image_overlay <- function(bbox,
     png.filename <- tempfile("download", tempdir(), ".png")
     writeBin(img_bin, png.filename)
   }
-
   invisible(png::readPNG(png.filename))
 }
 

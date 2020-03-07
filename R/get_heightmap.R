@@ -62,40 +62,50 @@ get_heightmap <- function(bbox,
   }
 
   url <- httr::parse_url("https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage")
-  res <- httr::GET(
-    url,
-    query = list(
-      bbox = paste(min(first_corner[["lng"]], second_corner[["lng"]]),
-        min(first_corner[["lat"]], second_corner[["lat"]]),
-        max(second_corner[["lng"]], first_corner[["lng"]]),
-        max(second_corner[["lat"]], first_corner[["lat"]]),
-        sep = ","
-      ),
-      bboxSR = sr_bbox,
-      imageSR = sr_image,
-      size = paste(img.width, img.height, sep = ","),
-      format = "tiff",
-      pixelType = "F32",
-      noDataInterpretation = "esriNoDataMatchAny",
-      interpolation = "+RSP_BilinearInterpolation",
-      f = "json"
+
+  counter <- 0
+
+  get_tif <- function() {
+    res <- httr::GET(
+      url,
+      query = list(
+        bbox = paste(min(first_corner[["lng"]], second_corner[["lng"]]),
+          min(first_corner[["lat"]], second_corner[["lat"]]),
+          max(second_corner[["lng"]], first_corner[["lng"]]),
+          max(second_corner[["lat"]], first_corner[["lat"]]),
+          sep = ","
+        ),
+        bboxSR = sr_bbox,
+        imageSR = sr_image,
+        size = paste(img.width, img.height, sep = ","),
+        format = "tiff",
+        pixelType = "F32",
+        noDataInterpretation = "esriNoDataMatchAny",
+        interpolation = "+RSP_BilinearInterpolation",
+        f = "json"
+      )
     )
-  )
 
-  if (httr::status_code(res) == 200) {
+    if (httr::status_code(res) != 200) stop(httr::status_code(res))
+
     body <- httr::content(res, type = "application/json")
-
     img_res <- httr::GET(body$href)
-    img_bin <- httr::content(img_res, "raw")
+  }
 
-    if (save.tif) {
-      writeBin(img_bin, tif.filename)
-    } else {
-      tif.filename <- tempfile("download", tempdir(), ".tif")
-      writeBin(img_bin, tif.filename)
-    }
+  img_res <- get_tif()
+  counter <- 1
+  while (httr::status_code(img_res) != 200 && counter < 15) {
+    img_res <- get_tif()
+    counter <- counter + 1
+  }
+
+  img_bin <- httr::content(img_res, "raw")
+
+  if (save.tif) {
+    writeBin(img_bin, tif.filename)
   } else {
-    stop(res)
+    tif.filename <- tempfile("download", tempdir(), ".tiff")
+    writeBin(img_bin, tif.filename)
   }
 
   raster_read <- raster::raster(tif.filename)

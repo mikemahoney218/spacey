@@ -8,7 +8,7 @@
   "description": "One of the remaining pain points in making beautiful maps via \n    packages like 'rayshader' is both obtaining and processing spatial data\n    to build from. 'spacey' aims to make it easier to obtain and use this data\n    for locations within the United States, providing utilities to download \n    'USGS' and 'ESRI' geospatial data and quickly turn it into maps.",
   "name": "spacey: Easily Obtain Spatial Data and Make Better Maps",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -220,5 +220,14 @@
     "map",
     "mapping"
   ],
-  "relatedLink": "https://mikemahoney218.github.io/spacey/"
+  "relatedLink": [
+    "https://mikemahoney218.github.io/spacey/",
+    "https://CRAN.R-project.org/package=spacey"
+  ],
+  "provider": {
+    "@id": "https://cran.r-project.org",
+    "@type": "Organization",
+    "name": "Comprehensive R Archive Network (CRAN)",
+    "url": "https://cran.r-project.org"
+  }
 }

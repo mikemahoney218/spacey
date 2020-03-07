@@ -23,4 +23,4 @@ cran-comments.md
 ^appveyor\.yml$
 .gitattributes
 README.html
-
+tests/testthat/Rplots.pdf

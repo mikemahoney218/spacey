@@ -20,7 +20,4 @@ create arrays themselves. It is extremely unlikely users will need to call
 this function themselves; instead, most users will call it via
 \code{[automap]}.
 }
-\examples{
-get_texture("spacey1")
-}
 \keyword{internal}

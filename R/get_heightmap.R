@@ -16,6 +16,8 @@
 #' resulting .tif to.
 #' @param sr_bbox Spatial reference code (ISO 19111) for bounding box
 #' @param sr_image Spatial reference code (ISO 19111) for image
+#' @param verbose Logical: print out debug information while trying to query the
+#' elevation map server?
 #'
 #' @return A matrix object containing elevation data suitable for use with
 #' mapping functions. Returned invisibly.
@@ -41,7 +43,8 @@ get_heightmap <- function(bbox,
                           save.tif = FALSE,
                           tif.filename = NULL,
                           sr_bbox = 4326,
-                          sr_image = 4326) {
+                          sr_image = 4326,
+                          verbose = FALSE) {
   stopifnot(is.logical(save.tif))
   if (img.width > 8000 || img.height > 8000) {
     stop(paste(
@@ -86,7 +89,8 @@ get_heightmap <- function(bbox,
       )
     )
 
-    if (httr::status_code(res) != 200) stop(httr::status_code(res))
+    if (httr::status_code(res) != 200) stop(paste("Query returned error code",
+                                            httr::status_code(res)))
 
     body <- httr::content(res, type = "application/json")
     img_res <- httr::GET(body$href)
@@ -96,7 +100,13 @@ get_heightmap <- function(bbox,
   counter <- 1
   while (httr::status_code(img_res) != 200 && counter < 15) {
     img_res <- get_tif()
+    if (verbose) print(paste0("Attempt #", counter, ": status code ",
+                              httr::status_code(img_res)))
     counter <- counter + 1
+  }
+
+  if (httr::status_code(img_res) != 200) {
+    stop(paste("Map server returned error code", httr::status_code(img_res)))
   }
 
   img_bin <- httr::content(img_res, "raw")

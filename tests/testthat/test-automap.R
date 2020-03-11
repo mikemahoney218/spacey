@@ -23,7 +23,6 @@ test_that("automap creates the same map twice", {
 })
 
 test_that("automap builds from local files", {
-  skip_on_cran()
   expect_invisible(automap(
     from.file = TRUE,
     tif.filename = "../data/boston_heights.tif",

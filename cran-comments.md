@@ -7,16 +7,7 @@
 
 ## R CMD check results
 
-There were no ERRORs or WARNINGs.
-
-There was one NOTE:
-
-* checking CRAN incoming feasibility ... NOTE
-Maintainer: 'Michael Mahoney <mike.mahoney.218@gmail.com>'
-
-New submission
-
-This is my first submission of this package.
+There were no ERRORs, WARNINGs, or NOTEs.
 
 ## Downstream Dependencies
 

@@ -13,6 +13,8 @@
 #'
 #' @keywords internal
 #'
+#' @examples
+#' get_texture("spacey1")
 #' @export
 get_texture <- function(colorscale) {
   if (colorscale == "spacey1") {

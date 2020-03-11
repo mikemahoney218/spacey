@@ -273,7 +273,6 @@ automap <- function(lat = NULL,
     }
   }
 
-
   if (from.file == TRUE || from.file == "tif") {
     heightmap <- load_heightmap(tif.filename)
   } else {

@@ -61,19 +61,6 @@ test_that("automap warnings fire appropriately", {
   ))
 })
 
-test_that("automap reproduces maps", {
-  skip_on_cran()
-  skip_on_appveyor() # appveyor dislikes this pathing
-  boston_map <- tempfile("boston", fileext = ".png")
-  x <- automap(lat = 42.3601, lng = -71.0589, z = 0.3)
-  rayshader::save_png(x, boston_map)
-  expect_equal(
-    load_overlay(boston_map),
-    load_overlay(pkgload::package_file("vignettes/boston_simple.png")),
-    tolerance = 0.004
-  )
-})
-
 test_that("automap errors fire appropriately", {
   expect_error(automap(
     lat = 42.3601, lng = -71.0589, save.file = TRUE,

@@ -13,7 +13,8 @@ get_heightmap(
   save.tif = FALSE,
   tif.filename = NULL,
   sr_bbox = 4326,
-  sr_image = 4326
+  sr_image = 4326,
+  verbose = FALSE
 )
 }
 \arguments{
@@ -37,6 +38,9 @@ resulting .tif to.}
 \item{sr_bbox}{Spatial reference code (ISO 19111) for bounding box}
 
 \item{sr_image}{Spatial reference code (ISO 19111) for image}
+
+\item{verbose}{Logical: print out debug information while trying to query the
+elevation map server?}
 }
 \value{
 A matrix object containing elevation data suitable for use with

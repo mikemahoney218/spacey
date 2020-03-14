@@ -89,8 +89,12 @@ get_heightmap <- function(bbox,
       )
     )
 
-    if (httr::status_code(res) != 200) stop(paste("Query returned error code",
-                                            httr::status_code(res)))
+    if (httr::status_code(res) != 200) {
+      stop(paste(
+        "Query returned error code",
+        httr::status_code(res)
+      ))
+    }
 
     body <- httr::content(res, type = "application/json")
     img_res <- httr::GET(body$href)
@@ -100,8 +104,12 @@ get_heightmap <- function(bbox,
   counter <- 1
   while (httr::status_code(img_res) != 200 && counter < 15) {
     img_res <- get_tif()
-    if (verbose) print(paste0("Attempt #", counter, ": status code ",
-                              httr::status_code(img_res)))
+    if (verbose) {
+      print(paste0(
+        "Attempt #", counter, ": status code ",
+        httr::status_code(img_res)
+      ))
+    }
     counter <- counter + 1
   }
 

@@ -164,7 +164,8 @@ rayshader. It requires a functioning internet connection to retrieve data.</p>
   <span class='kw'>save.tif</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>tif.filename</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>sr_bbox</span> <span class='kw'>=</span> <span class='fl'>4326</span>,
-  <span class='kw'>sr_image</span> <span class='kw'>=</span> <span class='fl'>4326</span>
+  <span class='kw'>sr_image</span> <span class='kw'>=</span> <span class='fl'>4326</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -208,6 +209,11 @@ resulting .tif to.</p></td>
     <tr>
       <th>sr_image</th>
       <td><p>Spatial reference code (ISO 19111) for image</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Logical: print out debug information while trying to query the
+elevation map server?</p></td>
     </tr>
     </table>
 

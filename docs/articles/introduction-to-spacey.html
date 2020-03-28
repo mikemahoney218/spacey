@@ -112,40 +112,41 @@
 <p>First, let’s load our package:</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">spacey</span>)</pre></body></html></div>
 <p>The most comprehensive command in <code>spacey</code> is <code>automap</code>, which only requires two vectors, one for latitude and one for longitude<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>, in order to quickly generate a rayshader image. In fact, you can use as little as a single coordinate pair:</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="../reference/automap.html">automap</a></span>(<span class="fl">44.121268</span>, -<span class="fl">73.903734</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">example_map</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/automap.html">automap</a></span>(<span class="fl">44.121268</span>, -<span class="fl">73.903734</span>)
+<span class="no">example_map</span></pre></body></html></div>
 <p><img src="../man/figures/README-johns_brook_basic-1.png" width="336"></p>
 <p>And it isn’t much harder to add overlays of satellite imagery:</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="../reference/automap.html">automap</a></span>(<span class="fl">44.121268</span>, -<span class="fl">73.903734</span>, <span class="kw">overlay</span> <span class="kw">=</span> <span class="st">"World_Imagery"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">example_map</span>$<span class="fu">update_values</span>(<span class="kw">overlay</span> <span class="kw">=</span> <span class="st">"World_Imagery"</span>)
+<span class="no">example_map</span></pre></body></html></div>
 <p><img src="../man/figures/README-johns_brook_overlay-1.png" width="336"></p>
 <p>Or turn those into 3D visuals:</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="../reference/automap.html">automap</a></span>(<span class="fl">44.121268</span>,
-  -<span class="fl">73.903734</span>,
-  <span class="kw">overlay</span> <span class="kw">=</span> <span class="st">"World_Imagery"</span>,
-  <span class="kw">method</span> <span class="kw">=</span> <span class="st">"3d"</span>,
-  <span class="kw">zoom</span> <span class="kw">=</span> <span class="fl">10</span>
-)</pre></body></html></div>
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">example_map</span>$<span class="fu">update_values</span>(<span class="kw">method</span> <span class="kw">=</span> <span class="st">"3d"</span>)
+<span class="no">example_map</span></pre></body></html></div>
 <p><img src="../man/figures/README-johns_brook_3d-1.png" width="336"></p>
 <p>In addition, <code>automap</code> supports parallelization with <code>future</code> straight out of the box to speed up map generation – just call <code><a href="https://rdrr.io/pkg/future/man/plan.html">future::plan("multisession")</a></code> (or whatever plan you prefer) before <code>automap</code> to run the different rayshading processes in parallel, notably speeding up the whole map generation process.</p>
-<p>All of the elevation and imagery data pulled by this package comes via the <a href="https://www.usgs.gov/core-science-systems/national-geospatial-program/national-map">USGS National Map API</a>, with the satellite imagery in particular coming via <a href="https://services.arcgisonline.com/ArcGIS/rest/services">ESRI’s MapServer API</a>. If you want to save these off as files (so that you can work on your maps without an Internet connection, or archive the data used), you can set <code>save.file = TRUE</code> in your automap call and provide names for your output files:</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="../reference/automap.html">automap</a></span>(<span class="fl">44.121268</span>,
-        -<span class="fl">73.903734</span>,
-        <span class="kw">overlay</span> <span class="kw">=</span> <span class="st">"World_Imagery"</span>,
-        <span class="kw">save.file</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
-        <span class="kw">tif.filename</span> <span class="kw">=</span> <span class="st">"my_heightmap.tif"</span>,
-        <span class="kw">png.filename</span> <span class="kw">=</span> <span class="st">"my_overlay.png"</span>)</pre></body></html></div>
-<p>It’s also possible to set <code>save.file</code> to either <code>png</code> or <code>tif</code>, if you’re only interested in saving one type of file locally – in which case, you only need to provide one filename!</p>
-<p>In order to then build our maps from those local files, we only need to swap the <code>save.file = TRUE</code> argument out for <code>from.file = TRUE</code> in order to build from local files:</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="../reference/automap.html">automap</a></span>(<span class="fl">44.121268</span>,
-        -<span class="fl">73.903734</span>,
-        <span class="kw">overlay</span> <span class="kw">=</span> <span class="st">"World_Imagery"</span>,
-        <span class="kw">from.file</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
-        <span class="kw">tif.filename</span> <span class="kw">=</span> <span class="st">"my_heightmap.tif"</span>,
-        <span class="kw">png.filename</span> <span class="kw">=</span> <span class="st">"my_overlay.png"</span>)</pre></body></html></div>
-<p>The <code>automap</code> function can be customized in dozens of ways to quickly iterate on maps, changing the specified overlays, terrain heights, color shading, and more. However, since every image I include here has to be downloaded by every single person who installs the package (and CRAN has a limit on package sizes for this very reason), those topics are covered online at the <a href="https://mikemahoney218.github.io/spacey/articles/automap-walkthrough.html">package’s documentation website.</a> Instead, this vignette will focus on the other functions included in the <code>spacey</code> package.</p>
-<p>If you only want to access the USGS and ESRI APIs, for instance, there’s no need to use the <code>automap</code> function at all. Instead, you can use the <code>get_heightmap</code> and <code>get_image_overlay</code> functions to accomplish a similar effect.</p>
+<p>All of the elevation and imagery data pulled by this package comes via the <a href="https://www.usgs.gov/core-science-systems/national-geospatial-program/national-map">USGS National Map API</a>, with the satellite imagery in particular coming via <a href="https://services.arcgisonline.com/ArcGIS/rest/services">ESRI’s MapServer API</a>. If you want to save these off as files (so that you can work on your maps without an Internet connection, or archive the data used), use the <code><a href="../reference/get_heightmap.html">get_heightmap()</a></code> and <code><a href="../reference/get_image_overlay.html">get_image_overlay()</a></code> functions:</p>
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">bounding_box</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_centroid_bounding_box.html">get_centroid_bounding_box</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">lat</span> <span class="kw">=</span> <span class="fl">44.121268</span>, <span class="kw">lng</span> <span class="kw">=</span> -<span class="fl">73.903734</span>),
+                                          <span class="kw">distance</span> <span class="kw">=</span> <span class="fl">10</span>)
+<span class="no">heightmap</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_heightmap.html">get_heightmap</a></span>(<span class="no">bounding_box</span>,
+                           <span class="kw">save.tif</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
+                           <span class="kw">tif.filename</span> <span class="kw">=</span> <span class="st">"out.tif"</span>)
+<span class="no">overlay</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_image_overlay.html">get_image_overlay</a></span>(<span class="no">bounding_box</span>,
+                             <span class="kw">save.png</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
+                             <span class="kw">png.filename</span> <span class="kw">=</span> <span class="st">"out.png"</span>)</pre></body></html></div>
+<p>You can then use <code>load_heightmap</code> and <code>load_overlay</code> functions to load those files into your session, and then provide the arrays to the <code>heightmap</code> and <code>texture</code> arguments of <code>automap</code>.</p>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">saved_map</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/automap.html">automap</a></span>(<span class="kw">heightmap</span> <span class="kw">=</span> <span class="no">heightmap</span>,
+                     <span class="kw">texture</span> <span class="kw">=</span> <span class="no">overlay</span>)</pre></body></html></div>
+<p>The <code>automap</code> function can be customized in dozens of ways to quickly iterate on maps, changing the specified overlays, terrain heights, color shading, and more. To tweak individual values used in calculating your map, use the <code>update_values()</code> function attached to your map objects to only refresh components which will change as a result:</p>
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="kw pkg">tictoc</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">tic</a></span>()
+<span class="no">example_map</span>$<span class="fu">update_values</span>(<span class="kw">overlay</span> <span class="kw">=</span> <span class="st">"USA_Topo_Maps"</span>)
+<span class="no">example_map</span>
+<span class="kw pkg">tictoc</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span>()
+<span class="co">#&gt; 8.821 sec elapsed</span></pre></body></html></div>
+<p><img src="topo.png" width="350"></p>
+<p>If you only want to access the USGS and ESRI APIs, there’s no need to use the <code>automap</code> function at all. Instead, you can use the <code>get_heightmap</code> and <code>get_image_overlay</code> functions to accomplish a similar effect.</p>
 <p>The largest difference with these functions (other than their return objects) is that they expect a <em>bounding box</em> for your map, while <code>automap</code> will calculate one for you based on the spatial extent of your input data and any value you pass to its <code>distance</code> argument. The bounding box needs to be a list containing coordinates for the lower left and upper right corners of your data (as two separate list elements) – you can either provide these yourself, or use one of the two functions provided by <code>spacey</code> to do it for you!</p>
 <p>The first of these functions is <code>get_centroid_bounding_box</code>, which is what <code>automap</code> uses to find the bounding box for a single coordinate pair. Just provide a named vector with latitude and longitude for the center of your map, alongside the distance you want your map to span (from the central location to any corner):</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="../reference/get_centroid_bounding_box.html">get_centroid_bounding_box</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(
+<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="../reference/get_centroid_bounding_box.html">get_centroid_bounding_box</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(
   <span class="st">"lat"</span> <span class="kw">=</span> <span class="fl">44.121268</span>,
   <span class="st">"lng"</span> <span class="kw">=</span> -<span class="fl">73.903734</span>
 ),
@@ -159,7 +160,7 @@
 <span class="co">#&gt;       lat       lng </span>
 <span class="co">#&gt;  44.18475 -73.81515</span></pre></body></html></div>
 <p>If you have more than just a single coordinate pair, you’re still able to get a bounding box for your data via <code>get_coord_bounding_box</code> – just pass it vectors containing your latitude and longitude data:</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">df</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">df</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(
   <span class="kw">lat</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">44.05771</span>, <span class="fl">44.18475</span>),
   <span class="kw">lng</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">73.99212</span>, -<span class="fl">73.81515</span>)
 )
@@ -173,7 +174,7 @@
 <span class="co">#&gt;       lat       lng </span>
 <span class="co">#&gt;  44.18475 -73.81515</span></pre></body></html></div>
 <p>You can also still take advantage of expanding the map to a certain distance from your data’s central point by finding the centroid for your dataset – using <code>get_centroid</code> – and then passing that as the first argument to <code>get_centroid_bounding_box</code>:</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="../reference/get_centroid.html">get_centroid</a></span>(<span class="no">df</span>$<span class="no">lat</span>, <span class="no">df</span>$<span class="no">lng</span>)
+<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="../reference/get_centroid.html">get_centroid</a></span>(<span class="no">df</span>$<span class="no">lat</span>, <span class="no">df</span>$<span class="no">lng</span>)
 <span class="co">#&gt;       lat       lng </span>
 <span class="co">#&gt;  44.12126 -73.90373</span>
 
@@ -187,26 +188,12 @@
 <span class="co">#&gt;  44.18475 -73.81515</span></pre></body></html></div>
 <p>All of these functions also have the option to work with (and return) data in radians by setting <code>coord.unit = "radians"</code>; the default, however, is decimal degrees. Functions which take <code>distance</code> arguments also have a <code>dist.unit</code> argument, which can be used to provide distances in <code>"km"</code> (the default), <code>"miles", "m"</code> (for meters), or <code>"ft"</code>. Note that the conversions between these units are imperfect, so use <code>km</code> if precision is needed.</p>
 <p>No matter which method you use, that bounding box can then be passed to <code>get_heightmap</code> to obtain USGS elevation data for your area of interest, or <code>get_image_overlay</code> to obtain satellite images:</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">bbox</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_centroid_bounding_box.html">get_centroid_bounding_box</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"lat"</span> <span class="kw">=</span> <span class="fl">44.121268</span>,
+<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">bbox</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_centroid_bounding_box.html">get_centroid_bounding_box</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"lat"</span> <span class="kw">=</span> <span class="fl">44.121268</span>,
                                  <span class="st">"lng"</span> <span class="kw">=</span> -<span class="fl">73.903734</span>),
                                 <span class="kw">distance</span> <span class="kw">=</span> <span class="fl">10</span>)
 
 <span class="no">heightmap</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_heightmap.html">get_heightmap</a></span>(<span class="no">bbox</span>)</pre></body></html></div>
 <p>Both of these functions also provide options to save the downloaded imagery to file – either using <code>save.tif</code> in <code>get_heightmap</code> or <code>save.png</code> in <code>get_image_overlay</code>. You can then load these images back into an R session using the <code>load_heightmap</code> or <code>load_overlay</code> functions, respectively, which will create objects ready to be used for mapping with rayshader.</p>
-<p>If we wanted, we can now replicate the default behavior of <code>automap</code> (although without supporting parallelization via <code>future</code>) by doing the following:</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">rayshader</span>)
-<span class="no">heightmap</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/rayshader/man/sphere_shade.html">sphere_shade</a></span>(<span class="kw">zscale</span> <span class="kw">=</span> <span class="fl">9</span>,
-               <span class="kw">texture</span> <span class="kw">=</span> <span class="st">"imhof4"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/rayshader/man/add_water.html">add_water</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/rayshader/man/detect_water.html">detect_water</a></span>(<span class="no">heightmap</span>,
-                         <span class="kw">zscale</span> <span class="kw">=</span> <span class="fl">9</span>),
-      <span class="kw">color</span> <span class="kw">=</span> <span class="st">"imhof4"</span>) <span class="kw">%&gt;%</span>
-      <span class="fu"><a href="https://rdrr.io/pkg/rayshader/man/add_shadow.html">add_shadow</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/rayshader/man/ray_shade.html">ray_shade</a></span>(<span class="no">heightmap</span>,
-                           <span class="kw">zscale</span> <span class="kw">=</span> <span class="fl">9</span>),
-                 <span class="kw">max_darken</span> <span class="kw">=</span> <span class="fl">0.5</span>) <span class="kw">%&gt;%</span>
-      <span class="fu"><a href="https://rdrr.io/pkg/rayshader/man/add_shadow.html">add_shadow</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/rayshader/man/ambient_shade.html">ambient_shade</a></span>(<span class="no">heightmap</span>, <span class="kw">zscale</span> <span class="kw">=</span> <span class="fl">9</span>), <span class="kw">max_darken</span> <span class="kw">=</span> <span class="fl">0.5</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/rayshader/man/plot_map.html">plot_map</a></span>()</pre></body></html></div>
-<p><img src="../man/figures/README-johns_brook_basic-1.png" width="336"></p>
 <p>My guess is that most people who use <code>spacey</code> will eventually move on to carefully designing their output maps, since you’re able to control things with much more granularity using the core <code>rayshader</code> functions than you are with <code>spacey</code>. However, the data import functions and quick iteration provided by <code>spacey</code> will hopefully help you get started with making these beautiful maps, letting you spend less time fighting with data and more time communicating your landscape to your audience.</p>
 <div id="miscellania" class="section level2">
 <h2 class="hasAnchor">

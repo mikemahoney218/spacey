@@ -109,25 +109,35 @@
 
 <p>The <code>spacey</code> package provides three main functions to make it easy to quickly build beautiful maps of locations in the United States via the <code>[rayshader](https://github.com/tylermorganwall/rayshader)</code> package. First off, it provides an <code>automap</code> function to quickly make maps using data from the USGS national map:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(spacey)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">automap</span>(<span class="fl">44.121268</span>, <span class="fl">-73.903734</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" data-line-number="2">example_map &lt;-<span class="st"> </span><span class="kw">automap</span>(<span class="fl">44.121268</span>, <span class="fl">-73.903734</span>)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">example_map</a></code></pre></div>
 <p><img src="reference/figures/README-johns_brook_basic-1.png" width="100%"></p>
 <p>As well as letting you incorporate overlay textures from ESRI’s MapServer API:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">automap</span>(<span class="fl">44.121268</span>, <span class="fl">-73.903734</span>, <span class="dt">overlay =</span> <span class="st">"World_Imagery"</span>)</a></code></pre></div>
-<p><img src="reference/figures/README-johns_brook_overlay-1.png" width="100%"></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">example_map<span class="op">$</span><span class="kw">update_values</span>(<span class="dt">overlay =</span> <span class="st">"World_Imagery"</span>)</a></code></pre></div>
 <p>And optionally even turn these into 3D visualizations:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">automap</span>(<span class="fl">44.121268</span>,</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="fl">-73.903734</span>,</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">  <span class="dt">overlay =</span> <span class="st">"World_Imagery"</span>,</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">  <span class="dt">method =</span> <span class="st">"3d"</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">example_map<span class="op">$</span>method &lt;-<span class="st"> "3d"</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">example_map</a></code></pre></div>
 <p><img src="reference/figures/README-johns_brook_3d-1.png" width="100%"></p>
-<p>And while <code>automap</code> tries to make it easy to configure these maps, <code>spacey</code> also lets you save off your heightmaps and overlays directly, either through arguments to <code>automap</code> or the functions <code>get_heightmap</code> and <code>get_overlay</code>, so that you can work directly with <code>rayshader</code> to make these maps by yourself.</p>
+<p>All of these can also work with the <code>future</code> package to speed up processing, letting you iterate on your map designs faster:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">library</span>(future)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">plan</span>(<span class="st">"sequential"</span>)</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">tictoc<span class="op">::</span><span class="kw">tic</span>()</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">example_map &lt;-<span class="st"> </span><span class="kw">automap</span>(<span class="fl">44.121268</span>, <span class="fl">-73.903734</span>)</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">tictoc<span class="op">::</span><span class="kw">toc</span>()</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; 22.934 sec elapsed</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="kw">plan</span>(<span class="st">"multisession"</span>)</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">tictoc<span class="op">::</span><span class="kw">tic</span>()</a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">example_map &lt;-<span class="st"> </span><span class="kw">automap</span>(<span class="fl">44.121268</span>, <span class="fl">-73.903734</span>)</a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">tictoc<span class="op">::</span><span class="kw">toc</span>()</a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; 16.619 sec elapsed</span></a></code></pre></div>
+<p>And while <code>automap</code> tries to make it easy to configure these maps, <code>spacey</code> also lets you save off your heightmaps and overlays directly through the functions <code>get_heightmap</code> and <code>get_overlay</code>, so that you can work directly with <code>rayshader</code> to make these maps by yourself.</p>
 <p>There’s a lot more to these three functions, alongside a few basic geospatial utilities <code>spacey</code> implements to make it easier to make maps from your data. For more information, check out the <a href="https://mikemahoney218.github.io/spacey/articles/introduction-to-spacey.html">introductory vignette</a>! ## Installation</p>
 <p>If the CRAN version badge above is green, you can install the released version of <code>spacey</code> from <a href="https://CRAN.R-project.org">CRAN</a> with:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">"spacey"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">"spacey"</span>)</a></code></pre></div>
 <p>You can always get the most up-to-date development version with:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"mikemahoney218/spacey"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># install.packages("remotes")</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">remotes<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"mikemahoney218/spacey"</span>)</a></code></pre></div>
 <div id="functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#functions" class="anchor"></a>Functions</h2>

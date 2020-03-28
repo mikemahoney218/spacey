@@ -241,6 +241,28 @@ spacey_map <- R6::R6Class("spacey_map",
       run_land <- run_water <- run_base <- run_ray <- run_map <- FALSE
 
       if (any(names(dots) %in% c("z", "colorscale"))) {
+        if (any(names(dots) %in% c("z"))) {
+          names(self$z) <- tolower(names(self$z))
+          if (length(self$z) > 1) {
+            self$water.z <- self$z["water"]
+            self$land.z <- self$z <- self$z["land"]
+          } else {
+            self$land.z <- self$water.z <- self$z
+          }
+        }
+        if (any(names(dots) %in% c("colorscale"))) {
+          names(self$colorscale) <- tolower(names(self$colorscale))
+          if (length(self$colorscale) > 1) {
+            self$water.color <- self$colorscale["water"]
+            self$land.color <- self$colorscale <- self$colorscale["land"]
+          } else {
+            self$land.color <- self$water.color <- self$colorscale
+          }
+          if (grepl("^spacey", self$water.color)) self$water.color <- "lightblue"
+          self$water.color <- get_texture(self$water.color)
+          self$land.color <- get_texture(self$land.color)
+          self$colorscale <- get_texture(self$colorscale)
+        }
         run_land <- TRUE
         run_water <- TRUE
       } else if (any(names(dots) %in% c("land.z", "land.color"))) {
@@ -276,7 +298,7 @@ spacey_map <- R6::R6Class("spacey_map",
         "img.width",
         "img.height"
       ))) {
-        private$new_data(self$heightmap, self$texture, self$overlay)
+        private$new_data(NULL, NULL, NULL)
         run_map <- TRUE
       }
 
@@ -667,33 +689,4 @@ automap <- function(lat = NULL, lng = NULL, distance = 10, method = "2d",
     dist.unit = dist.unit, coord.unit = coord.unit,
     heightmap = heightmap, texture = texture
   )
-}
-
-#' Update values within the map object and recalculate arrays as necessary
-#'
-#' This function will update the values within whatever object you pass it;
-#' assigning it to another name will create a new reference (but not a new
-#' object) and both names will point to the same, modified object. To create a
-#' new object, use \code{\link[spacey]{make_copy}} or your object's \code{clone}
-#' method.
-#'
-#' @param map_object Your \code{spacey_map} object.
-#' @param ... Any combination of fields accepted by \code{\link[spacey]{automap}}.
-#' Fields must be named.
-#'
-#' @export
-update_values <- function(map_object, ...) {
-  map_object$update_values(...)
-}
-
-#' Make a copy
-#'
-#' This function is an extremely thin wrapper around the R6 \code{clone} method
-#' to allow for more natural R code.
-#'
-#' @param map_object Your \code{spacey_map} object.
-#'
-#' @export
-make_copy <- function(map_object) {
-  map_object$clone()
 }

@@ -22,32 +22,43 @@ First off, it provides an `automap` function to quickly make maps using
 data from the USGS national map:
 
     library(spacey)
-    automap(44.121268, -73.903734)
+    example_map <- automap(44.121268, -73.903734)
+    example_map
 
 <img src="man/figures/README-johns_brook_basic-1.png" width="100%" />
 
 As well as letting you incorporate overlay textures from ESRI’s
 MapServer API:
 
-    automap(44.121268, -73.903734, overlay = "World_Imagery")
-
-<img src="man/figures/README-johns_brook_overlay-1.png" width="100%" />
+    example_map$update_values(overlay = "World_Imagery")
 
 And optionally even turn these into 3D visualizations:
 
-    automap(44.121268,
-      -73.903734,
-      overlay = "World_Imagery",
-      method = "3d"
-    )
+    example_map$method <- "3d"
+    example_map
 
 <img src="man/figures/README-johns_brook_3d-1.png" width="100%" />
 
+All of these can also work with the `future` package to speed up
+processing, letting you iterate on your map designs faster:
+
+    library(future)
+    plan("sequential")
+    tictoc::tic()
+    example_map <- automap(44.121268, -73.903734)
+    tictoc::toc()
+    #> 22.934 sec elapsed
+
+    plan("multisession")
+    tictoc::tic()
+    example_map <- automap(44.121268, -73.903734)
+    tictoc::toc()
+    #> 16.619 sec elapsed
+
 And while `automap` tries to make it easy to configure these maps,
-`spacey` also lets you save off your heightmaps and overlays directly,
-either through arguments to `automap` or the functions `get_heightmap`
-and `get_overlay`, so that you can work directly with `rayshader` to
-make these maps by yourself.
+`spacey` also lets you save off your heightmaps and overlays directly
+through the functions `get_heightmap` and `get_overlay`, so that you can
+work directly with `rayshader` to make these maps by yourself.
 
 There’s a lot more to these three functions, alongside a few basic
 geospatial utilities `spacey` implements to make it easier to make maps
@@ -62,8 +73,8 @@ version of `spacey` from [CRAN](https://CRAN.R-project.org) with:
 
 You can always get the most up-to-date development version with:
 
-    # install.packages("devtools")
-    devtools::install_github("mikemahoney218/spacey")
+    # install.packages("remotes")
+    remotes::install_github("mikemahoney218/spacey")
 
 Functions
 ---------

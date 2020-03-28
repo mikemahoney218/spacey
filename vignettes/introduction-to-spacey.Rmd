@@ -34,7 +34,8 @@ popular (longitude, latitude) format.], in order to quickly generate a rayshader
 image. In fact, you can use as little as a single coordinate pair:
 
 ```r
-automap(44.121268, -73.903734)
+example_map <- automap(44.121268, -73.903734)
+example_map
 ```
 
 ```{r, echo=FALSE}
@@ -44,7 +45,8 @@ knitr::include_graphics(pkgload::package_file("man/figures/README-johns_brook_ba
 And it isn't much harder to add overlays of satellite imagery:
 
 ``` r
-automap(44.121268, -73.903734, overlay = "World_Imagery")
+example_map$update_values(overlay = "World_Imagery")
+example_map
 ```
 
 ```{r echo=FALSE}
@@ -54,12 +56,8 @@ knitr::include_graphics(pkgload::package_file("man/figures/README-johns_brook_ov
 Or turn those into 3D visuals:
 
 ``` r
-automap(44.121268,
-  -73.903734,
-  overlay = "World_Imagery",
-  method = "3d",
-  zoom = 10
-)
+example_map$update_values(method = "3d")
+example_map
 ```
 
 ```{r echo=FALSE}
@@ -76,45 +74,48 @@ All of the elevation and imagery data pulled by this package comes via the
 with the satellite imagery in particular coming via 
 [ESRI's MapServer API](https://services.arcgisonline.com/ArcGIS/rest/services). 
 If you want to save these off as files (so that you can work on your maps 
-without an Internet connection, or archive the data used), you can set 
-`save.file = TRUE` in your automap call and provide names for your output files:
+without an Internet connection, or archive the data used), use the 
+`get_heightmap()` and `get_image_overlay()` functions:
 
 ``` r
-automap(44.121268, 
-        -73.903734, 
-        overlay = "World_Imagery",
-        save.file = TRUE, 
-        tif.filename = "my_heightmap.tif",
-        png.filename = "my_overlay.png")
+bounding_box <- get_centroid_bounding_box(c(lat = 44.121268, lng = -73.903734), 
+                                          distance = 10)
+heightmap <- get_heightmap(bounding_box,
+                           save.tif = TRUE,
+                           tif.filename = "out.tif")
+overlay <- get_image_overlay(bounding_box,
+                             save.png = TRUE,
+                             png.filename = "out.png")
 ```
 
-It's also possible to set `save.file` to either `png` or `tif`, if you're only 
-interested in saving one type of file locally -- in which case, you only need to 
-provide one filename!
+You can then use `load_heightmap` and `load_overlay` functions to load those 
+files into your session, and then provide the arrays to the `heightmap` and 
+`texture` arguments of `automap`.
 
-In order to then build our maps from those local files, we only need to swap the
-`save.file = TRUE` argument out for `from.file = TRUE` in order to build from 
-local files:
-
-``` r
-automap(44.121268, 
-        -73.903734, 
-        overlay = "World_Imagery",
-        from.file = TRUE, 
-        tif.filename = "my_heightmap.tif",
-        png.filename = "my_overlay.png")
+```r
+saved_map <- automap(heightmap = heightmap,
+                     texture = overlay)
 ```
 
 The `automap` function can be customized in dozens of ways to quickly iterate on
 maps, changing the specified overlays, terrain heights, color shading, and more.
-However, since every image I include here has to be downloaded by every single 
-person who installs the package (and CRAN has a limit on package sizes for this 
-very reason), those topics are covered online at the [package's documentation 
-website.](https://mikemahoney218.github.io/spacey/articles/automap-walkthrough.html)
-Instead, this vignette will focus on the other functions included in the 
-`spacey` package.
+To tweak individual values used in calculating your map, use the 
+`update_values()` function attached to your map objects to only refresh 
+components which will change as a result:
 
-If you only want to access the USGS and ESRI APIs, for instance, there's no need 
+```r
+tictoc::tic()
+example_map$update_values(overlay = "USA_Topo_Maps")
+example_map
+tictoc::toc()
+#> 8.821 sec elapsed
+```
+
+```{r echo=FALSE}
+knitr::include_graphics("topo.png")
+```
+
+If you only want to access the USGS and ESRI APIs, there's no need 
 to use the `automap` function at all. Instead, you can use the `get_heightmap` 
 and `get_image_overlay` functions to accomplish a similar effect.
 
@@ -189,29 +190,6 @@ file -- either using `save.tif` in `get_heightmap` or `save.png` in
 `get_image_overlay`. You can then load these images back into an R session using 
 the `load_heightmap` or `load_overlay` functions, respectively, which will 
 create objects ready to be used for mapping with rayshader. 
-
-If we wanted, we can now
-replicate the default behavior of `automap` (although without supporting 
-parallelization via `future`) by doing the following:
-
-``` r
-library(rayshader)
-heightmap %>%
-  sphere_shade(zscale = 9,
-               texture = "imhof4") %>%
-  add_water(detect_water(heightmap,
-                         zscale = 9),
-      color = "imhof4") %>%
-      add_shadow(ray_shade(heightmap,
-                           zscale = 9),
-                 max_darken = 0.5) %>%
-      add_shadow(ambient_shade(heightmap, zscale = 9), max_darken = 0.5) %>%
-  plot_map()
-```
-
-```{r, echo=FALSE}
-knitr::include_graphics(pkgload::package_file("man/figures/README-johns_brook_basic-1.png"))
-```
 
 My guess is that most people who use `spacey` will eventually move on to 
 carefully designing their output maps, since you're able to control things with 

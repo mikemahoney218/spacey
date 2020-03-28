@@ -7,8 +7,8 @@
 get_image_overlay(
   bbox,
   overlay = c("World_Imagery", "NatGeo_World_Map", "USA_Topo_Maps",
-    "World_Physical_Map", "World_Shaded_Relief", "World_Street_Map", "World_Terrain_Base",
-    "World_Topo_Map"),
+    "World_Physical_Map", "World_Shaded_Relief", "World_Street_Map",
+    "World_Terrain_Base", "World_Topo_Map"),
   img.width = 600,
   img.height = 600,
   lat = NULL,

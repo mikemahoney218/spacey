@@ -17,6 +17,10 @@
 #' get_texture("spacey1")
 #' @export
 get_texture <- function(colorscale) {
+  if (!grepl("^spacey", colorscale)) {
+    return(colorscale)
+  }
+
   if (colorscale == "spacey1") {
     rayshader::create_texture(
       "#53777A",

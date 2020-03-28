@@ -14,95 +14,30 @@ test_that("automap creates the same map twice", {
       lat = 42.3601, lng = -71.0589,
       overlay = "World_Imagery",
       colorscale = c(
-        "watercolor" = "imhof4",
-        "landcolor" = "imhof3"
+        "water" = "imhof4",
+        "land" = "imhof3"
       ),
       distance = 1
-    )
+    ),
+    tolerance = 1e-7
   )
 })
 
 test_that("automap builds from local files", {
-  expect_invisible(automap(
-    from.file = TRUE,
-    tif.filename = "../data/boston_heights.tif",
-    png.filename = "../data/boston_overlay.png",
-    print.map = FALSE
-  ))
-})
+  tif <- load_heightmap("../data/boston_heights.tif")
+  overlay <- load_overlay("../data/boston_overlay.png")
 
-test_that("automap warnings fire appropriately", {
-  skip_on_cran()
-  expect_warning(automap(
-    from.file = TRUE,
-    tif.filename = "../data/boston_heights.tif",
-    png.filename = "../data/boston_overlay.png",
-    save.file = TRUE
-  ))
-  expect_warning(automap(
-    from.file = "tif",
-    tif.filename = "../data/boston_heights.tif",
-    save.file = TRUE
-  ))
-  expect_warning(automap(
-    lat = 42.3601, lng = -71.0589, from.file = "png",
-    png.filename = "../data/boston_overlay.png",
-    save.file = TRUE
-  ))
-  expect_warning(automap(
-    lat = 42.3601, lng = -71.0589,
-    colorscale = list(rayshader::create_texture(
-      "#53777A",
-      "#C02942",
-      "#D95B43",
-      "#542437",
-      "#F7E29E"
-    ))
+  expect_visible(automap(
+    heightmap = tif,
+    texture = overlay
   ))
 })
 
 test_that("automap errors fire appropriately", {
-  expect_error(automap(
-    lat = 42.3601, lng = -71.0589, save.file = TRUE,
-    tif.filename = "junk.png"
-  ))
-  expect_error(automap(
-    lat = 42.3601, lng = -71.0589, save.file = TRUE,
-    png.filename = "junk.tif"
-  ))
-
   expect_error(automap(lat = 42.3601, lng = -71.0589, overlay = TRUE))
-
-  expect_error(automap(
-    lat = 42.3601, lng = -71.0589,
-    colorscale = c(
-      "water" = "imhof4",
-      "watercolor" = "imhof4"
-    )
-  ))
-  expect_error(automap(
-    lat = 42.3601, lng = -71.0589,
-    colorscale = c(
-      "water" = "imhof4",
-      "other" = "imhof4"
-    )
-  ))
   expect_error(automap(
     lat = 42.3601, lng = -71.0589,
     colorscale = "spacey10"
-  ))
-  junk_file <- tempfile("junk", fileext = ".png")
-  expect_error(automap(
-    lat = 42.3601, lng = -71.0589,
-    save.file = "png",
-    png.filename = junk_file
-  ))
-  junk_file <- tempfile("junk", fileext = ".txt")
-  expect_error(automap(
-    lat = 42.3601, lng = -71.0589,
-    save.file = "png",
-    overlay = "World_Imagery",
-    png.filename = junk_file
   ))
 })
 
@@ -130,7 +65,10 @@ test_that("3d maps work", {
   expect_error(
     automap(
       lat = 42.3601, lng = -71.0589,
-      colorscale = "spacey1",
+      colorscale = c(
+        land = "spacey2",
+        water = "lightblue"
+      ),
       method = "3d"
     ),
     NA

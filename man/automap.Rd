@@ -8,7 +8,7 @@ automap(
   lat = NULL,
   lng = NULL,
   distance = 10,
-  method = c("2d", "3d"),
+  method = "2d",
   img.width = 600,
   img.height = 600,
   overlay = NULL,
@@ -20,7 +20,7 @@ automap(
   sun.angle = 315,
   sun.altitude = 45,
   water.cutoff = 0.999,
-  water.min.area = length(heightmap)/400,
+  water.min.area = NULL,
   water.max.height = NULL,
   solid = TRUE,
   shadow = TRUE,
@@ -30,15 +30,10 @@ automap(
   phi = 45,
   fov = 0,
   zoom = 1,
-  save.file = c(FALSE, "tif", "png", TRUE),
-  from.file = c(FALSE, "tif", "png", TRUE),
-  tif.filename = NULL,
-  png.filename = NULL,
-  dist.unit = c("km", "miles", "m", "ft"),
-  coord.unit = c("degrees", "radians"),
-  sr_bbox = 4326,
-  sr_image = 4326,
-  print.map = TRUE
+  dist.unit = "km",
+  coord.unit = "degrees",
+  heightmap = NULL,
+  texture = NULL
 )
 }
 \arguments{
@@ -117,25 +112,6 @@ provided, the maximum height a point can be classified water.}
 
 \item{zoom}{Zoom factor.}
 
-\item{save.file}{Should the heightmap (\code{= "tif"}), overlay
-(\code{= "png"}), or both (\code{= TRUE}) be saved? Default \code{FALSE}
-saves neither.}
-
-\item{from.file}{Should the map be built from local \code{.tif}
-and \code{.png} files, rather than downloaded data? Accepts logical
-\code{FALSE} (no local files used) and \code{TRUE} (local files used for both
-height maps and textures, if requested), as well as strings \code{tif}
-(only use height map, redownload PNG) and \code{png} (only use texture,
-redownload tif). Overrides save arguments if local files are used.}
-
-\item{tif.filename}{If \code{save.tif} is \code{TRUE}, filename to save the
-\code{.tif} height map to. If \code{from.file} is \code{TRUE}, filename to
-load the height map from.}
-
-\item{png.filename}{If \code{save.png} is \code{TRUE}, filename to save the
-\code{.png} texture to. If \code{from.file} is \code{TRUE}, filename to
-load the texture from.}
-
 \item{dist.unit}{Units for the distance argument. All units are converted to
 kilometers, with some errors in the transition due to floating point
 arithmetic -- so if high accuracy is needed, convert units to kilometers
@@ -144,11 +120,11 @@ beforehand.}
 \item{coord.unit}{Units for latitude and longitude, in either decimal degrees
 or radians.}
 
-\item{sr_bbox}{Spatial reference code (ISO 19111) for bounding box}
+\item{heightmap}{Heightmap array, either provided by the user or pulled
+via the USGS national map API.}
 
-\item{sr_image}{Spatial reference code (ISO 19111) for image}
-
-\item{print.map}{Logical -- should the output map be printed?}
+\item{texture}{Overlay image array, either provided by the user or pulled
+from the ESRI map texture API.}
 }
 \value{
 A rayshader map object, by default printed and returned invisibly.

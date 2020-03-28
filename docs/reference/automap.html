@@ -17,23 +17,27 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -49,7 +53,6 @@ said data into matrices, and runs the data through rayshader using
 sensible defaults in order to return a 2D shaded map relief. It requires a
 functioning internet connection in order to retrieve data." />
 <meta property="og:image" content="https://mikemahoney218.github.io/spacey/logo.png" />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -77,7 +80,7 @@ functioning internet connection in order to retrieve data." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -91,7 +94,7 @@ functioning internet connection in order to retrieve data." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">spacey</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1.9000</span>
       </span>
     </div>
 
@@ -163,7 +166,7 @@ functioning internet connection in order to retrieve data.</p>
   <span class='kw'>lat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>lng</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>distance</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2d"</span>, <span class='st'>"3d"</span>),
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"2d"</span>,
   <span class='kw'>img.width</span> <span class='kw'>=</span> <span class='fl'>600</span>,
   <span class='kw'>img.height</span> <span class='kw'>=</span> <span class='fl'>600</span>,
   <span class='kw'>overlay</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -175,7 +178,7 @@ functioning internet connection in order to retrieve data.</p>
   <span class='kw'>sun.angle</span> <span class='kw'>=</span> <span class='fl'>315</span>,
   <span class='kw'>sun.altitude</span> <span class='kw'>=</span> <span class='fl'>45</span>,
   <span class='kw'>water.cutoff</span> <span class='kw'>=</span> <span class='fl'>0.999</span>,
-  <span class='kw'>water.min.area</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>heightmap</span>)/<span class='fl'>400</span>,
+  <span class='kw'>water.min.area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>water.max.height</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>solid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>shadow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
@@ -185,15 +188,10 @@ functioning internet connection in order to retrieve data.</p>
   <span class='kw'>phi</span> <span class='kw'>=</span> <span class='fl'>45</span>,
   <span class='kw'>fov</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>save.file</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>FALSE</span>, <span class='st'>"tif"</span>, <span class='st'>"png"</span>, <span class='fl'>TRUE</span>),
-  <span class='kw'>from.file</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>FALSE</span>, <span class='st'>"tif"</span>, <span class='st'>"png"</span>, <span class='fl'>TRUE</span>),
-  <span class='kw'>tif.filename</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>png.filename</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>dist.unit</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"km"</span>, <span class='st'>"miles"</span>, <span class='st'>"m"</span>, <span class='st'>"ft"</span>),
-  <span class='kw'>coord.unit</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"degrees"</span>, <span class='st'>"radians"</span>),
-  <span class='kw'>sr_bbox</span> <span class='kw'>=</span> <span class='fl'>4326</span>,
-  <span class='kw'>sr_image</span> <span class='kw'>=</span> <span class='fl'>4326</span>,
-  <span class='kw'>print.map</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  <span class='kw'>dist.unit</span> <span class='kw'>=</span> <span class='st'>"km"</span>,
+  <span class='kw'>coord.unit</span> <span class='kw'>=</span> <span class='st'>"degrees"</span>,
+  <span class='kw'>heightmap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>texture</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -325,33 +323,6 @@ provided, the maximum height a point can be classified water.</p></td>
       <td><p>Zoom factor.</p></td>
     </tr>
     <tr>
-      <th>save.file</th>
-      <td><p>Should the heightmap (<code>= "tif"</code>), overlay
-(<code>= "png"</code>), or both (<code>= TRUE</code>) be saved? Default <code>FALSE</code>
-saves neither.</p></td>
-    </tr>
-    <tr>
-      <th>from.file</th>
-      <td><p>Should the map be built from local <code>.tif</code>
-and <code>.png</code> files, rather than downloaded data? Accepts logical
-<code>FALSE</code> (no local files used) and <code>TRUE</code> (local files used for both
-height maps and textures, if requested), as well as strings <code>tif</code>
-(only use height map, redownload PNG) and <code>png</code> (only use texture,
-redownload tif). Overrides save arguments if local files are used.</p></td>
-    </tr>
-    <tr>
-      <th>tif.filename</th>
-      <td><p>If <code>save.tif</code> is <code>TRUE</code>, filename to save the
-<code>.tif</code> height map to. If <code>from.file</code> is <code>TRUE</code>, filename to
-load the height map from.</p></td>
-    </tr>
-    <tr>
-      <th>png.filename</th>
-      <td><p>If <code>save.png</code> is <code>TRUE</code>, filename to save the
-<code>.png</code> texture to. If <code>from.file</code> is <code>TRUE</code>, filename to
-load the texture from.</p></td>
-    </tr>
-    <tr>
       <th>dist.unit</th>
       <td><p>Units for the distance argument. All units are converted to
 kilometers, with some errors in the transition due to floating point
@@ -364,16 +335,14 @@ beforehand.</p></td>
 or radians.</p></td>
     </tr>
     <tr>
-      <th>sr_bbox</th>
-      <td><p>Spatial reference code (ISO 19111) for bounding box</p></td>
+      <th>heightmap</th>
+      <td><p>Heightmap array, either provided by the user or pulled
+via the USGS national map API.</p></td>
     </tr>
     <tr>
-      <th>sr_image</th>
-      <td><p>Spatial reference code (ISO 19111) for image</p></td>
-    </tr>
-    <tr>
-      <th>print.map</th>
-      <td><p>Logical -- should the output map be printed?</p></td>
+      <th>texture</th>
+      <td><p>Overlay image array, either provided by the user or pulled
+from the ESRI map texture API.</p></td>
     </tr>
     </table>
 
@@ -394,15 +363,10 @@ chap. B9, 39 p., https://doi.org/10.3133/tm11B9</p>
 <span class='fu'>automap</span>(<span class='fl'>44.121268</span>, -<span class='fl'>73.903734</span>, <span class='kw'>overlay</span> <span class='kw'>=</span> <span class='st'>"World_Imagery"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"3d"</span>)
 }</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#references">References</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -413,7 +377,7 @@ chap. B9, 39 p., https://doi.org/10.3133/tm11B9</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>
